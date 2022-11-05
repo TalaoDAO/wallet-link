@@ -67,12 +67,14 @@ def init_app(app,red) :
 
 def dapp_wallet(red):
     if request.method == 'GET' :
+        session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(16))
         session["nonce"] = "Verify address owning for Altme : " + nonce
         session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
         return render_template('dapp.html',nonce= session['cryptoWalletPayload'])
     else :
-        session['is_connected'] = True
+        if not session['is_connected'] :
+            return jsonify('Unauthorized'), 403
         id = str(uuid.uuid1())
         red.setex(id, 180, json.dumps({"associatedAddress" : request.form["address"],
                                         "accountName" : request.form["wallet"],
