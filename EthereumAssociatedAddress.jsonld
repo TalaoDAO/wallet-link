@@ -3,6 +3,8 @@
 		{
 			"accountName" :  "https://schema.org/identifier",
       		"associatedAddress" : "https://schema.org/account",
+			"cryptoWalletPayload" : "https://schema.org/message",
+			"cryptoWalletSignature" : "https://schema.org/signature",
 			"issuedBy": {
 				"@id": "schema:issuedBy",
 				"@context": {
@@ -23,6 +25,8 @@
 	"credentialSubject" : {
        		"id" : "",
        		"type" : "EthereumAssociatedAddress",
+			"cryptoWalletPayload" : "",
+			"cryptoWalletSignature" : "",
           	"associatedAddress" : "",
 		    "accountName" : "",
 			"issuedBy" : {"name" : "Altme"}

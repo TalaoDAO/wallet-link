@@ -68,13 +68,16 @@ def init_app(app,red) :
 def dapp_wallet(red):
     if request.method == 'GET' :
         nonce = ''.join(random.choice(characters) for i in range(16))
-        session["nonce"]="Verify address owning for Altme : "+nonce
-        return render_template('dapp.html',nonce= create_payload(session.get('nonce'),'MICHELINE'))
+        session["nonce"] = "Verify address owning for Altme : " + nonce
+        session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
+        return render_template('dapp.html',nonce= session['cryptoWalletPayload'])
     else :
         session['is_connected'] = True
         id = str(uuid.uuid1())
         red.setex(id, 180, json.dumps({"associatedAddress" : request.form["address"],
-                                "accountName" : request.form["wallet"]
+                                        "accountName" : request.form["wallet"],
+                                        "cryptoWalletPayload" : session['cryptoWalletPayload'],
+                                        "cryptoWalletSignature" : request.form["cryptoWalletSignature"]
                                 }))
         return redirect ('/wallet-link/qrcode' + "?id=" + id)
 
@@ -123,7 +126,8 @@ async def wallet_link_endpoint(id, red):
                          'message' : 'Server error'})
             red.publish('wallet-link', data)
             return jsonify('server error'), 500 # sent to wallet
-
+        credential['credentialSubject']['cryptoWalletSignature'] = data['cryptoWalletSignature']
+        credential['credentialSubject']['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
         credential['credentialSubject']['accountName'] = data['accountName']
         credential['credentialSubject']['issuedBy']['name'] = 'Altme'

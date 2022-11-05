@@ -25,6 +25,7 @@
       <form action="/wallet-link/dapp" method = "POST">
         <button id="synchroAltmeButton"  style="background-color: rgb(211, 148, 148)" type="submit" >Add your active account to Altme</button><br>
         <input id="synchroAltme" hidden name="address" value="">
+        <input id="cryptoWalletSignature" hidden name="cryptoWalletSignature" value="">
         <input id="synchroAltmeWallet" hidden name="wallet" value="">
       </form>
     </div>
@@ -334,6 +335,7 @@
                })
 
         console.log('signature:', signature)
+        document.getElementById('cryptoWalletSignature').value = signature;
       })
 
        // Add event listener to the button
