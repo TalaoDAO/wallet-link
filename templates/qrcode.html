@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+   
+  </head>
+  <body >
+
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+
+    <h2> <center>Scan with Altme</center></h2>
+
+
+        <div>
+              <center> <img  src="{{ qrcode(url) }}"> </center>
+       </div>
+
+
+      <script>
+        var source = new EventSource('/wallet-link/stream');
+        source.onmessage = function (event) {
+        const data = JSON.parse(event.data)
+        // voir ce que l on fait apres
+        if (data.id == '{{id}}'){
+          window.location.href='/wallet-link/followup?message=' + data.message;
+          }
+        };
+      </script>
+    
+
+  </body>
+</html>
