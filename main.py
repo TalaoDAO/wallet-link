@@ -76,12 +76,16 @@ def dapp_wallet(red):
         if not session['is_connected'] :
             return jsonify('Unauthorized'), 403
         id = str(uuid.uuid1())
-        red.setex(id, 180, json.dumps({"associatedAddress" : request.form["address"],
-                                        "accountName" : request.form["wallet"],
+        print(session["addressVerified"])
+        print(request.headers["wallet"])
+        print(session['cryptoWalletPayload'])
+        print(request.headers["cryptoWalletSignature"])
+        red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
+                                        "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : session['cryptoWalletPayload'],
-                                        "cryptoWalletSignature" : request.form["cryptoWalletSignature"]
-                                }))
-        return redirect ('/wallet-link/qrcode' + "?id=" + id)
+                                        "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
+                                }))        
+        return redirect ('http://192.168.1.17:5000/wallet-link/qrcode' + "?id=" + id)
 
 
 # route '/wallet-link/qrcode'
@@ -177,11 +181,19 @@ def wallet_link_stream(red):
 
 
 def validate_sign():
-    print(request.headers.get('signature'))
-    print('Tezos signed message '+session.get("nonce"))
-    print(key.Key.from_encoded_key("edpkvZWUhJmApw88fjonoCQoJqgywwXgK3Qv7ncZkM9Q4HDR4KPm8w").verify(request.headers.get('signature'), 'Tezos signed message '+session.get("nonce")))
-
-    return("ok"),200
+    #print(request.headers.get('signature'))
+    #print('Tezos signed message '+session.get("nonce"))
+    print(create_payload(session.get("nonce"),'MICHELINE'))
+    print(session.get('cryptoWalletPayload'))
+    try:
+        print(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
+        session.get('cryptoWalletPayload')))
+        print("verified :" +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
+        session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
+        return({'status':'ok'}),200
+    except ValueError:
+        pass
+        return({'status':'error'}),403
 
 
 if __name__ == '__main__':

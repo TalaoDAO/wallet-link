@@ -1,0 +1,8 @@
+{
+        "talao_Ed25519_private_key" : {
+            "crv":"Ed25519",
+            "d":"C273gAgpg72xBXqE3m0PQIAE9mKokiZcOnVdPe9qXQk",
+            "kty":"OKP",
+            "x":"FUoLewH4w4-KdaPH2cjZbL--CKYxQRWR05Yd_bIbhQo"
+        }
+}
