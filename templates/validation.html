@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+
+    <div id="large">
+        <div id="body">
+            <header>
+                <div id="wrapperTop"><img id="logo" src="/static/Logo.png"></div>
+            </header>
+
+            <div id="bigBox">
+                <div id="titles">
+                    <div id="title">
+                        <p id="titleP">Add an identity layer to any wallet ! </p>
+                    </div>
+                    <div id="textTop">
+                        <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a
+                            decentralized
+                            wallet
+                            app built on
+                            Self-sovereign identity.</p>
+                    </div>
+
+
+
+                </div>
+                <div id="mainBox">
+                    <div id="leftBox">
+                        <div id="leftTop">
+                            <div id="step1Div">
+                                <p id="step1">Step 2 : Scan this QR code with Altme</p>
+                            </div>
+                            <div id="chooseDiv">
+                                <p id="choose"></p>
+                            </div>
+                        </div>
+                        <div id="leftMid">
+                            <img id="qrcode" src="/static/tick-circle.png">
+                            <p id="success">Success !</p>
+                        </div>
+                        <div id="frame6">
+                            <p id="ssi">** Self-sovereign identity (SSI) gives individuals control over the personal
+                                information they
+                                use across the web.</p>
+
+
+                        </div>
+
+
+                    </div>
+                    <div id="rightBox"> <img id="draw" src="/static/Illustration.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        var source = new EventSource('/wallet-link/stream');
+        source.onmessage = function (event) {
+            const data = JSON.parse(event.data)
+            // voir ce que l on fait apres
+            if (data.id == '{{id}}') {
+                window.location.href = '/wallet-link/followup?message=' + data.message;
+            }
+        };
+    </script>
+
+
+</body>
+
+</html>

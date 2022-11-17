@@ -371,12 +371,12 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px;
     gap: 32px;
 
     width: 549px;
-    height: 240.89px;
+    height: 278px;
 
 
     /* Inside auto layout */
@@ -877,5 +877,36 @@ frame8 {
     /* Inside auto layout */
     flex: none;
     order: 1;
+    flex-grow: 0;
+}
+
+#qrcode {
+    width: 279px;
+}
+
+#success {
+    /* Connect wallet */
+
+    width: 549px;
+    height: 29px;
+
+    /* Paragraph/18/bold */
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+    text-align: center;
+
+    /* Secondary */
+    color: #544A62;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
     flex-grow: 0;
 }

@@ -162,6 +162,8 @@ def wallet_link_followup():
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
     # a voir si utile ???
+    print(request.args.get('message', 'No message'))
+    return render_template("validation.html")
     return jsonify (request.args.get('message', 'No message'))
 
 
