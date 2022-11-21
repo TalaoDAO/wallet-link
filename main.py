@@ -79,7 +79,7 @@ def dapp_wallet(red):
         nonce = ''.join(random.choice(characters) for i in range(16))
         session["nonce"] = "Verify address owning for Altme : " + nonce
         session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-        return render_template('dapp.html',nonce= session['cryptoWalletPayload'])
+        return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
     else :
         if not session['is_connected'] :
             return jsonify('Unauthorized'), 403
@@ -93,7 +93,7 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : session['cryptoWalletPayload'],
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect ('http://192.168.1.17:5000/wallet-link/qrcode' + "?id=" + id)
+        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id)
 
 
 # route '/wallet-link/qrcode'
