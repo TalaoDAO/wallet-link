@@ -37,10 +37,9 @@ mode = environment.currentMode(myenv)
 
 
 red= redis.Redis(host='127.0.0.1', port=6379, db=0)
-
-def create_payload (input, type) :
-    def char2Bytes(text):
-        return text.encode('utf-8').hex()
+def char2Bytes(text):
+    return text.encode('utf-8').hex()
+"""def create_payload (input, type) :
     formattedInput = ''.join([
         'Tezos signed message',
         'altme.io',
@@ -50,8 +49,17 @@ def create_payload (input, type) :
     logging.info(formattedInput)
     sep = '05' if type == 'MICHELINE' else '03'
     bytes = char2Bytes(formattedInput)
-    return sep + '0100' + char2Bytes(str(len(bytes))) + bytes
-
+    return sep + '0100' + char2Bytes(str(len(bytes))) + bytes"""
+def create_payload (input, type) :
+  formattedInput = ' '.join([
+    'Tezos Signed Message:',
+    'altme.io',
+    datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
+    input
+  ])
+  sep = '05' if type == 'MICHELINE'  else  '03'
+  bytes = char2Bytes(formattedInput)
+  return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
 def init_app(app,red) :
     app.add_url_rule('/wallet-link/dapp',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})

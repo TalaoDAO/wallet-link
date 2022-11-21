@@ -19,7 +19,7 @@
       <div id="bigBox">
         <div id="titles">
           <div id="title">
-            <p id="titleP">Add an identity layer to any wallet ! </p>
+            <p id="titleP">Add an identity to your crypto wallet ! </p>
           </div>
           <div id="textTop">
             <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
@@ -151,11 +151,7 @@
           NOT_OWNER: 'You are not the owner of this token.'
         }
       }
-      // preferredNetwork: beacon.NetworkType.DELPHINET
-      // matrixNodes: ['test.papers.tech', 'test2.papers.tech', 'matrix.papers.tech']
-      // matrixNodes: ['beacon-node-0.papers.tech:8448']
-      // matrixNodes: ['matrix.papers.tech']
-      // matrixNodes: ['beacon.tztip.me']
+
     })
 
     // Display the active account in the UI
@@ -165,41 +161,15 @@
           console.log(activeAccount)
           console.log(activeAccount.publicKey)
           console.log("activeaccount")
-          //document.getElementById('activeAccount').innerText = activeAccount.address
-          //document.getElementById('activeAccountNetwork').innerText = activeAccount.network.type
-          //document.getElementById('activeAccountTransport').innerText = activeAccount.origin.type
-          //document.getElementById("synchroAltme").value = activeAccount.address
-          /*
-          <div id="altme">
-    <form action="/wallet-link/dapp" method="POST">
-      <button id="synchroAltmeButton" style="background-color: rgb(211, 148, 148)" type="submit">Add your
-        active
-        account to Altme</button><br>
-      <input id="synchroAltme" hidden name="address" value="">
-      <input id="cryptoWalletSignature" hidden name="cryptoWalletSignature" value="">
-      <input id="synchroAltmeWallet" hidden name="wallet" value="">
-    </form>
-  </div>*/
-          // document.getElementById('altme').style.visibility = 'visible';
+          
 
         } else {
-          //document.getElementById('activeAccount').innerText = ''
-          //document.getElementById('activeAccountNetwork').innerText = ''
-          //document.getElementById('activeAccountTransport').innerText = ''
+ 
         }
       })
     }
     updateActiveAccount()
 
-    // Display the active account in the UI
-    /*const updateColorMode = () => {
-      client.getColorMode().then((colorMode) => {
-        document.getElementById('activeColorMode').innerText = colorMode
-      })
-    }
-    updateColorMode()*/
-
-    // Initiate a delegate operation
     const delegate = () => {
       client.requestOperation({
         operationDetails: [
@@ -302,26 +272,7 @@
         })
     }
 
-    /*document.getElementById('connect').addEventListener('click', () => {
-      // Check if we have an active account
-      client.getActiveAccount().then((activeAccount) => {
-        if (activeAccount) {
-          // If we have an active account, send the delegate operation directly
-          delegate()
-        } else {
-          // If we don't have an active account, we need to request permissions first and then send the delegate operation
-          requestPermission((permissions) => {
-            delegate()
-            updateActiveAccount()
-          })
-        }
-      })
-    })*/
-
-    // Add event listener to the button
-    /*document.getElementById('sendContractCall').addEventListener('click', () => {
-      sendContractCall()
-    })*/
+    
 
     // Add event listener to the button
     document.getElementById('requestPermission').addEventListener('click', () => {
