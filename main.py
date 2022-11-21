@@ -108,13 +108,13 @@ def wallet_link_qrcode(mode) :
 
 # route '/wallet-link/endpoint/
 async def wallet_link_endpoint(id, red):
-    credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
+    credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     
     if request.method == 'GET': 
-        credential_manifest = json.load(open('credential_manifest.json', 'r'))
+        credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    

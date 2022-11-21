@@ -103,6 +103,7 @@
   <div id="logger-output" hidden></div>
   <script src="https://cdn.jsdelivr.net/npm/@taquito/utils"></script>
   <script>
+    var wallet=""
     class MyLogger {
       constructor() { }
 
@@ -211,7 +212,7 @@
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
-                fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: 'Kukai', cryptoWalletSignature: signature.signature } }).then((res) => {
+                fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: wallet, cryptoWalletSignature: signature.signature } }).then((res) => {
                   document.location.href = res.url
                   console.log(res)
                 })
@@ -261,6 +262,7 @@
         .requestPermissions(/*{ network: { type: beacon.NetworkType.DELPHINET } }*/)
         .then((permissions) => {
           console.log('permissions', permissions)
+          wallet=permissions.appMetadata.name
           if (callback) {
             callback(permissions)
           }
