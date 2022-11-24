@@ -1,3 +1,8 @@
+
+from web3 import Web3
+from hexbytes import HexBytes
+from eth_account.messages import encode_defunct,defunct_hash_message
+import hashlib
 from flask import Flask,render_template, request, jsonify, redirect,session, Response
 import uuid 
 from flask_qrcode import QRcode
@@ -5,51 +10,24 @@ import json
 import redis
 import string
 import random
-from pytezos.crypto import key
 import os
 import environment
 from datetime import datetime, timedelta
 import didkit
-
+from pytezos.crypto import key
 import logging
 logging.basicConfig(level=logging.INFO)
-
-
-
 issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_did = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du"
 issuer_vm = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du#blockchainAccountId"
 
+w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/f2be8a3bf04d4a528eb416566f7b5ad6"))
 
-app = Flask(__name__)
-QRcode(app)
-app.secret_key ='miaou'
-# https://github.com/airgap-it/beacon-sdk
-# https://tezostaquito.io/docs/signing/
-characters = string.ascii_letters + string.digits + string.punctuation
+"""mesage= encode_defunct(text="6875972781")
+print(mesage)
+address = w3.eth.account.recover_message(mesage,signature=HexBytes("0xe277c9ce2fc17d3c6903410a7886cb87f18a064e7fc3e2f1e23df223b01b48371d5a5b37b6f217e0b5431a0a158023a0ee2184a422f68a82ce4b57d5d71252511c"))
+print(address)"""
 
-
-#init environnement variable
-myenv = os.getenv('MYENV')
-if not myenv :
-   myenv='thierry'
-mode = environment.currentMode(myenv)
-
-
-red= redis.Redis(host='127.0.0.1', port=6379, db=0)
-def char2Bytes(text):
-    return text.encode('utf-8').hex()
-"""def create_payload (input, type) :
-    formattedInput = ''.join([
-        'Tezos signed message',
-        'altme.io',
-        datetime.utcnow().replace(microsecond=0).isoformat() + "Z",
-        input
-    ])
-    logging.info(formattedInput)
-    sep = '05' if type == 'MICHELINE' else '03'
-    bytes = char2Bytes(formattedInput)
-    return sep + '0100' + char2Bytes(str(len(bytes))) + bytes"""
 def create_payload (input, type) :
   formattedInput = ' '.join([
     'Tezos Signed Message:',
@@ -60,6 +38,27 @@ def create_payload (input, type) :
   sep = '05' if type == 'MICHELINE'  else  '03'
   bytes = char2Bytes(formattedInput)
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
+    
+
+
+app = Flask(__name__)
+QRcode(app)
+app.secret_key ='miaou'
+
+
+characters = string.ascii_letters + string.digits
+
+
+#init environnement variable
+myenv = os.getenv('MYENV')
+if not myenv :
+   myenv='thierry'
+mode = environment.currentMode(myenv)
+
+red= redis.Redis(host='127.0.0.1', port=6379, db=0)
+def char2Bytes(text):
+    return text.encode('utf-8').hex()
+
 
 def init_app(app,red) :
     app.add_url_rule('/wallet-link/dapp',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
@@ -72,28 +71,35 @@ def init_app(app,red) :
     app.add_url_rule('/wallet-link/followup',  view_func=wallet_link_followup, methods = ['GET'])
     return
 
-
 def dapp_wallet(red):
     if request.method == 'GET' :
         session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(16))
         session["nonce"] = "Verify address owning for Altme : " + nonce
-        session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-        return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+        print("nonce " +session.get('nonce'))
+        if(request.args['blockchain']=="ethereum"):
+            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            session['blockchain']="eth"     
+            return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+        if(request.args['blockchain']=="tezos"):
+            session['blockchain']="tez"
+            session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
+            return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+            
     else :
         if not session['is_connected'] :
             return jsonify('Unauthorized'), 403
         id = str(uuid.uuid1())
-        print(session["addressVerified"])
+        print("address verified "+session["addressVerified"])
         print(request.headers["wallet"])
         print(session['cryptoWalletPayload'])
         print(request.headers["cryptoWalletSignature"])
         red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
-                                        "cryptoWalletPayload" : session['cryptoWalletPayload'],
+                                        "cryptoWalletPayload" : str(session['cryptoWalletPayload']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id)
+        return redirect ('https://192.168.1.17:3000/wallet-link/qrcode' + "?id=" + id)
 
 
 # route '/wallet-link/qrcode'
@@ -101,20 +107,29 @@ def wallet_link_qrcode(mode) :
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
-    url = mode.server + 'wallet-link/endpoint/' + id 
+    print("kb9")
+    url ='https://192.168.1.17:3000/wallet-link/endpoint/' + id 
     logging.info('qr code = %s', url)
     return render_template('qrcode.html', url=url, id=id)
 
 
 # route '/wallet-link/endpoint/
 async def wallet_link_endpoint(id, red):
-    credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+    credential=None
+    if(session.get('blockchain')=="tez"):
+        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+    if(session.get('blockchain')=="eth"):
+        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     
     if request.method == 'GET': 
-        credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+        credential_manifest=None
+        if(session.get('blockchain')=="tez"):
+            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+        if(session.get('blockchain')=="eth"):
+            credential_manifest = json.load(open('credential_manifest.json', 'r'))
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
@@ -191,23 +206,45 @@ def wallet_link_stream(red):
 
 
 def validate_sign():
+    print("validateSign")
     #print(request.headers.get('signature'))
     #print('Tezos signed message '+session.get("nonce"))
-    print(create_payload(session.get("nonce"),'MICHELINE'))
+    print("nonce "+session.get('nonce'))
+    #print("payload "+str(encode_defunct(text=session.get('nonce'))))
     print(session.get('cryptoWalletPayload'))
-    try:
-        print(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
-        session.get('cryptoWalletPayload')))
-        print("verified :" +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
-        session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
-        return({'status':'ok'}),200
-    except ValueError:
-        pass
-        return({'status':'error'}),403
+    print('signature '+request.headers.get('signature'))
+    if(session.get('blockchain')=="eth"):
+        try:
+            print("verifying ethereum")
+            message_hash = defunct_hash_message(text=session.get('nonce'))
+            address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
+            print(address)
+            session["addressVerified"]=address
+            print("address verified "+session["addressVerified"])
 
+            
+            return({'status':'ok'}),200
+        except ValueError:
+            pass
+            return({'status':'error'}),403
+    if(session.get('blockchain')=="tez"):
+        try:
+            print("verifying tezos")
+            print(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
+            session.get('cryptoWalletPayload')))
+            print("verified :" +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
+            session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
+            return({'status':'ok'}),200
+        except ValueError:
+            pass
+            return({'status':'error'}),403
+@app.route('/')
+def index():
+    return render_template("demo.html",nonce=session.get("nonce"))
 
 if __name__ == '__main__':
     init_app(app,red)
-    app.run( host = mode.IP, port= mode.port, debug =True)
-
-
+    print(mode.IP)
+    print(mode.port)
+    #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
+    app.run( host = mode.IP, port= 3000, debug =True,ssl_context='adhoc')
