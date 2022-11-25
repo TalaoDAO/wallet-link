@@ -870,6 +870,7 @@ frame8 {
     order: 0;
     flex-grow: 1;
 }
+
 #templelogo {
     /* temple-wallet 1 */
 
@@ -937,7 +938,18 @@ frame8 {
     align-self: stretch;
     flex-grow: 0;
 }
-.transparent{
+
+.transparent {
     background-color: transparent;
     border: transparent;
+}
+
+#connectDesktop {
+
+    position: absolute;
+    top: 60px;
+    left: 153px;
+    font-family: Nunito;
+    font-size: 20px;
+    color: #330080;
 }

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div id="large">
+    <div id="body">
+      <header>
+        <a href="https://altme.io/"><div id="wrapperTop"><img id="logo" src="/static/Logo.png"></div></a>
+        <p id="connectDesktop">Connect with your desktop</p>
+      </header>
+
+      <div id="bigBox">
+        <div id="titles">
+          <div id="title">
+            <p id="titleP">Add an identity to your crypto wallet ! </p>
+          </div>
+          <div id="textTop">
+            <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
+              wallet
+              app built on
+              Self-sovereign identity.</p>
+          </div>
+
+
+
+        </div>
+        <div id="mainBox">
+          <div id="leftBox">
+            <div id="leftTop">
+              <div id="step1Div">
+                <p id="step1">Step 1 : Link your wallet</p>
+              </div>
+              <div id="chooseDiv">
+                <p id="choose">Choose the wallet provider you want to associate with Altme.</p>
+              </div>
+            </div>
+            <div id="leftMid">
+              <div id="frame4">
+                <div id="frame7">
+                  <p id="tezos">Tezos</p>
+                </div>
+                <div id="frame8">
+                  <p id="ethereum">Ethereum</p>
+                </div>
+              </div>
+              <div id="frame11">
+                <div id="frame10">
+                  <p id="popular">Popular</p>
+                </div>
+                <div id="frame1">
+   
+                    <div id="box1">
+                      <div id="underbox1">
+                        <div class="frame2">
+                          <div><img id="beaconlogo" src="/static/walletconnect.png"></div>
+                          <div>
+                            <p class="walletText">WalletConnect</p>
+                          </div>
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+        
+                    <div id="box2">
+                      <div id="underbox2">
+                        <div class="frame2">
+                          <img id="templelogo" src="/static/metamask.png">
+
+                          <p class="walletText">Metamask Web Extension</p>
+
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+                
+                </div>
+              </div>
+            </div>
+            <div id="frame6">
+              <p id="ssi">** Self-sovereign identity (SSI) gives individuals control over the personal information they
+                use across the web.</p>
+
+
+            </div>
+
+
+          </div>
+          <div id="rightBox"> <img id="draw" src="/static/Illustration.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="connect_box">
+    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'></button>
+    <button class='kvwalletbtn' id='kvwalletmodal_metamask_btn'></button>
+  </div>
+
+
+
+
+
+
+
+
+  <script src="/static/prod/KV.latest.min.js" onload='shield("/static/sample.js", null, "head", "script", 0);'></script>
+  <script src="/static/prod/KV.latest.min.js"></script>
+  <script src="/static/prod/KV.WalletUIHandler.latest.min.js"></script>
+  <script>
+    var nonce="{{nonce}}"
+  
+  async function signMessage() {
+      KV.wallet.web3().eth.getAccounts().then(function (account) {
+
+        console.log(account)
+        KV.wallet.web3().eth.sign(KV.wallet.web3().eth.accounts.hashMessage("{{nonce}}"), account[0]).then(function (signature) {
+        console.log('signature:', signature)
+        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
+
+
+        
+          if (account) {
+            fetch(link, { method: "GET", headers: { pubKey: account, signature: signature } }).then((res) => {
+              res.json().then((data) => {
+                console.log(data);
+                if (data.status === "ok") {
+                  fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
+                    document.location.href = res.url
+                    console.log(res)
+                  })
+                }
+              });
+            });
+            console.log(account)
+          }
+        
+      })
+      
+      
+      })
+      
+    }</script>
+</body>
+
+</html>

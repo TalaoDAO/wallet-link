@@ -4,6 +4,7 @@ from hexbytes import HexBytes
 from eth_account.messages import encode_defunct,defunct_hash_message
 import hashlib
 from flask import Flask,render_template, request, jsonify, redirect,session, Response
+from flask_mobility import Mobility
 import uuid 
 from flask_qrcode import QRcode
 import json
@@ -20,7 +21,6 @@ logging.basicConfig(level=logging.INFO)
 issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_did = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du"
 issuer_vm = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du#blockchainAccountId"
-
 w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/f2be8a3bf04d4a528eb416566f7b5ad6"))
 
 """mesage= encode_defunct(text="6875972781")
@@ -45,6 +45,7 @@ app = Flask(__name__)
 QRcode(app)
 app.secret_key ='miaou'
 
+Mobility(app)
 
 characters = string.ascii_letters + string.digits
 
@@ -80,11 +81,18 @@ def dapp_wallet(red):
         if(request.args['blockchain']=="ethereum"):
             session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
             session['blockchain']="eth"     
-            return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+            if(request.MOBILE==False):
+                return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+            else:
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
         if(request.args['blockchain']=="tezos"):
             session['blockchain']="tez"
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-            return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+            if(request.MOBILE==False):
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+            else:
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+
             
     else :
         if not session['is_connected'] :
