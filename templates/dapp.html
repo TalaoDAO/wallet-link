@@ -48,7 +48,7 @@
                   <p id="tezos">Tezos</p>
                 </div>
                 <div id="frame8">
-                  <p id="ethereum">Ethereum</p>
+                  <a href="https://192.168.1.17:3000/wallet-link/dapp?blockchain=ethereum" id="ethereum">Ethereum</a>
                 </div>
               </div>
               <div id="frame11">
@@ -57,8 +57,8 @@
                 </div>
                 <div id="frame1">
                   <button id="requestPermission" class="transparent">
-                    <div id="box1">
-                      <div id="underbox1">
+                    <div class="box1">
+                      <div class="underbox1">
                         <div class="frame2">
                           <div><img id="beaconlogo" src="/static/beaconlogo.png"></div>
                           <div>
@@ -70,12 +70,65 @@
                     </div>
                   </button>
                   <button id="requestPermission2" class="transparent">
-                    <div id="box2">
-                      <div id="underbox2">
+                    <div class="box2">
+                      <div class="underbox2">
                         <div class="frame2">
                           <img id="templelogo" src="/static/temple-wallet.png">
 
                           <p class="walletText">Temple Wallet</p>
+
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+                  </button>
+                  <button id="requestPermission3" class="transparent">
+                    <div class="box1">
+                      <div class="underbox1">
+                        <div class="frame2">
+                          <div><img id="beaconlogo" src="/static/digitalartautonomy.webp"></div>
+                          <div>
+                            <p class="walletText">Digital Art Autonomy
+                            </p>
+                          </div>
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+                  </button>
+                  <button id="requestPermission4" class="transparent">
+                    <div class="box2">
+                      <div class="underbox2">
+                        <div class="frame2">
+                          <img id="templelogo" src="/static/airgap.png">
+
+                          <p class="walletText">Air Gap Wallet</p>
+
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+                  </button>
+                  <button id="requestPermission5" class="transparent">
+                    <div class="box1">
+                      <div class="underbox1">
+                        <div class="frame2">
+                          <div><img id="beaconlogo" src="/static/kukai.png"></div>
+                          <div>
+                            <p class="walletText">Kukai Wallet</p>
+                          </div>
+                        </div>
+                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                      </div>
+                    </div>
+                  </button>
+                  <button id="requestPermission6" class="transparent">
+                    <div class="box2">
+                      <div class="underbox2">
+                        <div class="frame2">
+                          <img id="templelogo" src="/static/temple-wallet.png">
+
+                          <p class="walletText">Temple Mobile</p>
 
                         </div>
                         <div class="frame3"><img class="vector" src="/static/vector.png"></div>
@@ -289,6 +342,18 @@
       requestPermission()
     })
     document.getElementById('requestPermission2').addEventListener('click', () => {
+      requestPermission()
+    })
+    document.getElementById('requestPermission3').addEventListener('click', () => {
+      requestPermission()
+    })
+    document.getElementById('requestPermission4').addEventListener('click', () => {
+      requestPermission()
+    })
+    document.getElementById('requestPermission5').addEventListener('click', () => {
+      requestPermission()
+    })
+    document.getElementById('requestPermission6').addEventListener('click', () => {
       requestPermission()
     })
   </script>

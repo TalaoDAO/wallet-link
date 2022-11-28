@@ -12,7 +12,9 @@
   <div id="large">
     <div id="body">
       <header>
-        <a href="https://altme.io/"><div id="wrapperTop"><img id="logo" src="/static/Logo.png"></div></a>
+        <a href="https://altme.io/">
+          <div id="wrapperTop"><img id="logo" src="/static/Logo.png"></div>
+        </a>
       </header>
 
       <div id="bigBox">
@@ -43,10 +45,53 @@
             <div id="leftMid">
               <div id="frame4">
                 <div id="frame7">
-                  <p id="tezos">Tezos</p>
+                  <a href="https://192.168.1.17:3000/wallet-link/dapp?blockchain=tezos" style="width: 81px;
+                  height: 29px;
+              
+                  font-family: 'Nunito';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 18px;
+                  line-height: 161.7%;
+              
+                  /* or 29px */
+              
+                  /* Secondary */
+                  color: #544A62;
+              
+              
+                  /* Inside auto layout */
+                  flex: none;
+                  order: 0;
+                  flex-grow: 0;
+                  position: relative;
+                  top:3px;
+
+                  ">Tezos</a>
                 </div>
                 <div id="frame8">
-                  <p id="ethereum">Ethereum</p>
+                  <a style="width: 47px;
+                  height: 29px;
+              
+                  font-family: 'Nunito';
+                  font-style: normal;
+                  font-weight: 700;
+                  font-size: 18px;
+                  line-height: 161.7%;
+              
+                  /* or 29px */
+              
+                  /* Purple */
+                  color: #330080;
+              
+              
+                  /* Inside auto layout */
+                  flex: none;
+                  order: 0;
+                  flex-grow: 0;
+                  position: relative;
+                  top:3px;
+">Ethereum</a>
                 </div>
               </div>
               <div id="frame11">
@@ -54,31 +99,53 @@
                   <p id="popular">Popular</p>
                 </div>
                 <div id="frame1">
-   
-                    <div id="box1">
-                      <div id="underbox1">
-                        <div class="frame2">
-                          <div><img id="beaconlogo" src="/static/walletconnect.png"></div>
-                          <div>
-                            <p class="walletText">WalletConnect</p>
-                          </div>
-                        </div>
-                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                      </div>
-                    </div>
-        
-                    <div id="box2">
-                      <div id="underbox2">
-                        <div class="frame2">
-                          <img id="templelogo" src="/static/metamask.png">
 
-                          <p class="walletText">Metamask Web Extension</p>
-
+                  <div class="box1">
+                    <div class="underbox1">
+                      <div class="frame2">
+                        <div><img id="beaconlogo" src="/static/metamask.png"></div>
+                        <div>
+                          <p class="walletText">Metamask Mobile</p>
                         </div>
-                        <div class="frame3"><img class="vector" src="/static/vector.png"></div>
                       </div>
+                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
                     </div>
-                
+                  </div>
+
+                  <div class="box2">
+                    <div class="underbox2">
+                      <div class="frame2">
+                        <img id="templelogo" src="/static/trustwallet.png">
+
+                        <p class="walletText">Trust Wallet</p>
+
+                      </div>
+                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                    </div>
+                  </div>
+                  <div class="box1">
+                    <div class="underbox1">
+                      <div class="frame2">
+                        <div><img id="beaconlogo" src="/static/metamask.png"></div>
+                        <div>
+                          <p class="walletText">MetaMask Web Extension</p>
+                        </div>
+                      </div>
+                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                    </div>
+                  </div>
+
+                  <div class="box2">
+                    <div class="underbox2">
+                      <div class="frame2">
+                        <img id="templelogo" src="/static/mathwallet.png">
+
+                        <p class="walletText">Math Wallet</p>
+
+                      </div>
+                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -100,32 +167,28 @@
 
   <div id="connect_box">
     <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'></button>
+    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn2'></button>
+    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn3'></button>
     <button class='kvwalletbtn' id='kvwalletmodal_metamask_btn'></button>
   </div>
-
-
-
-
-
-
 
 
   <script src="/static/prod/KV.latest.min.js" onload='shield("/static/sample.js", null, "head", "script", 0);'></script>
   <script src="/static/prod/KV.latest.min.js"></script>
   <script src="/static/prod/KV.WalletUIHandler.latest.min.js"></script>
   <script>
-    var nonce="{{nonce}}"
-  
-  async function signMessage() {
+    var nonce = "{{nonce}}"
+
+    async function signMessage() {
       KV.wallet.web3().eth.getAccounts().then(function (account) {
 
         console.log(account)
         KV.wallet.web3().eth.sign(KV.wallet.web3().eth.accounts.hashMessage("{{nonce}}"), account[0]).then(function (signature) {
-        console.log('signature:', signature)
-        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
+          console.log('signature:', signature)
+          let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
 
 
-        
+
           if (account) {
             fetch(link, { method: "GET", headers: { pubKey: account, signature: signature } }).then((res) => {
               res.json().then((data) => {
@@ -140,12 +203,12 @@
             });
             console.log(account)
           }
-        
+
+        })
+
+
       })
-      
-      
-      })
-      
+
     }</script>
 </body>
 

@@ -501,7 +501,7 @@ frame8 {
     order: 0;
     flex-grow: 0;
     position: relative;
-    bottom: 15px;
+    top: 3px;
 }
 
 #frame11 {
@@ -601,7 +601,7 @@ frame8 {
     top: 20px;
 }
 
-#box1 {
+.box1 {
     /* item */
 
     box-sizing: border-box;
@@ -626,11 +626,11 @@ frame8 {
     flex-grow: 0;
 }
 
-#box1:hover {
+/*.box1:hover {
     background: #EDECF2;
-}
+}*/
 
-#box2 {
+.box2 {
     /* item */
 
     box-sizing: border-box;
@@ -655,11 +655,11 @@ frame8 {
     flex-grow: 0;
 }
 
-#box2:hover {
+/*.box2:hover {
     background: #EDECF2;
-}
+}*/
 
-#underbox1 {
+.underbox1 {
     /* inside item */
 
     /* Auto layout */
@@ -679,7 +679,7 @@ frame8 {
     flex-grow: 1;
 }
 
-#underbox2 {
+.underbox2 {
     /* inside item */
 
     /* Auto layout */
@@ -783,34 +783,44 @@ frame8 {
     order: 0;
     flex-grow: 0;
 }
-
-#kvwalletmodal_walletconnect_btn {
+.kvwalletbtn{
     background-color: transparent;
     border: transparent;
     width: 549px;
     height: 67px;
     border-radius: 16px;
     z-index: 100;
+}
+#kvwalletmodal_walletconnect_btn {
+    
     position: absolute;
     top: 395px;
     left: 166px;
 
 }
+#kvwalletmodal_walletconnect_btn2 {
+    
+    position: absolute;
+    top: 559px;
+    left: 166px;
 
+}
+#kvwalletmodal_walletconnect_btn3 {
+    
+    position: absolute;
+    top: 642px;
+    left: 166px;
+
+}
 #kvwalletmodal_metamask_btn {
-    background-color: transparent;
-    border: transparent;
-    width: 549px;
-    height: 67px;
-    border-radius: 16px;
-    z-index: 100;
+
     position: absolute;
     top: 478px;
     left: 166px;
 }
 
 #frame6 {
-    /* Frame 6 */
+
 
     /* Auto layout */
     display: flex;
@@ -827,23 +837,8 @@ frame8 {
     order: 2;
     align-self: stretch;
     flex-grow: 0;
-    /* Frame 6 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 549px;
-    height: 78px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 2;
-    align-self: stretch;
-    flex-grow: 0;
+    position: relative;
+    top: 320px;
 }
 
 #ssi {

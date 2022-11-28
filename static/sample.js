@@ -9,6 +9,9 @@ KV.init(["/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
     btn_disconnect_label: "Disconnect",
     web3network: KV.rpc_codes.ETH_MAINNET,
     buttonCustom: document.getElementById("kvwalletmodal_walletconnect_btn"),
+    buttonCustom2: document.getElementById("kvwalletmodal_walletconnect_btn2"),
+    buttonCustom3: document.getElementById("kvwalletmodal_walletconnect_btn3"),
+
     metaButton: document.getElementById("kvwalletmodal_metamask_btn")
   });
   walletui.on("btnconnect_clicked", function (activity_when) {
@@ -35,9 +38,11 @@ KV.init(["/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
         hex += '' + nonce.charCodeAt(i).toString(16)
       }
       var hexMessage = "0x" + hex
-      console.log(typeof hexMessage)
+      console.log(hexMessage)
       console.log(typeof account)
+      console.log("here")
       KV.wallet.web3().eth.personal.sign(hexMessage, account[0]).then(function (signature) {
+        console.log("request sign")
         let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
 
 
