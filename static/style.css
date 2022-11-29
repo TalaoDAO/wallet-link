@@ -25,7 +25,7 @@
     padding: 40px 0px 0px;
     gap: 68px;
 
-    width: 1125px;
+    width: 1128px;
     height: 909px;
 
 
@@ -115,7 +115,7 @@
     padding: 0px;
 
     width: 1440px;
-    height: 1010px;
+    height: 1200px;
 
 
     /* Inside auto layout */
@@ -258,7 +258,6 @@ header {
 
     position: relative;
     width: 1440px;
-    height: 1010px;
 
     /* Gradient_light */
     background: linear-gradient(180deg, #F8F8FB 0%, #FFFFFF 50%);
@@ -783,7 +782,8 @@ frame8 {
     order: 0;
     flex-grow: 0;
 }
-.kvwalletbtn{
+
+.kvwalletbtn {
     background-color: transparent;
     border: transparent;
     width: 549px;
@@ -794,36 +794,42 @@ frame8 {
     left: 166px;
 
 }
+
 #kvwalletmodal_walletconnect_btn {
-    
+
     position: absolute;
     top: 395px;
 
 }
+
 #kvwalletmodal_walletconnect_btn2 {
-    
+
     position: absolute;
     top: 559px;
 
 }
+
 #kvwalletmodal_walletconnect_btn3 {
-    
+
     position: absolute;
     top: 641px;
 
 }
+
 #kvwalletmodal_walletconnect_btn4 {
-    
+
     position: absolute;
     top: 807px;
 
 }
+
 #kvwalletmodal_walletconnect_btn5 {
-    
+
     position: absolute;
     top: 724px;
 
 }
+
 #kvwalletmodal_metamask_btn {
 
     position: absolute;
@@ -958,5 +964,47 @@ frame8 {
     left: 153px;
     font-family: Nunito;
     font-size: 20px;
+    color: #330080;
+}
+
+#superFaq {
+    width: 1440px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#faq {
+    width: 1128px;
+
+}
+
+.question {
+    width: 1128px;
+}
+
+.questionP {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Secondary */
+    color: #544A62;
+}
+
+#faqP {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 131.7%;
+
+    /* or 42px */
+
     color: #330080;
 }
