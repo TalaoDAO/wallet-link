@@ -47,7 +47,7 @@ app.secret_key ='miaou'
 
 Mobility(app)
 
-characters = string.ascii_letters + string.digits
+characters = string.digits
 
 
 #init environnement variable
@@ -75,23 +75,25 @@ def init_app(app,red) :
 def dapp_wallet(red):
     if request.method == 'GET' :
         session['is_connected'] = True
-        nonce = ''.join(random.choice(characters) for i in range(16))
+        nonce = ''.join(random.choice(characters) for i in range(6))
         session["nonce"] = "Verify address owning for Altme : " + nonce
         print("nonce " +session.get('nonce'))
-        if(request.args['blockchain']=="ethereum"):
+        """if(request.args['blockchain']=="ethereum"):
             session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
             session['blockchain']="eth"     
             if(request.MOBILE==False):
                 return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")"""
         if(request.args['blockchain']=="tezos"):
+
             session['blockchain']="tez"
+            print(session.get('blockchain'))
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
             if(request.MOBILE==False):
-                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
             else:
-                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
 
             
     else :
@@ -107,7 +109,7 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : str(session['cryptoWalletPayload']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect ('https://192.168.1.17:3000/wallet-link/qrcode' + "?id=" + id)
+        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id)
 
 
 # route '/wallet-link/qrcode'
@@ -116,7 +118,7 @@ def wallet_link_qrcode(mode) :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
     print("kb9")
-    url ='https://192.168.1.17:3000/wallet-link/endpoint/' + id 
+    url =mode.server+'wallet-link/endpoint/' + id 
     logging.info('qr code = %s', url)
     return render_template('qrcode.html', url=url, id=id)
 
@@ -124,20 +126,18 @@ def wallet_link_qrcode(mode) :
 # route '/wallet-link/endpoint/
 async def wallet_link_endpoint(id, red):
     credential=None
-    if(session.get('blockchain')=="tez"):
-        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
-    if(session.get('blockchain')=="eth"):
-        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
+    print(session.get('blockchain'))
+    
+    credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+    
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     
     if request.method == 'GET': 
-        credential_manifest=None
-        if(session.get('blockchain')=="tez"):
-            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
-        if(session.get('blockchain')=="eth"):
-            credential_manifest = json.load(open('credential_manifest.json', 'r'))
+        
+        credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+        
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
@@ -255,4 +255,6 @@ if __name__ == '__main__':
     print(mode.IP)
     print(mode.port)
     #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
-    app.run( host = mode.IP, port= 3000, debug =True,ssl_context='adhoc')
+    app.run( host = mode.IP, port= mode.port, debug =True)
+    """,ssl_context='adhoc'"""
+    

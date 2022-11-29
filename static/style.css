@@ -790,26 +790,38 @@ frame8 {
     height: 67px;
     border-radius: 16px;
     z-index: 100;
+    position: absolute;
+    left: 166px;
+
 }
 #kvwalletmodal_walletconnect_btn {
     
     position: absolute;
     top: 395px;
-    left: 166px;
 
 }
 #kvwalletmodal_walletconnect_btn2 {
     
     position: absolute;
     top: 559px;
-    left: 166px;
 
 }
 #kvwalletmodal_walletconnect_btn3 {
     
     position: absolute;
-    top: 642px;
-    left: 166px;
+    top: 641px;
+
+}
+#kvwalletmodal_walletconnect_btn4 {
+    
+    position: absolute;
+    top: 807px;
+
+}
+#kvwalletmodal_walletconnect_btn5 {
+    
+    position: absolute;
+    top: 724px;
 
 }
 #kvwalletmodal_metamask_btn {
