@@ -983,7 +983,9 @@ frame8 {
 .question {
     width: 1128px;
 }
-
+.answer {
+    width: 1128px;
+}
 .questionP {
     font-family: 'Nunito';
     font-style: normal;
@@ -994,9 +996,20 @@ frame8 {
     /* or 29px */
 
     /* Secondary */
+    color: #000000;
+}
+.answerP {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Secondary */
     color: #544A62;
 }
-
 #faqP {
     font-family: 'Nunito';
     font-style: normal;
