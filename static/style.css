@@ -774,7 +774,7 @@ frame8 {
     /* beacon logo */
 
     width: 36.5px;
-    height: 33.89px;
+    height: 36.5px;
 
 
     /* Inside auto layout */
@@ -1007,4 +1007,12 @@ frame8 {
     /* or 42px */
 
     color: #330080;
+}
+#templeRight{
+    width: 50px;
+    height: 50px;
+}
+#kukaiRight{
+    width: 50px;
+    height: 50px;
 }
