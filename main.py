@@ -246,12 +246,12 @@ def validate_sign():
 def index():
     return render_template("demo.html",nonce=session.get("nonce"))
 
-if __name__ == '__main__':
-    init_app(app,red)
-    logging.info("app init")
+#if __name__ == '__main__':
+init_app(app,red)
+logging.info("app init")
     #print(mode.IP)
     #print(mode.port)
     #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
-    app.run( host = mode.IP, port= mode.port, debug =True)
-    """,ssl_context='adhoc'"""
+app.run( host = mode.IP, port= mode.port, debug =True)
+""",ssl_context='adhoc'"""
 logging.info("testLogging")
