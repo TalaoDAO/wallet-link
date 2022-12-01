@@ -41,7 +41,7 @@ def create_payload (input, type) :
     
 
 
-app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/staticWallet-link'))
+app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/static'))
 QRcode(app)
 app.secret_key ='miaou'
 
