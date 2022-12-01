@@ -246,8 +246,9 @@ def validate_sign():
 def index():
     return render_template("demo.html",nonce=session.get("nonce"))"""
 
-@app.route('/wallet-link/static/<filename>')
+@app.route('/wallet-link/static/<filename>',methods=['GET'])
 def serve_static(filename):
+    logging.info(filename)
     return send_file('./static/'+filename, attachment_filename=filename)
 
 if __name__ == '__main__':
