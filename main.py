@@ -73,6 +73,7 @@ def init_app(app,red) :
     return
 
 def dapp_wallet(red):
+    logging.info("dapp_wallet")
     if request.method == 'GET' :
         session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(6))
@@ -247,6 +248,7 @@ def index():
 
 if __name__ == '__main__':
     init_app(app,red)
+    logging.info("app init")
     #print(mode.IP)
     #print(mode.port)
     #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
