@@ -249,7 +249,7 @@ def index():
 @app.route('/wallet-link/static/<filename>',methods=['GET'])
 def serve_static(filename):
     logging.info(filename)
-    return send_file('./static/'+filename, attachment_filename=filename)
+    return send_file('./static/'+filename, download_name=filename)
 
 if __name__ == '__main__':
     logging.info("app init")
