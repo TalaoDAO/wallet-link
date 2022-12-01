@@ -12,10 +12,10 @@ class currentMode() :
 		
 		# En Prod chez AWS 
 		if self.myenv == 'aws':
-			self.yoti_pem_file = '/home/admin/issuer/key.pem'
-			self.sys_path = '/home/admin'
+			#self.yoti_pem_file = '/home/admin/issuer/key.pem'
+			#self.sys_path = '/home/admin'
 			self.server = 'https://talao.co/'
-			self.IP = '3.130.207.31' 
+			self.IP = '18.190.21.227' 
 		elif self.myenv == 'thierry' :
 			self.server = 'http://' + extract_ip() + ':5000/'
 			self.IP = extract_ip()
