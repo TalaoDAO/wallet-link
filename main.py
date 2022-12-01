@@ -254,4 +254,4 @@ if __name__ == '__main__':
     #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
-    
+logging.info("testLogging")
