@@ -3,7 +3,7 @@ from web3 import Web3
 from hexbytes import HexBytes
 from eth_account.messages import encode_defunct,defunct_hash_message
 import hashlib
-from flask import Flask,render_template, request, jsonify, redirect,session, Response
+from flask import Flask,render_template, request, jsonify, redirect,session, Response,send_file
 from flask_mobility import Mobility
 import uuid 
 from flask_qrcode import QRcode
@@ -242,9 +242,13 @@ def validate_sign():
         except ValueError:
             pass
             return({'status':'error'}),403
-@app.route('/')
+"""@app.route('/')
 def index():
-    return render_template("demo.html",nonce=session.get("nonce"))
+    return render_template("demo.html",nonce=session.get("nonce"))"""
+
+@app.route('/wallet-link/static/<filename>')
+def serve_static(filename):
+    return send_file('./static/'+filename, attachment_filename=filename)
 
 if __name__ == '__main__':
     logging.info("app init")
