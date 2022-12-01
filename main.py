@@ -86,15 +86,15 @@ def dapp_wallet(red):
                 return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")"""
-        if(request.args['blockchain']=="tezos"):
+        #if(request.args['blockchain']=="tezos"):
 
-            session['blockchain']="tez"
-            logging.info(session.get('blockchain'))
-            session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-            if(request.MOBILE==False):
-                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
-            else:
-                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+            #session['blockchain']="tez"
+        logging.info(session.get('blockchain'))
+        session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
+        if(request.MOBILE==False):
+            return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+        else:
+            return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
 
             
     else :
