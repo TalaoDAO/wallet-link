@@ -62,7 +62,7 @@ def char2Bytes(text):
 
 
 def init_app(app,red) :
-    app.add_url_rule('/wallet-link/dapp',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
+    app.add_url_rule('/wallet-link',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
     app.add_url_rule('/wallet-link/validate_sign' , view_func=validate_sign,methods=['GET'])
 
     # credential issuer routes
