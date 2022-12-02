@@ -88,7 +88,7 @@ def dapp_wallet(red):
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")"""
         #if(request.args['blockchain']=="tezos"):
 
-            #session['blockchain']="tez"
+        session['blockchain']="tez"
         logging.info(session.get('blockchain'))
         session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
         if(request.MOBILE==False):
@@ -253,12 +253,12 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
-    
+    init_app(app,red)
+
     #print(mode.IP)
     #print(mode.port)
     #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
-init_app(app,red)
 
 logging.info("testLogging")

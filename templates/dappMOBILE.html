@@ -219,47 +219,10 @@
 
 
 
-  <div id="logger-output" hidden></div>
   <script src="https://cdn.jsdelivr.net/npm/@taquito/utils"></script>
   <script>
     var wallet = ""
-    class MyLogger {
-      constructor() { }
 
-      debug(name, method, ...args) {
-        const el = document.createElement('div')
-        el.innerText = `'debug' ${name} ${method} ${args.join(', ')}`
-        el.setAttribute('style', 'background-color: blue')
-        document.getElementById('logger-output').appendChild(el)
-      }
-
-      log(name, method, ...args) {
-        const el = document.createElement('div')
-        el.innerText = `'log' ${name} ${method} ${args.join(', ')}`
-        el.setAttribute('style', 'background-color: green')
-        document.getElementById('logger-output').appendChild(el)
-      }
-
-      warn(name, method, ...args) {
-        const el = document.createElement('div')
-        el.innerText = `'warn' ${name} ${method} ${args.join(', ')}`
-        el.setAttribute('style', 'background-color: orange')
-        document.getElementById('logger-output').appendChild(el)
-      }
-
-      error(name, method, ...args) {
-        const el = document.createElement('div')
-        el.innerText = `'error' ${name} ${method} ${args.join(', ')}`
-        el.setAttribute('style', 'background-color: red')
-        document.getElementById('logger-output').appendChild(el)
-      }
-    }
-
-    const x = new MyLogger()
-
-    beacon.setLogger(x);
-
-    //document.getElementById('altme').style.visibility = 'hidden';
 
 
     // Initiate DAppClient
@@ -290,31 +253,7 @@
     }
     updateActiveAccount()
 
-    const delegate = () => {
-      client.requestOperation({
-        operationDetails: [
-          {
-            kind: beacon.TezosOperationType.DELEGATION,
-            delegate: 'tz1MJx9vhaNRSimcuXPK2rW4fLccQnDAnVKJ'
-          }
-        ]
-      })
-    }
-
-    // Initiate a delegate operation
-    const sendToSelf = () => {
-      return client.getActiveAccount().then((activeAccount) => {
-        return client.requestOperation({
-          operationDetails: [
-            {
-              kind: beacon.TezosOperationType.TRANSACTION,
-              destination: activeAccount?.address ?? '',
-              amount: '1'
-            }
-          ]
-        })
-      })
-    }
+    
 
     signPayloadOwning = async () => {
       const signature = await client.requestSignPayload({
@@ -343,38 +282,7 @@
       })
 
     }
-    // send contract call
-    const sendContractCall = () => {
-      return client.getActiveAccount().then(async (activeAccount) => {
-        const TZ_BUTTON_COLORS_CONTRACT = 'KT1RPW5kTX6WFxg8JK34rGEU24gqEEudyfvz'
-        const tokenId = '925'
-
-        // Setting the color of TzButton is only possible if you are currently the leader and own a color
-        // So this call will likely fail
-        try {
-          const result = await client.requestOperation({
-            operationDetails: [
-              {
-                kind: beacon.TezosOperationType.TRANSACTION,
-                amount: '0',
-                destination: TZ_BUTTON_COLORS_CONTRACT,
-                parameters: {
-                  entrypoint: 'set_color',
-                  value: {
-                    int: tokenId
-                  }
-                }
-              }
-            ]
-          })
-
-          console.log(result)
-        } catch (error) {
-          console.log(`The contract call failed and the following error was returned:`, error)
-        }
-      })
-    }
-
+   
     // Initiate a permission request
     const requestPermission = (callback) => {
       client
