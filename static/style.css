@@ -1046,7 +1046,7 @@ body {
     color: #4b4c4d;
 }
 
-.footer-clean h3,a {
+.footer-clean h3,a,p {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -1056,6 +1056,7 @@ body {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    font-weight: bolder;
 }
 
 footer {
