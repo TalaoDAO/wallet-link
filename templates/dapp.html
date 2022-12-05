@@ -229,9 +229,7 @@
       name: 'Altme', // Name of the DApp,
       disclaimerText: '',
       errorMessages: {
-        KT1RPW5kTX6WFxg8JK34rGEU24gqEEudyfvz: {
-          NOT_OWNER: 'You are not the owner of this token.'
-        }
+        
       }
 
     })
@@ -264,7 +262,7 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
-          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature } }).then((res) => {
+          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature ,address:activeAccount.address} }).then((res) => {
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {

@@ -21,12 +21,7 @@ logging.basicConfig(level=logging.INFO)
 issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_did = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du"
 issuer_vm = "did:tz:tz1NyjrTUNxDpPaqNZ84ipGELAcTWYg6s5Du#blockchainAccountId"
-w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/f2be8a3bf04d4a528eb416566f7b5ad6"))
-
-"""mesage= encode_defunct(text="6875972781")
-
-address = w3.eth.account.recover_message(mesage,signature=HexBytes("0xe277c9ce2fc17d3c6903410a7886cb87f18a064e7fc3e2f1e23df223b01b48371d5a5b37b6f217e0b5431a0a158023a0ee2184a422f68a82ce4b57d5d71252511c"))
-"""
+w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
 
 def create_payload (input, type) :
   formattedInput = ' '.join([
@@ -43,7 +38,7 @@ def create_payload (input, type) :
 
 app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/static'))
 QRcode(app)
-app.secret_key ='miaou'
+app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 
 Mobility(app)
 
@@ -82,7 +77,7 @@ def dapp_wallet(red):
         """if(request.args['blockchain']=="ethereum"):
             session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
             session['blockchain']="eth"     
-            if(request.MOBILE==False):
+            if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")"""
@@ -91,7 +86,7 @@ def dapp_wallet(red):
         session['blockchain']="tez"
         logging.info(session.get('blockchain'))
         session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-        if(request.MOBILE==False):
+        if not request.MOBILE:
             return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
         else:
             return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
@@ -121,11 +116,9 @@ def wallet_link_qrcode(mode) :
 
 
 # route '/wallet-link/endpoint/
-async def wallet_link_endpoint(id, red):
-    credential=None
+async def wallet_link_endpoint(id, red):  
     
     credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
-    
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -189,9 +182,7 @@ def wallet_link_followup():
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
     # a voir si utile ???
-    #print(request.args.get('message', 'No message'))
     return render_template("validation.html")
-    return jsonify (request.args.get('message', 'No message'))
 
 
 # server event push for user agent EventSource
@@ -210,41 +201,31 @@ def wallet_link_stream(red):
 
 
 def validate_sign():
-    #print("validateSign")
-    #print(request.headers.get('signature'))
-    #print('Tezos signed message '+session.get("nonce"))
-    #print("nonce "+session.get('nonce'))
-    #print("payload "+str(encode_defunct(text=session.get('nonce'))))
-    #print(session.get('cryptoWalletPayload'))
-    #print('signature '+request.headers.get('signature'))
     if(session.get('blockchain')=="eth"):
         try:
-            #print("verifying ethereum")
+            logging.info("verifying ethereum")
             message_hash = defunct_hash_message(text=session.get('nonce'))
             address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
-            #print(address)
+            logging.info("address verified : " +address)
             session["addressVerified"]=address
-            #print("address verified "+session["addressVerified"])
-
-            
             return({'status':'ok'}),200
         except ValueError:
             pass
             return({'status':'error'}),403
     if(session.get('blockchain')=="tez"):
         try:
-            #print("verifying tezos")
-            #print(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
-            #session.get('cryptoWalletPayload')))
-            #print("verified :" +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
+            logging.info("verifying tezos")
+            logging.info(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
+            session.get('cryptoWalletPayload')))
+            logging.info("address verified : " +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
+            if(key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()!=request.headers.get('address')):
+                return({'status':'error'}),403
             session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
             return({'status':'ok'}),200
         except ValueError:
             pass
             return({'status':'error'}),403
-"""@app.route('/')
-def index():
-    return render_template("demo.html",nonce=session.get("nonce"))"""
+
 
 @app.route('/wallet-link/static/<filename>',methods=['GET'])
 def serve_static(filename):
@@ -253,12 +234,7 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
-
-
-    #print(mode.IP)
-    #print(mode.port)
-    #app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
+    init_app(app,red)
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
-init_app(app,red)
 logging.info("testLogging")
