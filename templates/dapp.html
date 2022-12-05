@@ -2,7 +2,11 @@
 <html>
 
 <head>
-
+  <link rel = "stylesheet" type= "text/css" href= "{{ url_for('static', filename='bootstrap.min.css') }}">
+<link rel = "stylesheet" type= "text/css" href= "{{ url_for('static', filename='Footer-Clean.css') }}">
+<link rel = "stylesheet" type= "text/css" href= "{{ url_for('static', filename='fontawesome/css/all.css') }}"> 
+<link rel = "stylesheet" type= "text/css" href= "{{ url_for('static', filename='typeahead.css') }}">
+<link rel='stylesheet' href="{{ url_for('static', filename='fontawesome/css/fontawesome.min.css')}}">
   <script> window.beaconSdkDebugEnabled = true    </script>
   <script src="/wallet-link/static/walletbeacon.min.js"></script>
   <link rel="stylesheet" href="/wallet-link/static/style.css">
@@ -214,12 +218,54 @@
 
   </div>
 
+  <div class="footer-clean">
+    <footer>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div hidden class="col item">
+
+            <h3>Services</h3>
+            <ul>
+              <li><a href="https://talao.io">Consulting</a></li>
+              <li><a href="https://talao.io">Development</a></li>
+            </ul>
+          </div>
+          <div class="col item">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="https://talao.io">Consulting</a></li>
+              <li><a href="https://talao.io">Development</a></li>
+            </ul>
+          </div>
+
+          <div class="col item">
+            <h3>About</h3>
+            <ul>
+              <!--   <li><a href="/company">Company</a></li> -->
+              <li><a href="/sandbox/md_file?file=privacy">Privacy Policy</a></li>
+              <li><a href="/sandbox/md_file?file=terms_and_conditions">Terms & Conditions</a></li>
+
+            </ul>
+          </div>
+
+          <div class="col item social"><a href="https://wwww.facebook.com/TalaoDAO/"><i
+                class="fab fa-facebook"></i></a><a href="https://twitter.com/Talao_io"><i
+                class="fab fa-twitter"></i></a><a href="https://t.me/TalaoCommunity"><i
+                class="fab fa-telegram"></i></a><a href="mailto:relay@talao.io"><i class="fas fa-envelope"></i></a>
+            <p class="copyright">© Talao 2022 Version : {{Version}}</p>
+            <!--    <p class="copyright">Created : {{Created}}</p> -->
+          </div>
+
+        </div>
+      </div>
+    </footer>
+  </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/@taquito/utils"></script>
   <script>
     var wallet = ""
-    
+
 
     //document.getElementById('altme').style.visibility = 'hidden';
 
@@ -229,7 +275,7 @@
       name: 'Altme', // Name of the DApp,
       disclaimerText: '',
       errorMessages: {
-        
+
       }
 
     })
@@ -262,7 +308,7 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
-          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature ,address:activeAccount.address} }).then((res) => {
+          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
