@@ -1283,3 +1283,6 @@ nav a {
     width: 18px;
     height: 18px;
 }
+.footer-02__text a{
+    text-decoration: none;
+}
