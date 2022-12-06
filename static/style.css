@@ -33,6 +33,8 @@
     flex: none;
     order: 1;
     flex-grow: 1;
+    position: relative;
+    top: 90px;
 }
 
 #titles {
@@ -67,6 +69,7 @@
     flex: none;
     order: 1;
     flex-grow: 1;
+
 }
 
 #leftBox {
@@ -861,7 +864,7 @@ frame8 {
     align-self: stretch;
     flex-grow: 0;
     position: relative;
-    top:30px;
+    top: 30px;
 }
 
 #ssi {
@@ -977,6 +980,8 @@ frame8 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    top: 50px;
 }
 
 #faq {
@@ -1051,11 +1056,7 @@ body {
     color: #4b4c4d;
 }
 
-.footer-clean h3,
-a,
-p {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
+
 
 .container {
     width: 100%;
@@ -1119,4 +1120,74 @@ footer {
     color: inherit;
     text-decoration: none;
     opacity: 0.8;
+}
+
+.nav-02 {
+    position: fixed;
+    z-index: 100;
+    left: 0px;
+    top: 0px;
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    height: 70px;
+
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.nav-02__box {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 1170px;
+    justify-content: space-between;
+}
+
+.nav-02__list {
+    display: flex;
+    flex-direction: row;
+    width: 360px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-02__list_wrapper {
+    align-items: center;
+    display: flex;
+}
+.contactSpan{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2e0072;
+    width: 120px;
+    height: 44.8px;
+    border-radius: 4px;
+}
+.contactP{
+    color: white;
+}
+nav{
+    font-family: 'Nunito';
+    font-size: 14px;
+    font-weight: 700;
+    
+}
+nav a{
+    text-decoration: none;
+    color: #303030;
+}
+.nav-02__item:hover{
+    transform: translateY(-2px);
+    transition: color .2s ease,background-color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+}
+#faqNav{
+    position: relative;
+left: 14px;
 }
