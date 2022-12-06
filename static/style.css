@@ -976,10 +976,10 @@ frame8 {
 }
 
 #superFaq {
-    width: 100%;
+    width: 1170px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
     top: 50px;
 }
@@ -1213,4 +1213,11 @@ nav a {
 #newsNav {
     position: relative;
     right: 1px;
+}
+
+#page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
