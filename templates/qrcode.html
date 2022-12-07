@@ -1,70 +1,206 @@
-<!DOCTYPE html>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 
 <head>
+  <!--
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css'">
+  <link rel="stylesheet" type="text/css" href="/static/Footer-Clean.css">
+  <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.css">
+  <link rel="stylesheet" type="text/css" href="/static/typeahead.css">
+  <link rel='stylesheet' href="/static/fontawesome/css/fontawesome.min.css">-->
+  <script> window.beaconSdkDebugEnabled = true    </script>
+  <script src="/wallet-link/static/walletbeacon.min.js"></script>
   <link rel="stylesheet" href="/wallet-link/static/style.css">
 </head>
 
 <body>
+  <div id="page">
+    <div id="large">
+      <div id="body">
+        <nav class="js-nav nav-02  nav-02--sticky  nav-02--sticky--white  ">
+          <div class="nav-02__box">
+            <div class="nav-02__logo"><a class="nav-02__link" href="https://altme.io/" target="_self">
+                <img loading="lazy" class="nav-02__logo_img"
+                  src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
+              </a></div>
 
+            <div class="nav-02__list_wrapper  ">
+              <div class="nav-02__list nav-02__list--desktop">
+                <div class="nav-02__item">
+                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
+                    target="_self">
+                    <p class="linkP"> Wallet features
+                    </p>
+                  </a>
+                </div>
+                <div class="nav-02__item" id="newsNav">
+                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#posts-05-876621"
+                    target="_self">
+                    <p class="linkP">News</p>
 
-  <div id="large">
-    <div id="body">
-      <header>
-        <a href="https://altme.io/"><div id="wrapperTop"><img id="logo" src="/wallet-link/static/Logo.png"></div></a>
-      </header>
+                  </a>
+                </div>
+                <div class="nav-02__item" id="roadmapNav">
+                  <a href="https://altme.io/#features-09-390941" target="_self">
+                    <p class="linkP">Roadmap</p>
 
-      <div id="bigBox">
-        <div id="titles">
-          <div id="title">
-            <p id="titleP">Add an identity to your crypto wallet ! </p>
-          </div>
-          <div id="textTop">
-            <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
-              wallet
-              app built on
-              Self-Sovereign Identity.</p>
-          </div>
+                  </a>
+                </div>
+                <div class="nav-02__item" id="faqNav">
+                  <a class="button   button--black-outline  button--empty " href="#superFaq" target="_self">
+                    <p class="linkP">FAQ</p>
+                  </a>
+                </div>
+                <div class="nav-02__item">
 
-
-
-        </div>
-        <div id="mainBox">
-          <div id="leftBox">
-            <div id="leftTop">
-              <div id="step1Div">
-                <p id="step1">Step 2 : Scan this QR code with Altme</p>
+                  <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
+                    data-cancel-payment-url="" class="button button--accent-bg "
+                    href="/cdn-cgi/l/email-protection#e094888985929299a0818c948d85ce898f" target="_blank">
+                    <div class="contactSpan">
+                      <p class="contactP">Contact</p>
+                    </div>
+                  </a>
+                </div>
               </div>
-              <div id="chooseDiv">
-                <p id="choose"></p>
-              </div>
-            </div>
-            <div id="leftMid">
-              <div>
-                <img id="qrcode" src="{{ qrcode(url) }}">
-              </div>
-            </div>
-            <div id="frame6">
-              <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information they
-                use across the web.</p>
 
 
             </div>
+
+          </div>
+
+        </nav>
+
+        <div id="bigBox">
+          <div id="titles">
+            <div id="title">
+              <p id="titleP">Add an identity to your crypto wallet ! </p>
+            </div>
+            <div id="textTop">
+              <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
+                wallet
+                app built on
+                Self-Sovereign Identity.</p>
+            </div>
+
 
 
           </div>
-          <div id="rightBox"> <img id="draw" src="/wallet-link/static/Illustration.png">
+          <div id="mainBox">
+            <div id="leftBox">
+              <div id="leftTop">
+                <div id="step1Div">
+                  <p id="step1">Step 2 : Scan this QR code with Altme</p>
+                </div>
+                <div id="chooseDiv">
+                  <p id="choose"></p>
+                </div>
+              </div>
+              <div id="leftMid">
+                <div>
+                  <img id="qrcode" src="{{ qrcode(url) }}">
+                </div>
+              </div>
+              <div id="frame6">
+                <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
+                  they
+                  use across the web.</p>
+
+
+              </div>
+
+
+            </div>
+            <div id="rightBox"> <img id="draw" src="/wallet-link/static/Illustration.png">
+            </div>
           </div>
+
         </div>
       </div>
     </div>
+    <div id="superFaq">
+      <div id="faq">
+        <p id="faqP">F.A.Q.</p>
+      </div>
+      <div class="question">
+        <p class="questionP">What is wallet-link application for ? </p>
+      </div>
+      <div class="answer">
+        <p class="answerP">Wallet-link enables you to associate a crypto address you own with your Altme wallet, and
+          therefore to associate this crypto address with some your data (for example identity data) when required.
+        </p>
+      </div>
+      <div class="question">
+        <p class="questionP"> Why link a crypto address with verifiable credentials ?</p>
+      </div>
+      <div class="answer">
+        <p class="answerP">More and more services require to present verifiable credentials, either to access them (a
+          KYC for example) or to benefit from commercial offers (like a discount). With wallet-link, you can continue to
+          use your crypto wallet to sign transactions and manage your tokens and NFTs, while taking advantage of the
+          Altme wallet to manage your identity data and present them, linked to your crypto address, when necessary.</p>
+      </div>
+      <div class="question">
+        <p class="questionP"> Do I need to disclose my private keys ?
+        </p>
+      </div>
+      <div class="answer">
+        <p class="answerP">No you don’t need to disclose any private keys. All you have to do is sign a transaction with
+          your crypto wallet in order to get the credential that proves you hold the private key of the crypto address.
+        </p>
+      </div>
+      <div class="question">
+        <p class="questionP"> What is Altme SSI wallet ?</p>
+      </div>
+      <div class="answer">
+        <p class="answerP">Altme is a digital wallet built on Self-Sovereign Identity (SSI) technology. With Altme, your
+          identity data are stored on your device and not on a central server, enabling better privacy and security.
+          Your data can’t be stolen or monetized without your consent.
+          Altme allows you to produce proof of identity from a KYC, without revealing your identity data: over-18 or
+          over-13 proof, nationality proof, etc. With wallet-link, you can for example associate your proof of majority
+          with a crypto address you own.</p>
+      </div>
+      <div class="question">
+        <p class="questionP">How do I get Altme SSI wallet ? </p>
+      </div>
+      <div class="answer">
+        <p class="answerP">Altme wallet is available on Android and IOS stores. </p>
+      </div>
+      <div class="question">
+        <p class="questionP">Which crypto wallets can wallet-link be used with ?</p>
+      </div>
+      <div class="answer">
+        <p class="answerP"> Wallet-link can be used with all major crypto wallets compatible with Tezos and Ethereum
+          blockchain.</p>
+      </div>
+    </div>
+    <!--<img id="templeRight" src="/wallet-link/static/temple-wallet.png"><img id="kukaiRight" src="/wallet-link/static/kukai.png">-->
+
   </div>
 
+  <div class="bg-white-color ">
+    <footer class="footer-02" id="footer">
+      <div class="container">
+        <div class="footer-02__wrapper">
+          <div class="footer-02__text content_box">
+            <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
+                target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
+            <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
+          </div>
+          <div class="social-buttons  ">
 
-  
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--twitter"
+                href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
+                  alt="twitter icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--linkedin"
+                href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
+                  class="social-buttons__icon" alt="linkedin icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
 
-
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
   <script>
     var source = new EventSource('/wallet-link/stream');
     source.onmessage = function (event) {
@@ -75,8 +211,6 @@
       }
     };
   </script>
-
-
 </body>
 
 </html>

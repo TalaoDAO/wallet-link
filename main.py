@@ -23,6 +23,28 @@ issuer_vm = "did:web:app.altme.io:issuer#key-1"
 issuer_did = "did:web:app.altme.io:issuer"
 w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
 
+app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/static'))
+QRcode(app)
+app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
+
+Mobility(app)
+
+characters = string.digits
+
+#init environnement variable
+myenv = os.getenv('MYENV')
+if not myenv :
+   myenv='thierry'
+
+mode = environment.currentMode(myenv)
+
+red= redis.Redis(host='127.0.0.1', port=6379, db=0)
+
+
+def char2Bytes(text):
+    return text.encode('utf-8').hex()
+
+
 def create_payload (input, type) :
   formattedInput = ' '.join([
     'Tezos Signed Message:',
@@ -33,27 +55,6 @@ def create_payload (input, type) :
   sep = '05' if type == 'MICHELINE'  else  '03'
   bytes = char2Bytes(formattedInput)
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
-    
-
-
-app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/static'))
-QRcode(app)
-app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
-
-Mobility(app)
-
-characters = string.digits
-
-
-#init environnement variable
-myenv = os.getenv('MYENV')
-if not myenv :
-   myenv='thierry'
-mode = environment.currentMode(myenv)
-
-red= redis.Redis(host='127.0.0.1', port=6379, db=0)
-def char2Bytes(text):
-    return text.encode('utf-8').hex()
 
 
 def init_app(app,red) :
@@ -66,6 +67,7 @@ def init_app(app,red) :
     app.add_url_rule('/wallet-link/stream',  view_func=wallet_link_stream, methods = ['GET', 'POST'], defaults={'red' : red})
     app.add_url_rule('/wallet-link/followup',  view_func=wallet_link_followup, methods = ['GET'])
     return
+
 
 def dapp_wallet(red):
     logging.info("dapp_wallet")
@@ -199,7 +201,6 @@ def wallet_link_stream(red):
     return Response(event_stream(red), headers=headers)
         
 
-
 def validate_sign():
     if(session.get('blockchain')=="eth"):
         try:
@@ -219,13 +220,17 @@ def validate_sign():
             session.get('cryptoWalletPayload')))
             logging.info("address verified : " +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
             if(key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()!=request.headers.get('address')):
-                return({'status':'error'}),403
+                return redirect (mode.server+'wallet-link/error',403)
             session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
             return({'status':'ok'}),200
         except ValueError:
             pass
-            return({'status':'error'}),403
+            return redirect (mode.server+'wallet-link/error',403)
 
+@app.route('/wallet-link/error',methods=['GET'])
+def error():
+    logging.info(error)
+    return render_template("error.html")
 
 @app.route('/wallet-link/static/<filename>',methods=['GET'])
 def serve_static(filename):
@@ -234,10 +239,10 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
-    
-    
+    init_app(app,red)
+
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
     
-init_app(app,red)
+
 logging.info("testLogging")
