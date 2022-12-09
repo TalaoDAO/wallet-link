@@ -2,41 +2,92 @@
 <html>
 
 <head>
-
+  <!--
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css'">
+  <link rel="stylesheet" type="text/css" href="/static/Footer-Clean.css">
+  <link rel="stylesheet" type="text/css" href="/static/fontawesome/css/all.css">
+  <link rel="stylesheet" type="text/css" href="/static/typeahead.css">
+  <link rel='stylesheet' href="/static/fontawesome/css/fontawesome.min.css">-->
   <script> window.beaconSdkDebugEnabled = true    </script>
   <script src="/wallet-link/static/walletbeacon.min.js"></script>
-  <link rel="stylesheet" href="/wallet-link/static/style.css">
+  <link rel="stylesheet" href="/wallet-link/static/styleMobile.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
   <div id="page">
     <div id="large">
+      <div class="nav-02__list_wrapper  ">
+        <div class="nav-02__list nav-02__list--desktop">
+          <div class="nav-02__item">
+            <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
+              target="_self">
+              <p class="linkP"> Wallet features
+              </p>
+            </a>
+          </div>
+          <div class="nav-02__item" id="newsNav">
+            <a class="button   button--black-outline  button--empty " href="https://altme.io/#posts-05-876621"
+              target="_self">
+              <p class="linkP">News</p>
+
+            </a>
+          </div>
+          <div class="nav-02__item" id="roadmapNav">
+            <a href="https://altme.io/#features-09-390941" target="_self">
+              <p class="linkP">Roadmap</p>
+
+            </a>
+          </div>
+          <div class="nav-02__item" id="faqNav">
+            <a class="button   button--black-outline  button--empty " href="#superFaq" target="_self">
+              <p class="linkP">FAQent</p>
+            </a>
+          </div>
+          <div class="nav-02__item">
+
+            <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
+              data-cancel-payment-url="" class="button button--accent-bg "
+              href="/cdn-cgi/l/email-protection#e094888985929299a0818c948d85ce898f" target="_blank">
+              <div class="contactSpan">
+                <p class="contactP">Contact</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+      </div>
       <div id="body">
-        <header>
-          <a href="https://altme.io/">
-            <div id="wrapperTop"><img id="logo" src="/wallet-link/static/Logo.png"></div>
-          </a>
+        <div class="js-nav nav-02  nav-02--sticky  nav-02--sticky--white  ">
+          <div class="nav-02__box">
+            <div class="nav-02__logo">
+              <a class="nav-02__link" href="https://altme.io/" target="_self">
+                <img loading="lazy" class="nav-02__logo_img"
+                  src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
+              </a>
+            </div>
 
-          <p id="connectDesktop">Connect with your desktop</p>
 
-        </header>
+          </div>
+
+        </div>
 
         <div id="bigBox">
           <div id="titles">
             <div id="title">
-              <p id="titleP">Add an identity to your crypto wallet ! </p>
+              <p id="titleP">Add an identity layer to any wallet !  </p>
             </div>
             <div id="textTop">
-              <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
-                wallet
-                app built on
-                Self-Sovereign Identity.</p>
+              <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized wallet app built on Self-Sovereign Identity standard.</p>
             </div>
 
 
 
           </div>
           <div id="mainBox">
+            <div id="rightBox"> <img id="draw" src="/wallet-link/static/IllustrationTez.png">
+            </div>
             <div id="leftBox">
               <div id="leftTop">
                 <div id="step1Div">
@@ -56,30 +107,14 @@
                   </div>
                 </div>
                 <div id="frame11">
-                  <div id="frame10">
-                    <p id="popular">Popular</p>
-                  </div>
                   <div id="frame1">
-                    <button id="requestPermission" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/wallet-link/static/umami.jpg"></div>
-                            <div>
-                              <p class="walletText">Umami</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission2" class="transparent">
+                    <button id="requestPermission4" class="transparent">
                       <div class="box2">
                         <div class="underbox2">
                           <div class="frame2">
-                            <img id="templelogo" src="/wallet-link/static/temple-wallet.png">
+                            <img id="templelogo" src="/wallet-link/static/airgap.png">
 
-                            <p class="walletText">Temple Web Extension</p>
+                            <p class="walletText">Air Gap Wallet</p>
 
                           </div>
                           <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
@@ -95,19 +130,6 @@
                               <p class="walletText">Digital Art Autonomy
                               </p>
                             </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission4" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/wallet-link/static/airgap.png">
-
-                            <p class="walletText">Air Gap Wallet</p>
-
                           </div>
                           <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
                         </div>
@@ -139,6 +161,35 @@
                         </div>
                       </div>
                     </button>
+                    <button id="requestPermission2" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/wallet-link/static/temple-wallet.png">
+
+                            <p class="walletText">Temple Web Extension</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+
+
+
+                    <button id="requestPermission" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/wallet-link/static/umami.jpg"></div>
+                            <div>
+                              <p class="walletText">Umami</p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -152,8 +203,7 @@
 
 
             </div>
-            <div id="rightBox"> <img id="draw" src="/wallet-link/static/IllustrationTez.png">
-            </div>
+
           </div>
         </div>
       </div>
@@ -217,6 +267,31 @@
 
   </div>
 
+  <div class="bg-white-color ">
+    <footer class="footer-02" id="footer">
+      <div class="container">
+        <div class="footer-02__wrapper">
+          <div class="footer-02__text content_box">
+            <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
+                target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
+            <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
+          </div>
+          <div class="social-buttons  ">
+
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--twitter"
+                href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
+                  alt="twitter icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--linkedin"
+                href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
+                  class="social-buttons__icon" alt="linkedin icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/@taquito/utils"></script>
@@ -224,15 +299,15 @@
     var wallet = ""
 
 
+    //document.getElementById('altme').style.visibility = 'hidden';
+
 
     // Initiate DAppClient
     const client = beacon.getDAppClientInstance({
       name: 'Altme', // Name of the DApp,
       disclaimerText: '',
       errorMessages: {
-        KT1RPW5kTX6WFxg8JK34rGEU24gqEEudyfvz: {
-          NOT_OWNER: 'You are not the owner of this token.'
-        }
+
       }
 
     })
@@ -253,7 +328,6 @@
     }
     updateActiveAccount()
 
-    
 
     signPayloadOwning = async () => {
       const signature = await client.requestSignPayload({
@@ -266,7 +340,7 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
-          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature } }).then((res) => {
+          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
@@ -282,7 +356,7 @@
       })
 
     }
-   
+
     // Initiate a permission request
     const requestPermission = (callback) => {
       client

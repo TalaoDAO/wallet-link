@@ -239,10 +239,10 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
-    init_app(app,red)
+    
 
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
     
-
+init_app(app,red)
 logging.info("testLogging")
