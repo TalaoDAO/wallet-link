@@ -1477,6 +1477,14 @@ nav a {
 
 .inactiveQuestions {
     visibility: collapse;
+    height: 0px;
+    font-size: 0;
+}
+
+.inactiveQuestions *{
+    visibility: collapse;
+    height: 0px;
+    font-size: 0;
 }
 
 #youHaveQuestions {
@@ -1524,7 +1532,7 @@ nav a {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 32px;
+    padding: 16px;
     gap: 8px;
 
     width: 1128px;
@@ -1546,7 +1554,7 @@ nav a {
     position: relative;
     bottom: 4px;
     right: 6px;
-
+    margin: 18px;
 
 }
 

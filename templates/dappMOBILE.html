@@ -76,10 +76,11 @@
         <div id="bigBox">
           <div id="titles">
             <div id="title">
-              <p id="titleP">Add an identity layer to any wallet !  </p>
+              <p id="titleP">Add an identity layer to any wallet ! </p>
             </div>
             <div id="textTop">
-              <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized wallet app built on Self-Sovereign Identity standard.</p>
+              <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
+                wallet app built on Self-Sovereign Identity standard.</p>
             </div>
 
 
@@ -209,59 +210,135 @@
       </div>
     </div>
     <div id="superFaq">
-      <div id="faq">
-        <p id="faqP">F.A.Q.</p>
+      <p id="youHaveQuestions">You have questions ?
+        We have answers.</p>
+      <div id="underFrame19">
+        <button id="buttonGeneral" class="buttonFAQ">
+          <div id="divButtonGeneral" class="activeButtonFAQ">
+            <p id="frame16P">General</p>
+          </div>
+        </button>
+        <button id="buttonSecurity" class="buttonFAQ">
+          <div id="divButtonSecurity" class="inactiveButtonFAQ">
+            <p id="frame17P">Security</p>
+          </div>
+        </button>
+        <button id="buttonSSI" class="buttonFAQ">
+          <div id="divButtonSSI" class="inactiveButtonFAQ">
+            <p id="frame18P">SSI</p>
+          </div>
+        </button>
+
+        <!-- <div id="frame19"></div>-->
       </div>
-      <div class="question">
-        <p class="questionP">What is wallet-link application for ? </p>
+      <div id="generalQuestions" class="activeQuestions">
+        <div id="question1" class="superQuestions">
+          <div class="question">
+            <p class="questionP">What is wallet-link application for ? </p>
+            <button id="showAnswer1" class="showAnswerButton"><img id="arrow1" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+          </div>
+
+          <p class="inactiveAnswer" id="answer1">Wallet-link enables you to associate a crypto address you own with
+            your Altme wallet, and
+            therefore to associate this crypto address with some your data (for example identity data) when required.
+          </p>
+
+        </div>
+        <div id="question2" class="superQuestions">
+          <div class="question">
+            <p class="questionP">Why link a crypto address with verifiable credentials ?</p>
+            <button id="showAnswer2" class="showAnswerButton"><img id="arrow2" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+
+          </div>
+
+          <p class="inactiveAnswer" id="answer2">More and more services require to present verifiable credentials,
+            either to access them
+            (a
+            KYC for example) or to benefit from commercial offers (like a discount). With wallet-link, you can
+            continue
+            to
+            use your crypto wallet to sign transactions and manage your tokens and NFTs, while taking advantage of the
+            Altme wallet to manage your identity data and present them, linked to your crypto address, when necessary.
+          </p>
+
+        </div>
+
+
       </div>
-      <div class="answer">
-        <p class="answerP">Wallet-link enables you to associate a crypto address you own with your Altme wallet, and
-          therefore to associate this crypto address with some your data (for example identity data) when required.
-        </p>
+      <div id="securityQuestions" class="inactiveQuestions">
+        <div id="question3" class="superQuestions">
+          <div class="question">
+            <p class="questionP">Do I need to disclose my private keys ? </p>
+            <button id="showAnswer3" class="showAnswerButton"><img id="arrow3" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+          </div>
+
+          <p class="inactiveAnswer" id="answer3">No you don’t need to disclose any private keys. All you have to do is
+            sign a transaction
+            with
+            your crypto wallet in order to get the credential that proves you hold the private key of the crypto
+            address.
+          </p>
+
+        </div>
+        <div id="question4" class="superQuestions">
+          <div class="question">
+            <p class="questionP">What is Altme SSI wallet ?</p>
+            <button id="showAnswer4" class="showAnswerButton"><img id="arrow4" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+
+          </div>
+
+          <p class="inactiveAnswer" id="answer4">Altme is a digital wallet built on Self-Sovereign Identity (SSI)
+            technology. With Altme,
+            your
+            identity data are stored on your device and not on a central server, enabling better privacy and security.
+            Your data can’t be stolen or monetized without your consent.
+            Altme allows you to produce proof of identity from a KYC, without revealing your identity data: over-18 or
+            over-13 proof, nationality proof, etc. With wallet-link, you can for example associate your proof of
+            majority
+            with a crypto address you own.
+          </p>
+
+        </div>
+
+
       </div>
-      <div class="question">
-        <p class="questionP"> Why link a crypto address with verifiable credentials ?</p>
+      <div id="SSIQuestions" class="inactiveQuestions">
+        <div id="question5" class="superQuestions">
+          <div class="question">
+            <p class="questionP">How do I get Altme SSI wallet ? </p>
+            <button id="showAnswer5" class="showAnswerButton"><img id="arrow5" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+          </div>
+
+          <p class="inactiveAnswer" id="answer5">Altme wallet is available on Android and IOS stores.
+          </p>
+
+        </div>
+        <div id="question6" class="superQuestions">
+          <div class="question">
+            <p class="questionP">Which crypto wallets can wallet-link be used with ?</p>
+            <button id="showAnswer6" class="showAnswerButton"><img id="arrow6" class="arrows"
+                src="/wallet-link/static/arrow-circle-down.png"></button>
+
+          </div>
+
+          <p class="inactiveAnswer" id="answer6">Wallet-link can be used with all major crypto wallets compatible with
+            Tezos and Ethereum
+            blockchain.
+          </p>
+
+        </div>
+
+
       </div>
-      <div class="answer">
-        <p class="answerP">More and more services require to present verifiable credentials, either to access them (a
-          KYC for example) or to benefit from commercial offers (like a discount). With wallet-link, you can continue to
-          use your crypto wallet to sign transactions and manage your tokens and NFTs, while taking advantage of the
-          Altme wallet to manage your identity data and present them, linked to your crypto address, when necessary.</p>
-      </div>
-      <div class="question">
-        <p class="questionP"> Do I need to disclose my private keys ?
-        </p>
-      </div>
-      <div class="answer">
-        <p class="answerP">No you don’t need to disclose any private keys. All you have to do is sign a transaction with
-          your crypto wallet in order to get the credential that proves you hold the private key of the crypto address.
-        </p>
-      </div>
-      <div class="question">
-        <p class="questionP"> What is Altme SSI wallet ?</p>
-      </div>
-      <div class="answer">
-        <p class="answerP">Altme is a digital wallet built on Self-Sovereign Identity (SSI) technology. With Altme, your
-          identity data are stored on your device and not on a central server, enabling better privacy and security.
-          Your data can’t be stolen or monetized without your consent.
-          Altme allows you to produce proof of identity from a KYC, without revealing your identity data: over-18 or
-          over-13 proof, nationality proof, etc. With wallet-link, you can for example associate your proof of majority
-          with a crypto address you own.</p>
-      </div>
-      <div class="question">
-        <p class="questionP">How do I get Altme SSI wallet ? </p>
-      </div>
-      <div class="answer">
-        <p class="answerP">Altme wallet is available on Android and IOS stores. </p>
-      </div>
-      <div class="question">
-        <p class="questionP">Which crypto wallets can wallet-link be used with ?</p>
-      </div>
-      <div class="answer">
-        <p class="answerP"> Wallet-link can be used with all major crypto wallets compatible with Tezos and Ethereum
-          blockchain.</p>
-      </div>
+
+
+
+
     </div>
     <!--<img id="templeRight" src="/wallet-link/static/temple-wallet.png"><img id="kukaiRight" src="/wallet-link/static/kukai.png">-->
 
@@ -398,6 +475,102 @@
     })
     document.getElementById('requestPermission6').addEventListener('click', () => {
       requestPermission()
+    })
+    document.getElementById('buttonGeneral').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "activeQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+    })
+    document.getElementById('buttonSecurity').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "activeQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+    })
+    document.getElementById('buttonSSI').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "activeQuestions");
+    })
+    document.getElementById('showAnswer1').addEventListener('click', () => {
+      console.log(document.getElementById('answer1').getAttribute("class"))
+      if (document.getElementById('answer1').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer1').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow1').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer1').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer1').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow1').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer2').addEventListener('click', () => {
+      console.log(document.getElementById('answer2').getAttribute("class"))
+      if (document.getElementById('answer2').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer2').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow2').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer2').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer2').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow2').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer3').addEventListener('click', () => {
+      console.log(document.getElementById('answer3').getAttribute("class"))
+      if (document.getElementById('answer3').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer3').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow3').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer3').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer3').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow3').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer4').addEventListener('click', () => {
+      console.log(document.getElementById('answer4').getAttribute("class"))
+      if (document.getElementById('answer4').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer4').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow4').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer4').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer4').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow4').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer5').addEventListener('click', () => {
+      console.log(document.getElementById('answer5').getAttribute("class"))
+      if (document.getElementById('answer5').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer5').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow5').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer5').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer5').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow5').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer6').addEventListener('click', () => {
+      console.log(document.getElementById('answer6').getAttribute("class"))
+      if (document.getElementById('answer6').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer6').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow6').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer6').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer6').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow6').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
     })
   </script>
 
