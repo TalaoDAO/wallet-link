@@ -1057,6 +1057,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .nav-02__box {
@@ -1069,9 +1070,24 @@ footer {
 
 .nav-02__list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
+    z-index: 120;
+    position: absolute;
+    top: 90px;
+    width: 100%;
+    background-color: white;
+    gap: 15px;
+}
+
+.nav-02__link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-left: 15px;
 }
 
 .nav-02__list_wrapper {
@@ -1081,6 +1097,7 @@ footer {
 }
 
 .contactSpan {
+    min-width: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1113,24 +1130,13 @@ nav a {
     color: #6600FF;
 }
 
-#faqNav {
-    position: relative;
-    left: 14.5px;
-}
+#faqNav {}
 
-.linkP:hover {
-    color: #6600FF;
-}
 
-#roadmapNav {
-    position: relative;
-    left: 7px;
-}
 
-#newsNav {
-    position: relative;
-    right: 1px;
-}
+#roadmapNav {}
+
+#newsNav {}
 
 #page {
     display: flex;
@@ -1143,32 +1149,36 @@ nav a {
     width: 100%;
     background-color: white;
     position: relative;
-    top: 150px;
+    top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 200px;
 }
 
 .footer-02 {
     display: flex;
     flex-direction: column;
+
 }
 
 .social-buttons {
     display: flex;
     flex-direction: row;
 
-    justify-content: space-around;
+    justify-content: flex-start;
     opacity: 0.7;
     position: relative;
     top: 2px;
+    width: 330px;
+    height: 24.33px;
 }
 
 .footer-02__wrapper {
     display: flex;
-    flex-direction: row;
-
+    flex-direction: column;
+    height: 120px;
     justify-content: space-between;
 
 }
@@ -1187,16 +1197,15 @@ nav a {
 
 #line1Footer {
     margin: 0;
-
+    width: 330px;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 26px;
 
     /* or 160% */
-    display: flex;
-    align-items: center;
+
 
     color: rgba(61, 61, 61, 0.7);
 
@@ -1212,10 +1221,13 @@ nav a {
     margin: 0;
 }
 
-.social-buttons__icon {}
+.social-buttons__icon {
+    width: 18px;
+    opacity: 0.7;
+}
 
 .footer-02__text a {
-    color: #3d3d3d;
+    color: rgba(61, 61, 61, 0.7);
 }
 
 #underFrame19 {
@@ -1380,14 +1392,14 @@ nav a {
 
 .inactiveQuestions {
     visibility: collapse;
-    font-size: 0;
     height: 0px;
+    font-size: 0;
 }
 
-.inactiveQuestions * {
+.inactiveQuestions #text{
     visibility: collapse;
-    font-size: 0;
     height: 0px;
+    font-size: 0;
 }
 
 #youHaveQuestions {
@@ -1415,9 +1427,17 @@ nav a {
     margin: 32px;
 }
 
-#SSIQuestions {}
+#SSIQuestions {
+    position: relative;
+    bottom: 80px;
 
-#securityQuestions {}
+}
+
+#securityQuestions {
+    position: relative;
+    bottom: 40px;
+
+}
 
 .superQuestions {
     box-sizing: border-box;
@@ -1478,4 +1498,108 @@ nav a {
     visibility: collapse;
     width: 1128px;
     font-size: 0;
+}
+.inactiveAnswer p{
+    visibility: collapse;
+    width: 1128px;
+    font-size: 0;
+}
+.inactiveQuestions p{
+    visibility: collapse;
+    width: 1128px;
+    font-size: 0;
+}
+/*#buttonMenuLogo {
+    width: 12px;
+    height: 2px;
+    background-color: black;
+    border-radius: 4px;
+}
+#buttonMenuLogo::after {
+    content: "";
+    width: 12px;
+    height: 2px;
+    background-color: black;
+    border-radius: 4px;
+    display: block;
+}
+#buttonMenuLogo::before {
+    content: "";
+    width: 12px;
+    height: 2px;
+    background-color: black;
+    border-radius: 4px;
+    display: block;
+}*/
+.imgButtonMenuInactive {
+    width: 12px;
+}
+
+.imgButtonMenuActive {
+    width: 9.1px;
+}
+
+#buttonMenuLogo {
+    width: 42px;
+    height: 44px;
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#buttonMenu {
+    background-color: transparent;
+    border: transparent;
+    position: relative;
+    right: 15px;
+    padding: 0;
+    width: 42px;
+
+}
+
+.menuActive {}
+
+.toHide {
+    height: 0px;
+    visibility: collapse;
+    font-size: 0;
+}
+
+.nav-02__list a {
+
+    font-family: 'Nunito';
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #303030;
+
+
+}
+
+.nav-02__item:hover p {
+    color: #6600FF;
+}
+
+.nav-02__item {
+    height: 44.8px;
+
+}
+
+#line1Footer #text {
+    visibility: visible;
+}
+
+.twitter {
+    position: relative;
+    left: 6px;
+    bottom: 1px;
+}
+
+.linkedin {
+    position: relative;
+    left: 18px;
+    bottom: 1px;
 }

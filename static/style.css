@@ -38,6 +38,8 @@
 }
 
 #titles {
+    position: relative;
+    top: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1010,7 +1012,9 @@ frame8 {
 
     /* Secondary */
     color: #544A62;
-
+    margin: 2px;
+    max-width: 970px;
+    text-align: left;
 
 }
 
@@ -1523,7 +1527,9 @@ nav a {
     bottom: 70px;
 
 }
-
+.superQuestions:hover {
+    background-color: #F1EDF7;
+}
 .superQuestions {
     box-sizing: border-box;
 
@@ -1532,9 +1538,9 @@ nav a {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: 16px;
-    gap: 8px;
-
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 30px;
     width: 1128px;
 
     background: #FFFFFF;
@@ -1559,8 +1565,7 @@ nav a {
 }
 
 .showAnswerButton {
-    width: 32px;
-    height: 32px;
+
     border-radius: 50px;
     background-color: transparent;
     border: transparent;

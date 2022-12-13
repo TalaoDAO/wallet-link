@@ -17,7 +17,7 @@
 <body>
   <div id="page">
     <div id="large">
-      <div class="nav-02__list_wrapper  ">
+      <div id="menuDiv" class="nav-02__list_wrapper  ">
         <div class="nav-02__list nav-02__list--desktop">
           <div class="nav-02__item">
             <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
@@ -41,7 +41,7 @@
           </div>
           <div class="nav-02__item" id="faqNav">
             <a class="button   button--black-outline  button--empty " href="#superFaq" target="_self">
-              <p class="linkP">FAQent</p>
+              <p class="linkP">FAQ</p>
             </a>
           </div>
           <div class="nav-02__item">
@@ -58,20 +58,26 @@
 
 
       </div>
-      <div id="body">
-        <div class="js-nav nav-02  nav-02--sticky  nav-02--sticky--white  ">
-          <div class="nav-02__box">
-            <div class="nav-02__logo">
-              <a class="nav-02__link" href="https://altme.io/" target="_self">
-                <img loading="lazy" class="nav-02__logo_img"
-                  src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
-              </a>
-            </div>
-
-
+      <div class="js-nav nav-02  nav-02--sticky  nav-02--sticky--white  ">
+        <div class="nav-02__box">
+          <div class="nav-02__logo">
+            <a class="nav-02__link" href="https://altme.io/" target="_self">
+              <img loading="lazy" class="nav-02__logo_img"
+                src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
+            </a>
           </div>
 
+
         </div>
+        <button id="buttonMenu">
+          <div id="buttonMenuLogo">
+            <img id="imageButtonMenu" class="imgButtonMenuInactive" src="/wallet-link/static/div.png">
+          </div>
+        </button>
+
+      </div>
+      <div id="body">
+
 
         <div id="bigBox">
           <div id="titles">
@@ -344,29 +350,29 @@
 
   </div>
 
-  <div class="bg-white-color ">
+  <div id="footer" class="bg-white-color ">
     <footer class="footer-02" id="footer">
-      <div class="container">
-        <div class="footer-02__wrapper">
-          <div class="footer-02__text content_box">
-            <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
-                target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
-            <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
-          </div>
-          <div class="social-buttons  ">
 
-            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--twitter"
-                href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
-                  alt="twitter icon"
-                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
-            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--linkedin"
-                href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
-                  class="social-buttons__icon" alt="linkedin icon"
-                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
+      <div class="footer-02__wrapper">
+        <div class="footer-02__text content_box">
+          <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
+              target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
+          <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
+        </div>
+        <div class="social-buttons  ">
 
-          </div>
+          <div class="social-buttons__item twitter"><a class="social-buttons__link social-buttons__link--twitter"
+              href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
+                alt="twitter icon"
+                src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
+          <div class="social-buttons__item linkedin"><a class="social-buttons__link social-buttons__link--linkedin"
+              href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
+                class="social-buttons__icon" alt="linkedin icon"
+                src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
+
         </div>
       </div>
+
     </footer>
   </div>
 
@@ -572,6 +578,36 @@
 
       }
     })
+    document.getElementById('buttonMenu').addEventListener('click', () => {
+      //console.log(document.getElementById('buttonMenu').getAttribute("class"))
+      if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuInactive") {
+        document.getElementById('bigBox').setAttribute("class", "toHide");
+        document.getElementById('superFaq').setAttribute("class", "toHide");
+        document.getElementById('footer').setAttribute("class", "toHide");
+
+        document.getElementById('menuDiv').setAttribute("class", "menuActive");
+        document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+
+        document.getElementById('imageButtonMenu').setAttribute("class", "imgButtonMenuActive");
+        document.getElementById('imageButtonMenu').setAttribute("src", "/wallet-link/static/crossMenu.png")
+      }
+      else if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuActive") {
+        document.getElementById('bigBox').setAttribute("class", "");
+        document.getElementById('superFaq').setAttribute("class", "");
+        document.getElementById('footer').setAttribute("class", "");
+        document.getElementById('menuDiv').setAttribute("class", "nav-02__list_wrapper");
+        document.getElementById('generalQuestions').setAttribute("class", "activeQuestions");
+        document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+
+        document.getElementById('imageButtonMenu').setAttribute("class", "imgButtonMenuInactive");
+        document.getElementById('imageButtonMenu').setAttribute("src", "/wallet-link/static/div.png")
+
+      }
+    })
+
   </script>
 
 
