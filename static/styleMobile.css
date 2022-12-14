@@ -1231,40 +1231,21 @@ nav a {
 }
 
 #underFrame19 {
-    /*display: flex;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-top: 2px;
     padding-bottom: 2px;
-    gap: 40px;
 
-    width: 92.5%;
-
-    /* Purple_light */
-    /*background: #F1EDF7;
-    border-radius: 76px;*/
-
-    /* Inside auto layout */
-    /*flex: none;
-    order: 0;
-    flex-grow: 0;
-    */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*padding: 8px;*/
-    gap: 40px;
-
-    width: 92.5%;
-    height: 279px;
+    width: 85%;
+    height: 77px;
 
     /* Purple_light */
     background: #F1EDF7;
-    border-radius: 36px;
+    border-radius: 76px;
 
     /* Inside auto layout */
     flex: none;
@@ -1410,7 +1391,7 @@ nav a {
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
-    font-size: 58px;
+    font-size: 34px;
     line-height: 131.7%;
 
     /* or 76px */
@@ -1424,7 +1405,7 @@ nav a {
     flex: none;
     order: 0;
     flex-grow: 0;
-    margin: 32px;
+    margin: 10px;
 }
 
 #SSIQuestions {
@@ -1471,8 +1452,7 @@ nav a {
 }
 
 .showAnswerButton {
-    width: 32px;
-    height: 32px;
+    width: 100%;
     border-radius: 50px;
     background-color: transparent;
     border: transparent;
@@ -1491,22 +1471,22 @@ nav a {
     /* Secondary */
     color: #544A62;
 
-
+    text-align: left;
 }
 
 .inactiveAnswer {
     visibility: collapse;
-    width: 1128px;
+
     font-size: 0;
 }
 .inactiveAnswer p{
     visibility: collapse;
-    width: 1128px;
+
     font-size: 0;
 }
 .inactiveQuestions p{
     visibility: collapse;
-    width: 1128px;
+
     font-size: 0;
 }
 /*#buttonMenuLogo {

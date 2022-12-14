@@ -257,7 +257,7 @@ if __name__ == '__main__':
 
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
-init_app(app,red)
     
+init_app(app,red)
 
 logging.info("testLogging")
