@@ -786,6 +786,7 @@
       document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
       document.getElementById('SSIQuestions').setAttribute("class", "activeQuestions");
     })
+    
     document.getElementById('showAnswer11').addEventListener('click', () => {
       console.log(document.getElementById('answer11').getAttribute("class"))
       if (document.getElementById('answer11').getAttribute("class") === "inactiveAnswer") {
@@ -1063,6 +1064,36 @@
 
       }
     })*/
+
+    document.getElementById('buttonMenu').addEventListener('click', () => {
+      //console.log(document.getElementById('buttonMenu').getAttribute("class"))
+      if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuInactive") {
+        document.getElementById('bigBox').setAttribute("class", "toHide");
+        document.getElementById('superFaq').setAttribute("class", "toHide");
+        document.getElementById('footer').setAttribute("class", "toHide");
+
+        document.getElementById('menuDiv').setAttribute("class", "menuActive");
+        document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+
+        document.getElementById('imageButtonMenu').setAttribute("class", "imgButtonMenuActive");
+        document.getElementById('imageButtonMenu').setAttribute("src", "/wallet-link/static/crossMenu.png")
+      }
+      else if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuActive") {
+        document.getElementById('bigBox').setAttribute("class", "");
+        document.getElementById('superFaq').setAttribute("class", "");
+        document.getElementById('footer').setAttribute("class", "");
+        document.getElementById('menuDiv').setAttribute("class", "nav-02__list_wrapper");
+        document.getElementById('generalQuestions').setAttribute("class", "activeQuestions");
+        document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+        document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+
+        document.getElementById('imageButtonMenu').setAttribute("class", "imgButtonMenuInactive");
+        document.getElementById('imageButtonMenu').setAttribute("src", "/wallet-link/static/div.png")
+
+      }
+    })
 
   </script>
 
