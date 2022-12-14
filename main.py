@@ -145,6 +145,21 @@ async def wallet_link_endpoint(id, red):
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
         credential['credentialSubject']['id'] = request.form['subject_id']
+
+        try :
+            presentation = json.loads(request.form['presentation']) 
+        except :
+            logging.warning("presentation does not exist")
+            return jsonify('Unauthorized'), 401
+        if request.form['subject_id'] != presentation['holder'] :
+            logging.warning("holder does not match subject")
+            return jsonify('Unauthorized'), 401
+        presentation_result = await didkit.verify_presentation(request.form['presentation'], '{}')
+        if not json.loads(presentation_result)['errors'] :
+            logging.warning("presentation failed  %s", presentation_result)
+            return jsonify('Unauthorized'), 401
+        
+
         try :
             data = json.loads(red.get(id).decode())
         except :
