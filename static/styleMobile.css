@@ -5,6 +5,10 @@
 
 #logo {}
 
+.noScroll{
+    overflow:hidden;
+}
+
 #draw {
     width: 72%;
     flex: none;

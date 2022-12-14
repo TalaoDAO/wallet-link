@@ -1068,6 +1068,7 @@
     document.getElementById('buttonMenu').addEventListener('click', () => {
       //console.log(document.getElementById('buttonMenu').getAttribute("class"))
       if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuInactive") {
+        document.documentElement.setAttribute("class", "noScroll");
         document.getElementById('bigBox').setAttribute("class", "toHide");
         document.getElementById('superFaq').setAttribute("class", "toHide");
         document.getElementById('footer').setAttribute("class", "toHide");
@@ -1081,6 +1082,7 @@
         document.getElementById('imageButtonMenu').setAttribute("src", "/wallet-link/static/crossMenu.png")
       }
       else if (document.getElementById('imageButtonMenu').getAttribute("class") === "imgButtonMenuActive") {
+        document.documentElement.setAttribute("class", "");
         document.getElementById('bigBox').setAttribute("class", "");
         document.getElementById('superFaq').setAttribute("class", "");
         document.getElementById('footer').setAttribute("class", "");
