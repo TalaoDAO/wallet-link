@@ -933,6 +933,7 @@ frame8 {
 .answer {}
 
 .questionP {
+    text-align: left;
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 500;
