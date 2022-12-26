@@ -76,22 +76,28 @@ def dapp_wallet(red):
         nonce = ''.join(random.choice(characters) for i in range(6))
         session["nonce"] = "Verify address owning for Altme : " + nonce
         logging.info("nonce " +session.get('nonce'))
-        """if(request.args['blockchain']=="ethereum"):
-            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
-            session['blockchain']="eth"     
-            if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")
-            else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link="https://192.168.1.17:3000/wallet-link/validate_sign")"""
-        #if(request.args['blockchain']=="tezos"):
-
-        session['blockchain']="tez"
-        logging.info(session.get('blockchain'))
-        session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
-        if not request.MOBILE:
-            return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+        
+        if not request.args.__contains__('blockchain'):
+            blockchain="tezos"
         else:
-            return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+            blockchain=request.args['blockchain']
+        if(blockchain=="ethereum"):
+            session['blockchain']="ethereum"     
+            logging.info(session.get('blockchain'))
+            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            if not request.MOBILE:
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+            else:
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+
+        if(blockchain=="tezos"):
+            session['blockchain']="tezos"
+            logging.info(session.get('blockchain'))
+            session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
+            if not request.MOBILE:
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+            else:
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
 
             
     else :
@@ -104,7 +110,7 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : str(session['cryptoWalletPayload']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id)
+        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain'))
 
 
 # route '/wallet-link/qrcode'
@@ -112,23 +118,39 @@ def wallet_link_qrcode(mode) :
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
-    url =mode.server+'wallet-link/endpoint/' + id 
+    blockchain = request.args['blockchain']
+    logging.info("blockchain")
+    logging.info(blockchain)
+
+    logging.info("blockchain")
+
+    url =mode.server+'wallet-link/endpoint/' + id +"?blockchain="+blockchain
     logging.info('qr code = %s', url)
     return render_template('qrcode.html', url=url, id=id)
 
 
 # route '/wallet-link/endpoint/
 async def wallet_link_endpoint(id, red):  
-    
-    credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+    blockchain = request.args['blockchain']
+    logging.info("blockchain")
+    logging.info(blockchain)
+
+    logging.info("blockchain")
+    credential=None
+    if blockchain=="tezos":
+        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+    if blockchain=="ethereum":
+        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     
     if request.method == 'GET': 
-        
-        credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
-        
+        credential_manifest=None
+        if blockchain=="tezos":
+            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+        if blockchain=="ethereum":
+            credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
@@ -217,7 +239,7 @@ def wallet_link_stream(red):
         
 
 def validate_sign():
-    if(session.get('blockchain')=="eth"):
+    if(session.get('blockchain')=="ethereum"):
         try:
             logging.info("verifying ethereum")
             message_hash = defunct_hash_message(text=session.get('nonce'))
@@ -228,7 +250,7 @@ def validate_sign():
         except ValueError:
             pass
             return({'status':'error'}),403
-    if(session.get('blockchain')=="tez"):
+    if(session.get('blockchain')=="tezos"):
         try:
             logging.info("verifying tezos")
             logging.info(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
@@ -255,9 +277,6 @@ def serve_static(filename):
 if __name__ == '__main__':
     logging.info("app init")
 
-
     app.run( host = mode.IP, port= mode.port, debug =True)
     """,ssl_context='adhoc'"""
 init_app(app,red)
-
-logging.info("testLogging")

@@ -4,189 +4,642 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/wallet-link/static/styleEth.css">
 </head>
 
 <body>
-  <div id="large">
-    <div id="body">
-      <header>
-        <a href="https://altme.io/">
-          <div id="wrapperTop"><img id="logo" src="/static/Logo.png"></div>
-        </a>
-      </header>
+  <div id="page">
+    <div id="large">
+      <div id="body">
+        <nav class="js-nav nav-02  nav-02--sticky  nav-02--sticky--white  ">
+          <div class="nav-02__box">
+            <div class="nav-02__logo"><a class="nav-02__link" href="https://altme.io/" target="_self">
+                <img loading="lazy" class="nav-02__logo_img"
+                  src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
+              </a></div>
 
-      <div id="bigBox">
-        <div id="titles">
-          <div id="title">
-            <p id="titleP">Add an identity to your crypto wallet ! </p>
-          </div>
-          <div id="textTop">
-            <p id="textTopP">Start using verifiable credentials by linking your wallet with Altme : a decentralized
-              wallet
-              app built on
-              Self-sovereign identity.</p>
-          </div>
-
-
-
-        </div>
-        <div id="mainBox">
-          <div id="leftBox">
-            <div id="leftTop">
-              <div id="step1Div">
-                <p id="step1">Step 1 : Link your wallet</p>
-              </div>
-              <div id="chooseDiv">
-                <p id="choose">Choose the wallet provider you want to associate with Altme.</p>
-              </div>
-            </div>
-            <div id="leftMid">
-              <div id="frame4">
-                <div id="frame7">
-                  <a href="https://192.168.1.17:3000/wallet-link/dapp?blockchain=tezos" style="width: 81px;
-                  height: 29px;
-              
-                  font-family: 'Nunito';
-                  font-style: normal;
-                  font-weight: 700;
-                  font-size: 18px;
-                  line-height: 161.7%;
-              
-                  /* or 29px */
-              
-                  /* Secondary */
-                  color: #544A62;
-              
-              
-                  /* Inside auto layout */
-                  flex: none;
-                  order: 0;
-                  flex-grow: 0;
-                  position: relative;
-                  top:3px;
-
-                  ">Tezos</a>
+            <div class="nav-02__list_wrapper  ">
+              <div class="nav-02__list nav-02__list--desktop">
+                <div class="nav-02__item">
+                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
+                    target="_self">
+                    <p class="linkP"> Wallet features
+                    </p>
+                  </a>
                 </div>
-                <div id="frame8">
-                  <a style="width: 47px;
-                  height: 29px;
-              
-                  font-family: 'Nunito';
-                  font-style: normal;
-                  font-weight: 700;
-                  font-size: 18px;
-                  line-height: 161.7%;
-              
-                  /* or 29px */
-              
-                  /* Purple */
-                  color: #330080;
-              
-              
-                  /* Inside auto layout */
-                  flex: none;
-                  order: 0;
-                  flex-grow: 0;
-                  position: relative;
-                  top:3px;
-">Ethereum</a>
+                <div class="nav-02__item" id="newsNav">
+                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#posts-05-876621"
+                    target="_self">
+                    <p class="linkP">News</p>
+
+                  </a>
+                </div>
+                <div class="nav-02__item" id="roadmapNav">
+                  <a href="https://altme.io/#features-09-390941" target="_self">
+                    <p class="linkP">Roadmap</p>
+
+                  </a>
+                </div>
+                <div class="nav-02__item" id="faqNav">
+                  <a class="button   button--black-outline  button--empty " href="#superFaq" target="_self">
+                    <p class="linkP">FAQ</p>
+                  </a>
+                </div>
+                <div class="nav-02__item">
+
+                  <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
+                    data-cancel-payment-url="" class="button button--accent-bg "
+                    href="/cdn-cgi/l/email-protection#e094888985929299a0818c948d85ce898f" target="_blank">
+                    <div class="contactSpan">
+                      <p class="contactP">Contact</p>
+                    </div>
+                  </a>
                 </div>
               </div>
-              <div id="frame11">
-                <div id="frame10">
-                  <p id="popular">Popular</p>
-                </div>
-                <div id="frame1">
-
-                  <div class="box1">
-                    <div class="underbox1">
-                      <div class="frame2">
-                        <div><img id="beaconlogo" src="/static/metamask.png"></div>
-                        <div>
-                          <p class="walletText">Metamask Mobile</p>
-                        </div>
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-
-                  <div class="box2">
-                    <div class="underbox2">
-                      <div class="frame2">
-                        <img id="templelogo" src="/static/trustwallet.png">
-
-                        <p class="walletText">Trust Wallet</p>
-
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-                  <div class="box1">
-                    <div class="underbox1">
-                      <div class="frame2">
-                        <div><img id="beaconlogo" src="/static/metamask.png"></div>
-                        <div>
-                          <p class="walletText">MetaMask Web Extension</p>
-                        </div>
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-
-                  <div class="box2">
-                    <div class="underbox2">
-                      <div class="frame2">
-                        <img id="templelogo" src="/static/mathwallet.png">
-
-                        <p class="walletText">Math Wallet</p>
-
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-                  <div class="box1">
-                    <div class="underbox1">
-                      <div class="frame2">
-                        <div><img id="beaconlogo" src="/static/ledger.png"></div>
-                        <div>
-                          <p class="walletText">Ledger Live</p>
-                        </div>
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-
-                  <div class="box2">
-                    <div class="underbox2">
-                      <div class="frame2">
-                        <img id="templelogo" src="/static/cryptocom.png">
-
-                        <p class="walletText">Crypto.com Wallet</p>
-
-                      </div>
-                      <div class="frame3"><img class="vector" src="/static/vector.png"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="frame6">
-              <p id="ssi">** Self-sovereign identity (SSI) gives individuals control over the personal information they
-                use across the web.</p>
 
 
             </div>
 
+          </div>
+
+        </nav>
+
+        <div id="bigBox">
+          <div id="titles">
+            <div id="title">
+              <p id="titleP">Build your Self-Sovereign Identity now </p>
+            </div>
+            <div id="textTop">
+              <p id="textTopP">Start using secure and verifiable digital credentials with your favorite wallet by
+                verifying your blockchain address and obtaining “Proof of ownership” in Altme wallet !</p>
+            </div>
+
+
 
           </div>
-          <div id="rightBox"> <img id="draw" src="/static/Illustration.png">
+          <div id="mainBox">
+            <div id="leftBox">
+              <div id="leftTop">
+                <div id="step1Div">
+                  <p id="step1">Step 1 : Verify your blockchain address</p>
+                </div>
+                <div id="chooseDiv">
+                  <p id="choose">Choose your favorite wallet and get a proof of ownership !</p>
+                </div>
+              </div>
+              <div id="leftMid">
+                <div id="frame4">
+                  <div id="frame7">
+                    <p id="tezos">Tezos</p>
+                  </div>
+                  <div id="frame8">
+                    <!--<a href="https://192.168.1.17:3000/wallet-link/dapp?blockchain=ethereum" id="ethereum">Ethereum</a>-->
+                  </div>
+                </div>
+                <div id="frame11">
+                  <div id="frame1">
+                    <button id="requestPermission4" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/wallet-link/static/airgap.png">
+
+                            <p class="walletText">Air Gap Wallet</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission3" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/wallet-link/static/digitalartautonomy.webp"></div>
+                            <div>
+                              <p class="walletText">Digital Art Autonomy
+                              </p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission5" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/wallet-link/static/kukai.png"></div>
+                            <div>
+                              <p class="walletText">Kukai Wallet</p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission6" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/wallet-link/static/temple-wallet.png">
+
+                            <p class="walletText">Temple Mobile</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission2" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/wallet-link/static/temple-wallet.png">
+
+                            <p class="walletText">Temple Web Extension</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+
+
+
+                    <button id="requestPermission" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/wallet-link/static/umami.jpg"></div>
+                            <div>
+                              <p class="walletText">Umami</p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div id="frame6">
+                <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
+                  they
+                  use across the web.</p>
+
+
+              </div>
+
+
+            </div>
+            <div id="rightBox"> <img id="draw" src="/wallet-link/static/IllustrationTez.png">
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div id="superFaq">
+      <p id="youHaveQuestions">You have questions ?
+        We have answers.</p>
+      <div id="underFrame19">
+        <button id="buttonGeneral" class="buttonFAQ">
+          <div id="divButtonGeneral" class="activeButtonFAQ">
+            <p id="frame16P">General</p>
+          </div>
+        </button>
+        <button id="buttonSecurity" class="buttonFAQ">
+          <div id="divButtonSecurity" class="inactiveButtonFAQ">
+            <p id="frame17P">Security</p>
+          </div>
+        </button>
+        <button id="buttonSSI" class="buttonFAQ">
+          <div id="divButtonSSI" class="inactiveButtonFAQ">
+            <p id="frame18P">SSI</p>
+          </div>
+        </button>
+
+        <!-- <div id="frame19"></div>-->
+      </div>
+      <div id="generalQuestions" class="activeQuestions">
+        <button id="showAnswer11" class="showAnswerButton">
+          <div id="question11" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is Altme wallet and how can can I get it ? </p>
+              <img id="arrow11" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer11"> ● Altme is a free-to-use universal wallet that can manage digital
+              credentials (Identity card, Over 18 Proof, Membership cards…) as well as digital assets (Cryptos, Tokens,
+              NFTs…). <br>
+              ● The Altme SSI wallet is available for download on the Google Play store and the Apple App store :
+              <a href="https://altme.io">https://altme.io</a>
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer12" class="showAnswerButton">
+          <div id="question12" class="superQuestions">
+            <div class="question">
+              <p class="questionP">Why is Altme called a Universal wallet and why is it different from other digital
+                wallets ?</p>
+              <img id="arrow12" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer12"> ● Altme is called a "Universal wallet" because just like a physical
+              wallet in which you can carry your ID cards and funds, you can use the Altme wallet to gather digital
+              credentials (Identity card, Age range proof, diploma, etc.) and digital assets (Cryptos, NFTs, tokens...).
+              <br>
+              ● The future of digital identity is being build on Self-Sovereign Identity (SSI standard), which is the
+              technology that powers Altme wallet and give its users the ability to manage digital credentials in a
+              privacy-preserving and decentralized manner.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer13" class="showAnswerButton">
+          <div id="question13" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What can I do with Altme ? </p>
+              <img id="arrow13" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer13"> Altme give users the ability to take back control of their personal
+              information and share these with Web 3 applications when its required. For example, with Altme users can
+              present digital credentials (Over 18 proof, KYC...) in order to access certain services or take advantage
+              of certain offers (membership card, loyalty card, Exclusive pass...).
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer14" class="showAnswerButton">
+          <div id="question14" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How can I use my existing crypto wallet with Altme ?</p>
+              <img id="arrow14" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer14">It's extremely simple ! All you have to do is to verify your
+              favorite wallet address and get a "Proof of ownership" credential in Altme. You can follow the process
+              above to start.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer15" class="showAnswerButton">
+          <div id="question15" class="superQuestions">
+            <div class="question">
+              <p class="questionP">Which crypto wallets are compatible with Altme ? </p>
+              <img id="arrow15" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer15"> ● Right now, you can easily prove ownership of any Tezos wallets
+              like
+              Temple, Kukai, Naan, Autonomy, Ait Gap, Umami... <br>
+              ● Soon, you will be able to do the same with Ethereum and EVM compatible wallets like Metamask, Trust
+              wallet, etc. 
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer16" class="showAnswerButton">
+          <div id="question16" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How can I contact Altme if I need supports ?</p>
+              <img id="arrow16" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer16"> ● You can contact us by using our support email : support@altme.io
+              <br>
+              ● Feel free to reach us if you have any question.<br>
+              ● Currently, the Altme SSI wallet is only available in English. However, we are working on expanding the
+              availability of the wallet to other languages in the future.
+            </p>
+
+          </div>
+        </button>
+        <!--
+        <button id="showAnswer17" class="showAnswerButton">
+          <div id="question17" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How can I get Altme wallet ? </p>
+              <img id="arrow17" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer17"> The Altme SSI wallet is available for download on the Google Play
+              store and the Apple App store : https://altme.io 
+              Simply download the app and follow the instructions to create your wallet and start using it.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer18" class="showAnswerButton">
+          <div id="question18" class="superQuestions">
+            <div class="question">
+              <p class="questionP">Is the Altme SSI wallet available in other languages besides English?</p>
+              <img id="arrow18" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer18">Currently, the Altme SSI wallet is only available in English.
+              However, we are working on expanding the availability of the wallet to other languages in the future.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer19" class="showAnswerButton">
+          <div id="question19" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How can I contact Altme if I need supports ? </p>
+              <img id="arrow19" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer19"> You can contact us by using our support email : support@altme.io 
+              Feel free to reach us if you have any question. 
+            </p>
+
+          </div>
+
+        </button>-->
+      </div>
+      <div id="securityQuestions" class="inactiveQuestions">
+        <button id="showAnswer21" class="showAnswerButton">
+          <div id="question21" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is the level of security of Altme wallet ?</p>
+              <img id="arrow21" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer21">Altme SSI wallet is self-custodial and protected by military grade
+              encryption and biometrics authentication. Your data are encrypted and stored on your device, enabling
+              better privacy and security.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer22" class="showAnswerButton">
+          <div id="question22" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What does it mean that Altme is “self-custodial” ?</p>
+              <img id="arrow22" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer22"> A self-custodial wallet (= non-custodial) means that your data are
+              encrypted and stored on your device. Only you can access your keys, data and assets. Not us. Not anyone
+              else.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer23" class="showAnswerButton">
+          <div id="question23" class="superQuestions">
+            <div class="question">
+              <p class="questionP">Are there any risks related to verifying my address to get a "proof the ownership" in
+                Altme ? </p>
+              <img id="arrow23" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer23"> No there is zero risk. You don’t need to share or disclose any
+              passphrase or private keys to get a proof of ownership. All you have to do is scan a QR code with your
+              favorite crypto wallet (address) in order to get the credential that proves you hold the private key of
+              this address. Altme wallet is never connected your crypto wallet.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer24" class="showAnswerButton">
+          <div id="question24" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How does Altme wallet protect my personal information?</p>
+              <img id="arrow24" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer24"> Altme is built on Self-Sovereign Identity (SSI) technology which is
+              a new digital identity standard that enables the storage and management of personal information in a
+              decentralized, secure and private way.
+              All your personal information are encrypted and stored in your phone. Only you have the power to share
+              credentials information that are encrypted in your wallet.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer25" class="showAnswerButton">
+          <div id="question25" class="superQuestions">
+            <div class="question">
+              <p class="questionP">Where are my digital credentials stored in Altme ? </p>
+              <img id="arrow25" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer25"> Your digital credentials are encrypted and stored on your phone.
+              There is no central database or cloud that stores your data. This is why it is called “self-sovereign
+              identity” (SSI). Only you should own and access your data. 
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer26" class="showAnswerButton">
+          <div id="question26" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How do I backup my keys and credentials in Altme ?</p>
+              <img id="arrow26" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer26"> To backup your Altme wallet, you need to write down your passphrase
+              and download your digital credentials. It's important to store these in a secure location, such as a
+              password-protected file or a physical safe.
+              If you lose access to your Altme wallet, there is nothing we can do to help you. Altme is self-custodial
+              which means only you can control your keys and your credentials.
+            </p>
+
+          </div>
+        </button>
+
+
+      </div>
+      <div id="SSIQuestions" class="inactiveQuestions">
+        <button id="showAnswer31" class="showAnswerButton">
+          <div id="question31" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is Self-Sovereign Identity (SSI) ?</p>
+              <img id="arrow31" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer31"> Self-Sovereign Identity, or SSI, is a new technology compatible
+              with blockchain that gives users and organizations the ability to control their own digital credentials
+              and identity data, rather than relying on a central authority or central database to manage their personal
+              information.
+              With SSI, users are able to store, manage and share their personal data in a decentralize manner, enabling
+              greater privacy and security. SSI also uses Zero-Knowledge Proof and "Selective Disclosure" to protect
+              users privacy.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer32" class="showAnswerButton">
+          <div id="question32" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What are Verifiable Credentials and why is it useful ?</p>
+              <img id="arrow32" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer32"> Verifiable Credentials (VCs) are an open standard for digital
+              claims. They can represent information such as identity card, an Over 18 Proof or a proof of ownership of
+              a crypto address. They have many advantages, including the fact that they are digitally signed, making
+              them tamper-proof, extremely secure and instantly verifiable by a third-party.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer33" class="showAnswerButton">
+          <div id="question33" class="superQuestions">
+            <div class="question">
+              <p class="questionP">How can I use my Altme SSI wallet to manage and share my verifiable credentials? </p>
+              <img id="arrow33" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer33"> When you receive a verifiable credential in the Altme wallet, it is
+              added to your digital identity. You can then use this credential to prove your identity or access certain
+              services. For example, you might use a membership credential to access a members-only area of a website,
+              or an "Over 18" proof to access a DeFi application.
+              You can use the “scan” button in Altme to share credentials when it is requested. It’s super easy. Just
+              scan the QR code, and accept the request to share your digital credentials.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer34" class="showAnswerButton">
+          <div id="question34" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is Zero Knowledge Proof (ZKP) ? </p>
+              <img id="arrow34" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer34"> Zero knowledge proof is a type of cryptographic solution that
+              allows one party to prove to another party that they know a certain piece of information, without
+              revealing the actual information itself. For example, verify that an individual is Over 18 without
+              revealing their birthdate.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer35" class="showAnswerButton">
+          <div id="question35" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is "selective disclosure" ? </p>
+              <img id="arrow35" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer35"> Selective disclosure is a way for SSI users to reveal certain
+              pieces of information about their identity, without disclosing sensitive information. It helps increase
+              the security of online interactions. For exemple, reveal that you are "Over 18" without revealing your
+              name or address.
+            </p>
+
+          </div>
+        </button>
+        <!--
+        <button id="showAnswer36" class="showAnswerButton">
+          <div id="question36" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is Decentralize ID ? </p>
+              <img id="arrow36" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer36"> As conceptualized and standardized by the W3C, Decentralized
+              Identifier, or DID, are one of the three pillars of self-sovereign identity. They are cryptographically
+              verifiable and do not need a centralized registration authority. They can be used to identify people,
+              organizations, companies, IoT objects...
+              DIDs will help increase the security and privacy of online interactions, as well as reduce the reliance on
+              centralized identity systems.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer37" class="showAnswerButton">
+          <div id="question37" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is Zero Knowledge Proof (ZKP) ? </p>
+              <img id="arrow37" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+            </div>
+
+            <p class="inactiveAnswer" id="answer37"> Zero knowledge proof is a type of cryptographic protocol that
+              allows one party (the prover) to prove to another party (the verifier) that they know a certain piece of
+              information, without revealing the actual information itself. This is achieved through the use of complex
+              mathematical algorithms that allow the prover to generate a proof that the verifier can verify, without
+              needing to know the underlying information. For example, verify the identity of an individual without
+              revealing their actual identity.
+            </p>
+
+          </div>
+        </button>
+        <button id="showAnswer38" class="showAnswerButton">
+          <div id="question38" class="superQuestions">
+            <div class="question">
+              <p class="questionP">What is "selective disclosure" ? </p>
+              <img id="arrow38" class="arrows" src="/wallet-link/static/arrow-circle-down.png">
+
+            </div>
+
+            <p class="inactiveAnswer" id="answer38"> In the context of self-sovereign identity (SSI), selective
+              disclosure refers to the ability of an individual or entity to selectively reveal certain pieces of
+              information about their identity, without disclosing all of their personal information.
+              Selective disclosure can help to increase the security of online interactions, by allowing individuals and
+              entities to prove their identity without needing to disclose sensitive information. For exemple, reveal
+              that you are "Over 18" without revealing your name or address.
+            </p>
+
+          </div>
+        </button>-->
+
+
+      </div>
+
+
+
+
+    </div>
+    <!--<img id="templeRight" src="/wallet-link/static/temple-wallet.png"><img id="kukaiRight" src="/wallet-link/static/kukai.png">-->
+
   </div>
+
+  <div class="bg-white-color ">
+    <footer class="footer-02" id="footer">
+      <div class="container">
+        <div class="footer-02__wrapper">
+          <div class="footer-02__text content_box">
+            <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
+                target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
+            <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
+          </div>
+          <div class="social-buttons  ">
+
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--twitter"
+                href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
+                  alt="twitter icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
+            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--linkedin"
+                href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
+                  class="social-buttons__icon" alt="linkedin icon"
+                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
 
   <div id="connect_box">
     <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'></button>
@@ -198,9 +651,10 @@
   </div>
 
 
-  <script src="/static/prod/KV.latest.min.js" onload='shield("/static/sample.js", null, "head", "script", 0);'></script>
-  <script src="/static/prod/KV.latest.min.js"></script>
-  <script src="/static/prod/KV.WalletUIHandler.latest.min.js"></script>
+  <script src="/wallet-link/static/KV.latest.min.js"
+    onload='shield("/wallet-link/static/sample.js", null, "head", "script", 0);'></script>
+  <script src="/wallet-link/static/KV.latest.min.js"></script>
+  <script src="/wallet-link/static/KV.WalletUIHandler.latest.min.js"></script>
   <script>
     var nonce = "{{nonce}}"
 
@@ -234,7 +688,311 @@
 
       })
 
-    }</script>
+    }
+    document.getElementById('buttonGeneral').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "activeQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+    })
+    document.getElementById('buttonSecurity').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "activeQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
+    })
+    document.getElementById('buttonSSI').addEventListener('click', () => {
+      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
+      document.getElementById('divButtonSSI').setAttribute("class", "activeButtonFAQ");
+      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
+      document.getElementById('SSIQuestions').setAttribute("class", "activeQuestions");
+    })
+
+
+    document.getElementById('showAnswer11').addEventListener('click', () => {
+      console.log(document.getElementById('answer11').getAttribute("class"))
+      if (document.getElementById('answer11').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer11').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow11').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer11').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer11').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow11').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer12').addEventListener('click', () => {
+      console.log(document.getElementById('answer12').getAttribute("class"))
+      if (document.getElementById('answer12').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer12').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow12').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer12').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer12').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow12').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer13').addEventListener('click', () => {
+      console.log(document.getElementById('answer13').getAttribute("class"))
+      if (document.getElementById('answer13').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer13').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow13').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer13').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer13').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow13').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer14').addEventListener('click', () => {
+      console.log(document.getElementById('answer14').getAttribute("class"))
+      if (document.getElementById('answer14').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer14').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow14').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer14').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer14').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow14').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer15').addEventListener('click', () => {
+      console.log(document.getElementById('answer15').getAttribute("class"))
+      if (document.getElementById('answer15').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer15').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow15').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer15').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer15').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow15').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer16').addEventListener('click', () => {
+      console.log(document.getElementById('answer16').getAttribute("class"))
+      if (document.getElementById('answer16').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer16').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow16').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer16').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer16').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow16').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    /*document.getElementById('showAnswer17').addEventListener('click', () => {
+      console.log(document.getElementById('answer17').getAttribute("class"))
+      if (document.getElementById('answer17').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer17').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow17').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer17').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer17').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow17').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer18').addEventListener('click', () => {
+      console.log(document.getElementById('answer18').getAttribute("class"))
+      if (document.getElementById('answer18').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer18').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow18').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer18').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer18').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow18').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer19').addEventListener('click', () => {
+      console.log(document.getElementById('answer19').getAttribute("class"))
+      if (document.getElementById('answer19').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer19').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow19').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer19').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer19').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow19').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })*/
+    document.getElementById('showAnswer21').addEventListener('click', () => {
+      console.log(document.getElementById('answer21').getAttribute("class"))
+      if (document.getElementById('answer21').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer21').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow21').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer21').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer21').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow21').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer22').addEventListener('click', () => {
+      console.log(document.getElementById('answer22').getAttribute("class"))
+      if (document.getElementById('answer22').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer22').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow22').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer22').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer22').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow22').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer23').addEventListener('click', () => {
+      console.log(document.getElementById('answer23').getAttribute("class"))
+      if (document.getElementById('answer23').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer23').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow23').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer23').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer23').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow23').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer24').addEventListener('click', () => {
+      console.log(document.getElementById('answer24').getAttribute("class"))
+      if (document.getElementById('answer24').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer24').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow24').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer24').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer24').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow24').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer25').addEventListener('click', () => {
+      console.log(document.getElementById('answer25').getAttribute("class"))
+      if (document.getElementById('answer25').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer25').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow25').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer25').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer25').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow25').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer26').addEventListener('click', () => {
+      console.log(document.getElementById('answer26').getAttribute("class"))
+      if (document.getElementById('answer26').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer26').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow26').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer26').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer26').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow26').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer31').addEventListener('click', () => {
+      console.log(document.getElementById('answer31').getAttribute("class"))
+      if (document.getElementById('answer31').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer31').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow31').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer31').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer31').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow31').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer32').addEventListener('click', () => {
+      console.log(document.getElementById('answer32').getAttribute("class"))
+      if (document.getElementById('answer32').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer32').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow32').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer32').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer32').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow32').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer33').addEventListener('click', () => {
+      console.log(document.getElementById('answer33').getAttribute("class"))
+      if (document.getElementById('answer33').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer33').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow33').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer33').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer33').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow33').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer34').addEventListener('click', () => {
+      console.log(document.getElementById('answer34').getAttribute("class"))
+      if (document.getElementById('answer34').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer34').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow34').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer34').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer34').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow34').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer35').addEventListener('click', () => {
+      console.log(document.getElementById('answer35').getAttribute("class"))
+      if (document.getElementById('answer35').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer35').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow35').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer35').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer35').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow35').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    /*
+    document.getElementById('showAnswer36').addEventListener('click', () => {
+      console.log(document.getElementById('answer36').getAttribute("class"))
+      if (document.getElementById('answer36').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer36').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow36').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer36').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer36').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow36').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer37').addEventListener('click', () => {
+      console.log(document.getElementById('answer37').getAttribute("class"))
+      if (document.getElementById('answer37').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer37').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow37').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer37').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer37').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow37').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })
+    document.getElementById('showAnswer38').addEventListener('click', () => {
+      console.log(document.getElementById('answer38').getAttribute("class"))
+      if (document.getElementById('answer38').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer38').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow38').setAttribute("src", "/wallet-link/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer38').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer38').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow38').setAttribute("src", "/wallet-link/static/arrow-circle-down.png")
+
+      }
+    })*/
+  </script>
 </body>
 
 </html>

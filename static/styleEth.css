@@ -1566,3 +1566,8 @@ nav a {
     background-color: transparent;
     border: transparent;
 }
+.kvwalletbtn{
+    border: red;
+    border-width: 1px;
+    border-style: solid;
+}
