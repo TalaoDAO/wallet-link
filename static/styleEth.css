@@ -579,11 +579,7 @@ frame8 {
 
 #connect_box {
 
-    position: absolute;
-    top: 200px;
-    left: 0px;
-    width: 549px;
-    height: 148.89px;
+
 
 
 }
@@ -788,56 +784,42 @@ frame8 {
 
 .kvwalletbtn {
     background-color: transparent;
-    border: transparent;
+    /*border: transparent;*/
     width: 549px;
     height: 67px;
     border-radius: 16px;
-    z-index: 100;
-    position: absolute;
-    left: 166px;
-
+    border: red;
+    border-width: 1px;
+    border-style: solid;
 }
 
 #kvwalletmodal_walletconnect_btn {
 
-    position: absolute;
-    top: 395px;
 
 }
 
 #kvwalletmodal_walletconnect_btn2 {
 
-    position: absolute;
-    top: 559px;
+
 
 }
 
 #kvwalletmodal_walletconnect_btn3 {
 
-    position: absolute;
-    top: 641px;
 
 }
 
 #kvwalletmodal_walletconnect_btn4 {
 
-    position: absolute;
-    top: 807px;
-
 }
 
 #kvwalletmodal_walletconnect_btn5 {
 
-    position: absolute;
-    top: 724px;
 
 }
 
 #kvwalletmodal_metamask_btn {
 
-    position: absolute;
-    top: 478px;
-    left: 166px;
 }
 
 #frame6 {
@@ -1566,8 +1548,8 @@ nav a {
     background-color: transparent;
     border: transparent;
 }
-.kvwalletbtn{
-    border: red;
-    border-width: 1px;
-    border-style: solid;
+#divButtonTest{
+    width: 549px;
+    height: 67px;
+    border-radius: 16px;
 }
