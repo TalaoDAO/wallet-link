@@ -579,7 +579,22 @@ frame8 {
 
 #connect_box {
 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
 
+    width: 560px;
+    height: 333px;
+    overflow: scroll;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    position: relative;
+    top: 20px;
 
 
 }
