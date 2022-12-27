@@ -1,7 +1,7 @@
 //To enable wallet connect, an infuraID is needed, so this should be set first
 KV.set_infuraID("f2be8a3bf04d4a528eb416566f7b5ad6");
 //The wallet connection system can be then be initialised, and other dependency scripts can be added
-KV.init(["/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
+KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
   let walletui = new KV.WalletUIHandler({
     parent_container: document.getElementById("connect_box"),
     btn_connect: document.getElementById("connect_btn"),
@@ -45,7 +45,7 @@ KV.init(["/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
       console.log("here")
       KV.wallet.web3().eth.personal.sign(hexMessage, account[0]).then(function (signature) {
         console.log("request sign")
-        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
+        let link = "https://talao.co/wallet-link/validate_sign";
 
 
 
@@ -54,7 +54,7 @@ KV.init(["/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
-                fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
+                fetch("/wallet-link", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
                   document.location.href = res.url
                   console.log(res)
                 })
