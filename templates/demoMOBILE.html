@@ -123,7 +123,7 @@
         console.log(account)
         KV.wallet.web3().eth.sign(KV.wallet.web3().eth.accounts.hashMessage("{{nonce}}"), account[0]).then(function (signature) {
         console.log('signature:', signature)
-        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
+        let link = "https://talao.co/wallet-link/validate_sign";
 
 
         

@@ -45,7 +45,7 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
       console.log("here")
       KV.wallet.web3().eth.personal.sign(hexMessage, account[0]).then(function (signature) {
         console.log("request sign")
-        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
+        let link = "https://talao.co/wallet-link/validate_sign";
 
 
 
