@@ -1,7 +1,7 @@
 //To enable wallet connect, an infuraID is needed, so this should be set first
 KV.set_infuraID("f2be8a3bf04d4a528eb416566f7b5ad6");
 //The wallet connection system can be then be initialised, and other dependency scripts can be added
-KV.init(["/wallet-link/static/prod/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
+KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
   let walletui = new KV.WalletUIHandler({
     parent_container: document.getElementById("connect_box"),
     btn_connect: document.getElementById("connect_btn"),
