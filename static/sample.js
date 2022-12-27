@@ -54,7 +54,7 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
-                fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
+                fetch("/wallet-link", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
                   document.location.href = res.url
                   console.log(res)
                 })
