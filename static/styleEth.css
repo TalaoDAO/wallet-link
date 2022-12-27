@@ -803,9 +803,8 @@ frame8 {
     width: 549px;
     height: 67px;
     border-radius: 16px;
-    border: red;
-    border-width: 1px;
-    border-style: solid;
+    border: none;
+    padding: 0;
 }
 
 #kvwalletmodal_walletconnect_btn {
