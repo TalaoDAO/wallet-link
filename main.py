@@ -110,7 +110,7 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : str(session['cryptoWalletPayload']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain'))
+        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
 
 
 # route '/wallet-link/qrcode'
@@ -124,7 +124,7 @@ def wallet_link_qrcode(mode) :
 
     logging.info("blockchain")
 
-    url =mode.server+'wallet-link/endpoint/' + id +"?blockchain="+blockchain
+    url =mode.server+'wallet-link/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
     return render_template('qrcode.html', url=url, id=id)
 
@@ -144,7 +144,7 @@ async def wallet_link_endpoint(id, red):
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
-    
+    credential["credentialSubject"]["associatedAddress"]=request.args['address']
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
@@ -278,6 +278,6 @@ if __name__ == '__main__':
     logging.info("app init")
 
     app.run( host = mode.IP, port= mode.port, debug =True)
+init_app(app,red)
 
 """,ssl_context='adhoc'"""
-init_app(app,red)
