@@ -394,7 +394,8 @@ header {
     order: 1;
     align-self: stretch;
     flex-grow: 0;
-
+    /*position: relative;
+    top: 8px;*/
 }
 
 #frame4 {
@@ -465,6 +466,33 @@ frame8 {
 }
 
 #tezos {
+    /* Secondary */
+    color: #544A62;
+
+
+    width: 47px;
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+    bottom: 15px;
+}
+
+#ethereum {
     /* Tezos */
 
     width: 47px;
@@ -488,32 +516,6 @@ frame8 {
     flex-grow: 0;
     position: relative;
     bottom: 15px;
-}
-
-#ethereum {
-    /* Ethereum */
-
-    width: 81px;
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Secondary */
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    position: relative;
-    top: 3px;
 }
 
 #frame11 {
@@ -596,7 +598,6 @@ frame8 {
     position: relative;
     top: 20px;
 
-
 }
 
 #frame1 {
@@ -623,17 +624,15 @@ frame8 {
 
 .box1 {
     /* item */
-
     box-sizing: border-box;
-
     /* Auto layout */
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 16px 24px;
 
-    width: 549px;
-    height: 65.89px;
+    width: 552px;
+    height: 68px;
 
     background: #FFFFFF;
     border: 1px solid #EDECF2;
@@ -641,9 +640,10 @@ frame8 {
 
     /* Inside auto layout */
     flex: none;
-    order: 0;
     align-self: stretch;
     flex-grow: 0;
+    position: relative;
+    left: 1px;
 }
 
 .box1:hover {
@@ -652,9 +652,7 @@ frame8 {
 
 .box2 {
     /* item */
-
     box-sizing: border-box;
-
     /* Auto layout */
     display: flex;
     flex-direction: row;
@@ -670,7 +668,6 @@ frame8 {
 
     /* Inside auto layout */
     flex: none;
-    order: 1;
     align-self: stretch;
     flex-grow: 0;
 }
@@ -755,20 +752,8 @@ frame8 {
     flex-grow: 1;
     /* Frame 3 */
 
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 1;
+    position: relative;
+    left: 138px;
 }
 
 .vector {
@@ -800,41 +785,31 @@ frame8 {
 .kvwalletbtn {
     background-color: transparent;
     /*border: transparent;*/
-    width: 549px;
+    min-width: 551px;
     height: 67px;
     border-radius: 16px;
     border: none;
     padding: 0;
+    /*border: red;
+    border-width: 1px;
+    border-style: solid;*/
+    z-index: 100;
+    position: relative;
+    right: 391px;
+    order: 2;
 }
 
-#kvwalletmodal_walletconnect_btn {
+#kvwalletmodal_walletconnect_btn {}
 
+#kvwalletmodal_walletconnect_btn2 {}
 
-}
+#kvwalletmodal_walletconnect_btn3 {}
 
-#kvwalletmodal_walletconnect_btn2 {
+#kvwalletmodal_walletconnect_btn4 {}
 
+#kvwalletmodal_walletconnect_btn5 {}
 
-
-}
-
-#kvwalletmodal_walletconnect_btn3 {
-
-
-}
-
-#kvwalletmodal_walletconnect_btn4 {
-
-}
-
-#kvwalletmodal_walletconnect_btn5 {
-
-
-}
-
-#kvwalletmodal_metamask_btn {
-
-}
+#kvwalletmodal_metamask_btn {}
 
 #frame6 {
 
@@ -917,7 +892,7 @@ frame8 {
 
     /* Inside auto layout */
     flex: none;
-    order: 1;
+    order: 0;
     flex-grow: 0;
 }
 
@@ -1562,8 +1537,48 @@ nav a {
     background-color: transparent;
     border: transparent;
 }
-#divButtonTest{
+
+#divButtonTest {
     width: 549px;
     height: 67px;
     border-radius: 16px;
 }
+
+.rightDivButton {
+    display: flex;
+    flex-direction: row;
+    width: 460px;
+    overflow: hidden;
+}
+
+#boxWC1 {
+    order: 0;
+}
+
+#boxWC2 {
+    order: 1;
+}
+
+#boxWC3 {
+    order: 2;
+}
+
+#boxWC4 {
+    order: 3;
+}
+
+#boxWC5 {
+    order: 4;
+}
+
+#boxMetamask {
+    order: 5;
+}
+
+.kvwalletmodal {
+    order: 2000;
+    height: 0px;
+    font-size: 0;
+}
+#frame7 a{
+text-decoration: none;}

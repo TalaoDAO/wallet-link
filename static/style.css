@@ -491,9 +491,11 @@ frame8 {
 }
 
 #ethereum {
-    /* Ethereum */
+    /* Secondary */
+    color: #544A62;
 
-    width: 81px;
+
+    width: 47px;
     height: 29px;
 
     font-family: 'Nunito';
@@ -504,8 +506,7 @@ frame8 {
 
     /* or 29px */
 
-    /* Secondary */
-    color: #544A62;
+
 
 
     /* Inside auto layout */
@@ -513,9 +514,8 @@ frame8 {
     order: 0;
     flex-grow: 0;
     position: relative;
-    top: 3px;
+    bottom: 15px;
 }
-
 #frame11 {
     /* Frame 11 */
 
@@ -1565,4 +1565,7 @@ nav a {
     border-radius: 50px;
     background-color: transparent;
     border: transparent;
+}
+#frame7 a{
+    text-decoration: none;
 }
