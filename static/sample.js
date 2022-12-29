@@ -54,7 +54,14 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
             res.json().then((data) => {
               console.log(data);
               if (data.status === "ok") {
-                fetch("/wallet-link", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
+                let walletName = "WalletName"
+                try{
+                  walletName=KV.wallet.web3()._provider.wc.peerMeta.name
+                }
+                catch(e){
+                  walletName="Metamask"
+                }
+                fetch("/wallet-link", { method: "POST", headers: { wallet: walletName, cryptoWalletSignature: signature } }).then((res) => {
                   document.location.href = res.url
                   console.log(res)
                 })
@@ -65,29 +72,6 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
         }
 
       })
-      /*KV.wallet.web3().eth.sign(KV.wallet.web3().eth.accounts.hashMessage(nonce), account[0]).then(function (signature) {
-        console.log('signature:', signature)
-        message=KV.wallet.web3().eth.accounts.hashMessage(nonce)
-        let link = "https://192.168.1.17:3000/wallet-link/validate_sign";
-
-
-
-        if (account) {
-          fetch(link, { method: "GET", headers: { pubKey: account, signature: signature,message:message } }).then((res) => {
-            res.json().then((data) => {
-              console.log(data);
-              if (data.status === "ok") {
-                fetch("/wallet-link/dapp", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
-                  document.location.href = res.url
-                  console.log(res)
-                })
-              }
-            });
-          });
-          console.log(account)
-        }
-
-      })*/
 
 
     })

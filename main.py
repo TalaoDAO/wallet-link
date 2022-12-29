@@ -278,6 +278,7 @@ if __name__ == '__main__':
     logging.info("app init")
 
     app.run( host = mode.IP, port= mode.port, debug =True)
+
 init_app(app,red)
 
 """,ssl_context='adhoc'"""
