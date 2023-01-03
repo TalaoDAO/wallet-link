@@ -5,8 +5,8 @@
 
 #logo {}
 
-.noScroll{
-    overflow:hidden;
+.noScroll {
+    overflow: hidden;
 }
 
 #draw {
@@ -76,7 +76,7 @@
     padding: 0px;
     gap: 0px;
 
-
+    overflow: hidden;
 
 
     /* Inside auto layout */
@@ -546,7 +546,7 @@ frame8 {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    
+
 }
 
 #frame1 {
@@ -661,7 +661,7 @@ frame8 {
 
 .frame2 {
     /* Frame 2 */
-
+    width: 200%;
     /* Auto layout */
     display: flex;
     flex-direction: row;
@@ -746,38 +746,23 @@ frame8 {
     z-index: 100;
 
     width: 50px;
-    height: 50px;
     order: 200;
+    width: 400%;
+    position: relative;
+    right: 270px;
 }
 
-#kvwalletmodal_walletconnect_btn {
+#kvwalletmodal_walletconnect_btn {}
 
+#kvwalletmodal_walletconnect_btn2 {}
 
-}
+#kvwalletmodal_walletconnect_btn3 {}
 
-#kvwalletmodal_walletconnect_btn2 {
+#kvwalletmodal_walletconnect_btn4 {}
 
-}
+#kvwalletmodal_walletconnect_btn5 {}
 
-#kvwalletmodal_walletconnect_btn3 {
-
-
-}
-
-#kvwalletmodal_walletconnect_btn4 {
-
-
-
-}
-
-#kvwalletmodal_walletconnect_btn5 {
-
-}
-
-#kvwalletmodal_metamask_btn {
-
-
-}
+#kvwalletmodal_metamask_btn {}
 
 #frame6 {
 
@@ -1371,7 +1356,7 @@ nav a {
     font-size: 0;
 }
 
-.inactiveQuestions #text{
+.inactiveQuestions #text {
     visibility: collapse;
     height: 0px;
     font-size: 0;
@@ -1473,16 +1458,19 @@ nav a {
 
     font-size: 0;
 }
-.inactiveAnswer p{
+
+.inactiveAnswer p {
     visibility: collapse;
 
     font-size: 0;
 }
-.inactiveQuestions p{
+
+.inactiveQuestions p {
     visibility: collapse;
 
     font-size: 0;
 }
+
 /*#buttonMenuLogo {
     width: 12px;
     height: 2px;
@@ -1577,8 +1565,10 @@ nav a {
     left: 18px;
     bottom: 1px;
 }
+
 .rightDivButton {
     display: flex;
     flex-direction: row;
     overflow: hidden;
+    width: 200%;
 }

@@ -67,7 +67,7 @@
         <div id="bigBox">
           <div id="titles">
             <div id="title">
-              <p id="titleP">Build your Self-Sovereign Identity now </p>
+              <p id="titleP">Add an identity to your crypto wallet</p>
             </div>
             <div id="textTop">
               <p id="textTopP">Start using secure and verifiable digital credentials with your favorite wallet by
@@ -81,7 +81,8 @@
             <div id="leftBox">
               <div id="leftTop">
                 <div id="step1Div">
-                  <p id="step1">Step 1 : Verify your blockchain address</p>
+                  <p id="step1">Step 1 : Choose your crypto wallet
+                  </p>
                 </div>
                 <div id="chooseDiv">
                   <p id="choose">Choose your favorite wallet and get a proof of ownership !</p>
@@ -188,95 +189,28 @@
                         </div>
                       </div>
                     </div>
+                    <div class="box1" id="boxMetamask">
+                      <div class="underbox1">
+                        <div class="frame2">
+                          <div><img id="beaconlogo" src="/wallet-link/static/metamask.png"></div>
+                          <div class="rightDivButton">
+                            <p class="walletText">Coinbase Wallet</p>
+                            <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
+
+                            <button class='kvwalletbtn' id='kvwalletmodal_coinbase_btn'></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                   </div>
-                  <!--<div id="connect_box">
-                    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'>
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/wallet-link/static/metamask.png"></div>
-                            <div>
-                              <p class="walletText">Metamask Mobile</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn2'>
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/wallet-link/static/trustwallet.png">
-
-                            <p class="walletText">Trust Wallet</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn3'>
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/wallet-link/static/mathwallet.png">
-
-                            <p class="walletText">Math Wallet</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn4'>
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/wallet-link/static/ledger.png"></div>
-                            <div>
-                              <p class="walletText">Ledger Live</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn5'>
-
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/wallet-link/static/cryptocom.png">
-
-                            <p class="walletText">Crypto.com Wallet</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button class='kvwalletbtn' id='kvwalletmodal_metamask_btn'>
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/wallet-link/static/metamask.png"></div>
-                            <div>
-                              <p class="walletText">MetaMask Web Extension</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                  </div>-->
                 </div>
               </div>
               <div id="frame6">
                 <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
                   they
                   use across the web.</p>
+                  <button onclick="disconnect()">Disconnect</button>
 
 
               </div>
@@ -732,15 +666,6 @@
   </div>
 
 
-  <!-- <div id="connect_box">
-    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'>    </button>
-    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn2'></button>
-    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn3'></button>
-    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn4'></button>
-    <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn5'></button>
-    <button class='kvwalletbtn' id='kvwalletmodal_metamask_btn'></button>
-  </div>*/-->
-
 
   <script src="/wallet-link/static/KV.latest.min.js"
     onload='shield("/wallet-link/static/sample.js", null, "head", "script", 0);'></script>
@@ -1046,6 +971,10 @@
 
       }
     })
+    disconnect = ()=>{
+      console.log("disconnect")
+      KV.wallet.disconnect()
+    }
     /*
     document.getElementById('showAnswer36').addEventListener('click', () => {
       console.log(document.getElementById('answer36').getAttribute("class"))
