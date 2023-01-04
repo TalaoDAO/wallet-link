@@ -84,7 +84,7 @@ def dapp_wallet(red):
         if(blockchain=="ethereum"):
             session['blockchain']="ethereum"     
             logging.info(session.get('blockchain'))
-            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
@@ -92,7 +92,7 @@ def dapp_wallet(red):
         if(blockchain=="fantom"):
             session['blockchain']="fantom"     
             logging.info(session.get('blockchain'))
-            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demoFTM.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
@@ -100,7 +100,7 @@ def dapp_wallet(red):
         if(blockchain=="polygon"):
             session['blockchain']="polygon"     
             logging.info(session.get('blockchain'))
-            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demoPOL.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
@@ -108,7 +108,7 @@ def dapp_wallet(red):
         if(blockchain=="bsc"):
             session['blockchain']="bsc"     
             logging.info(session.get('blockchain'))
-            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demoBSC.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
