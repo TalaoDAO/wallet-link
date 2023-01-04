@@ -187,7 +187,7 @@ async def wallet_link_endpoint(id, red):
         if blockchain=="polygon":
             credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
-        credential_manifest['evidence']['id'] = str(uuid.uuid1())
+        #credential_manifest['evidence']['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
         credential['id'] = "urn:uuid:random" # for preview
@@ -202,7 +202,7 @@ async def wallet_link_endpoint(id, red):
 
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
-        credential['credentialSubject']['id'] = request.form['subject_id']
+        credential['evidence']['id'] = request.form['subject_id']
 
         try :
             presentation = json.loads(request.form['presentation']) 
