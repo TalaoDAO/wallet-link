@@ -187,6 +187,7 @@ async def wallet_link_endpoint(id, red):
         if blockchain=="polygon":
             credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
+        credential_manifest['evidence']['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
         credential['id'] = "urn:uuid:random" # for preview
@@ -226,8 +227,8 @@ async def wallet_link_endpoint(id, red):
                          'message' : 'Server error'})
             red.publish('wallet-link', data)
             return jsonify('server error'), 500 # sent to wallet
-        credential['credentialSubject']['cryptoWalletSignature'] = data['cryptoWalletSignature']
-        credential['credentialSubject']['cryptoWalletPayload'] = data['cryptoWalletPayload']
+        credential['evidence']['cryptoWalletSignature'] = data['cryptoWalletSignature']
+        credential['evidence']['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
         credential['credentialSubject']['accountName'] = data['accountName']
         credential['credentialSubject']['issuedBy']['name'] = 'Altme'
