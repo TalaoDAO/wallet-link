@@ -202,7 +202,7 @@ async def wallet_link_endpoint(id, red):
 
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
-        credential['evidence']['id'] = request.form['subject_id']
+        credential['evidence'][0]['id'] = request.form['subject_id']
 
         try :
             presentation = json.loads(request.form['presentation']) 
@@ -227,8 +227,8 @@ async def wallet_link_endpoint(id, red):
                          'message' : 'Server error'})
             red.publish('wallet-link', data)
             return jsonify('server error'), 500 # sent to wallet
-        credential['evidence']['cryptoWalletSignature'] = data['cryptoWalletSignature']
-        credential['evidence']['cryptoWalletPayload'] = data['cryptoWalletPayload']
+        credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
+        credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
         credential['credentialSubject']['accountName'] = data['accountName']
         credential['credentialSubject']['issuedBy']['name'] = 'Altme'
