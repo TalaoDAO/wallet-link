@@ -311,9 +311,9 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
-    init_app(app,red)
+    
 
-    app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
+    app.run( host = mode.IP, port= mode.port, debug =True)
 
-
+init_app(app,red)
 """,ssl_context='adhoc'"""
