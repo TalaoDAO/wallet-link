@@ -89,7 +89,14 @@ def dapp_wallet(red):
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
-
+        if(blockchain=="fantom"):
+            session['blockchain']="fantom"     
+            logging.info(session.get('blockchain'))
+            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            if not request.MOBILE:
+                return render_template('demoFTM.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+            else:
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
@@ -141,6 +148,8 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
     if blockchain=="ethereum":
         credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
+    if blockchain=="fantom":
+        credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -151,6 +160,9 @@ async def wallet_link_endpoint(id, red):
             credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="ethereum":
             credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
+        if blockchain=="fantom":
+            credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
+        
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
@@ -239,9 +251,9 @@ def wallet_link_stream(red):
         
 
 def validate_sign():
-    if(session.get('blockchain')=="ethereum"):
+    if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom"):
         try:
-            logging.info("verifying ethereum")
+            logging.info("verifying "+session.get('blockchain'))
             message_hash = defunct_hash_message(text=session.get('nonce'))
             address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
             logging.info("address verified : " +address)

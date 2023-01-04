@@ -518,6 +518,33 @@ frame8 {
     bottom: 15px;
 }
 
+#fantom {
+    /* Tezos */
+
+    width: 47px;
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+    color: #544A62;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+    bottom: 15px;
+    left: 30px;
+}
+
 #frame11 {
     /* Frame 11 */
 
@@ -820,14 +847,12 @@ frame8 {
     align-items: flex-start;
     padding: 0px;
 
-    width: 549px;
     height: 78px;
 
 
     /* Inside auto layout */
     flex: none;
     order: 2;
-    align-self: stretch;
     flex-grow: 0;
     position: relative;
     top: 30px;
@@ -888,6 +913,30 @@ frame8 {
     /* or 29px */
 
     color: #000000;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+#soon{
+    /* Beacon Wallet */
+    text-align: left;
+    padding-left: 25px;
+    width: 280px;
+    height: 29px;
+
+    /* Paragraph/18/bold */
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    color: #665c5c;
 
 
     /* Inside auto layout */
@@ -1549,6 +1598,7 @@ nav a {
     flex-direction: row;
     width: 460px;
     overflow: hidden;
+    align-items: center;
 }
 
 #boxWC1 {
@@ -1580,5 +1630,27 @@ nav a {
     height: 0px;
     font-size: 0;
 }
-#frame7 a{
-text-decoration: none;}
+
+#frame7 a {
+    text-decoration: none;
+}
+
+#disconnect {
+    height: 67px;
+    border-radius: 16px;
+    background: #FFFFFF;
+    border: 1px solid #EDECF2;
+    border-radius: 16px;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+    color: #000000;
+    width: 260px;
+
+    order: 1;
+
+    position: relative;
+    top: 5px;
+}
