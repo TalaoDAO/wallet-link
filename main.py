@@ -97,6 +97,22 @@ def dapp_wallet(red):
                 return render_template('demoFTM.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+        if(blockchain=="polygon"):
+            session['blockchain']="polygon"     
+            logging.info(session.get('blockchain'))
+            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            if not request.MOBILE:
+                return render_template('demoPOL.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+            else:
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+        if(blockchain=="bsc"):
+            session['blockchain']="bsc"     
+            logging.info(session.get('blockchain'))
+            session['cryptoWalletPayload'] = encode_defunct(text=session['nonce'])
+            if not request.MOBILE:
+                return render_template('demoBSC.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+            else:
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
@@ -150,6 +166,10 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     if blockchain=="fantom":
         credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
+    if blockchain=="polygon":
+        credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
+    if blockchain=="bsc":
+        credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -162,7 +182,10 @@ async def wallet_link_endpoint(id, red):
             credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="fantom":
             credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
-        
+        if blockchain=="bsc":
+            credential_manifest = json.load(open('BinanceAssociatedAddress_credential_manifest.json', 'r')) 
+        if blockchain=="polygon":
+            credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
@@ -251,7 +274,7 @@ def wallet_link_stream(red):
         
 
 def validate_sign():
-    if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom"):
+    if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bsc" or session.get('blockchain')=="polygon"):
         try:
             logging.info("verifying "+session.get('blockchain'))
             message_hash = defunct_hash_message(text=session.get('nonce'))
@@ -288,9 +311,9 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
+    init_app(app,red)
 
-    app.run( host = mode.IP, port= mode.port, debug =True)
+    app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
 
-init_app(app,red)
 
 """,ssl_context='adhoc'"""

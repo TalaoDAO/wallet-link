@@ -544,7 +544,58 @@ frame8 {
     bottom: 15px;
     left: 30px;
 }
+#bsc {
+    /* Tezos */
 
+    width: 47px;
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+    color: #544A62;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+    bottom: 15px;
+    left: 30px;
+}
+#polygon {
+    /* Tezos */
+
+    width: 47px;
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+    color: #544A62;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: relative;
+    bottom: 15px;
+    left: 30px;
+}
 #frame11 {
     /* Frame 11 */
 

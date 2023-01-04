@@ -507,7 +507,7 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #330080;
+    color: #544A62;
 
 
     /* Inside auto layout */
@@ -517,7 +517,6 @@ frame8 {
     position: relative;
     bottom: 15px;
 }
-
 #fantom {
     /* Tezos */
 
@@ -585,7 +584,7 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
+    color: #330080;
 
 
     /* Inside auto layout */
@@ -965,30 +964,6 @@ frame8 {
     /* or 29px */
 
     color: #000000;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-#soon{
-    /* Beacon Wallet */
-    text-align: left;
-    padding-left: 25px;
-    width: 280px;
-    height: 29px;
-
-    /* Paragraph/18/bold */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    color: #665c5c;
 
 
     /* Inside auto layout */
