@@ -685,7 +685,7 @@
   <script>
     var nonce = "{{nonce}}"
 
-    async function signMessage() {
+    /*async function signMessage() {
       KV.wallet.web3().eth.getAccounts().then(function (account) {
 
         console.log(account)
@@ -715,7 +715,7 @@
 
       })
 
-    }
+    }*/
     document.getElementById('buttonGeneral').addEventListener('click', () => {
       document.getElementById('divButtonGeneral').setAttribute("class", "activeButtonFAQ");
       document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
