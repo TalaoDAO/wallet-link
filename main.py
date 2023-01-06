@@ -332,9 +332,6 @@ def validate_sign():
             print(session.get('nonce'))
             address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
             logging.info("address verified : " +address)
-
-            address2 = w3.eth.account.recoverHash(session.get('nonce'), signature=request.headers.get('signature'))
-            logging.info("address verified2 : " +address2)
             session["addressVerified"]=address
             return({'status':'ok'}),200
         except ValueError:
