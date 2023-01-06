@@ -467,7 +467,6 @@ frame8 {
 
 #tezos {
     /* Secondary */
-    color: #544A62;
 
 
     width: 47px;
@@ -507,7 +506,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #330080;
 
 
     /* Inside auto layout */
@@ -533,7 +531,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -559,7 +556,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -585,7 +581,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -1672,7 +1667,9 @@ nav a {
 #boxWC5 {
     order: 4;
 }
-
+#boxWC6{
+    order: 6;
+}
 #boxMetamask {
     order: 5;
 }
@@ -1705,4 +1702,17 @@ nav a {
 
     position: relative;
     top: 5px;
+    z-index: 100;
+}
+
+#disconnect:hover {
+    background: #EDECF2;
+}
+.activeNav{
+    color: #544A62;
+
+}
+.inactiveNav{
+    color: #330080;
+
 }

@@ -14,7 +14,7 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
     buttonCustom3: document.getElementById("kvwalletmodal_walletconnect_btn3"),
     buttonCustom4: document.getElementById("kvwalletmodal_walletconnect_btn4"),
     buttonCustom5: document.getElementById("kvwalletmodal_walletconnect_btn5"),
-
+    buttonCustom6: document.getElementById("kvwalletmodal_walletconnect_btn6"),
     metaButton: document.getElementById("kvwalletmodal_metamask_btn"),
     //coinbaseButton: document.getElementById("kvwalletmodal_coinbase_btn")
   });

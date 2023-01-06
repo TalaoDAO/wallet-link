@@ -379,7 +379,6 @@ header {
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
-    gap: 32px;
 
 
     border-bottom: 1px solid rgba(84, 74, 98, 0.19);
@@ -392,6 +391,7 @@ header {
     top: 15px;
     max-width: 90%;
     width: 90%;
+    justify-content: space-between;
 }
 
 frame7 {
@@ -434,9 +434,11 @@ frame8 {
 }
 
 #tezos {
-    /* Tezos */
+    /* Secondary */
 
-    margin: 0;
+
+    height: 29px;
+
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
@@ -445,8 +447,7 @@ frame8 {
 
     /* or 29px */
 
-    /* Purple */
-    color: #330080;
+
 
 
     /* Inside auto layout */
@@ -457,9 +458,9 @@ frame8 {
 }
 
 #ethereum {
-    /* Ethereum */
+    /* Tezos */
 
-
+    height: 29px;
 
     font-family: 'Nunito';
     font-style: normal;
@@ -469,17 +470,85 @@ frame8 {
 
     /* or 29px */
 
-    /* Secondary */
-    color: #544A62;
+    /* Purple */
 
 
     /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    top: 3px;
+
 }
+
+#fantom {
+    /* Tezos */
+
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+}
+
+#bsc {
+    /* Tezos */
+
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+}
+
+#polygon {
+    /* Tezos */
+
+    height: 29px;
+
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 161.7%;
+
+    /* or 29px */
+
+    /* Purple */
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+
+}
+
 
 #frame11 {
     /* Frame 11 */
@@ -689,28 +758,15 @@ frame8 {
 
 
 
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    /* Frame 3 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-
-
-
 
     /* Inside auto layout */
     flex: none;
     order: 1;
     align-self: stretch;
     flex-grow: 1;
+    position: absolute;
+    right: 10%;
+    padding-top: 25px;
 }
 
 .vector {
@@ -1571,4 +1627,18 @@ nav a {
     flex-direction: row;
     overflow: hidden;
     width: 200%;
+}
+
+#frame7 a {
+    text-decoration: none;
+}
+
+.activeNav {
+    color: #544A62;
+
+}
+
+.inactiveNav {
+    color: #330080;
+
 }

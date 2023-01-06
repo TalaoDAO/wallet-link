@@ -479,7 +479,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #330080;
 
 
     /* Inside auto layout */
@@ -492,7 +491,6 @@ frame8 {
 
 #ethereum {
     /* Secondary */
-    color: #544A62;
 
 
     width: 47px;
@@ -531,7 +529,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -557,7 +554,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -583,7 +579,6 @@ frame8 {
     /* or 29px */
 
     /* Purple */
-    color: #544A62;
 
 
     /* Inside auto layout */
@@ -1646,4 +1641,12 @@ nav a {
 }
 #frame7 a{
     text-decoration: none;
+}
+.activeNav{
+    color: #544A62;
+
+}
+.inactiveNav{
+    color: #330080;
+
 }

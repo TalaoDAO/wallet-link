@@ -56,6 +56,55 @@ def create_payload (input, type) :
   bytes = char2Bytes(formattedInput)
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
+def navBarMaker(blockchain):
+    navbar=""
+    activeLinks=["""<div id="frame7">
+                    <a href="/wallet-link?blockchain=tezos"><p class="activeNav" id="tezos">Tezos</p></a>
+                  </div>""","""<div id="frame7">
+                    <a href="/wallet-link?blockchain=ethereum">
+                      <p class="activeNav" id="ethereum">Ethereum</p>
+                    </a>
+                  </div>""",
+                  """<div id="frame7">
+                    <a href="/wallet-link?blockchain=fantom"><p class="activeNav" id="fantom">Fantom</p></a>
+                  </div>""",
+                  """<div id="frame7">
+                    <a href="/wallet-link?blockchain=polygon">
+                      <p class="activeNav" id="polygon">Polygon</p>
+                    </a>
+                  </div>""",
+                  """<div id="frame7">
+                    <a href="/wallet-link?blockchain=bsc">
+                      <p class="activeNav" id="bsc">BSC</p>
+                    </a>
+                  </div>"""]
+    inactiveLinks=["""<div id="frame7">
+                    <p class="inactiveNav" id="tezos">Tezos</p>
+                  </div>""",
+                  """<div id="frame7">
+                    
+                      <p class="inactiveNav" id="ethereum">Ethereum</p>
+                    
+                  </div>""",
+                  """<div id="frame7">
+                    <p class="inactiveNav" id="fantom">Fantom</p>
+                  </div>""",
+                  """<div id="frame7">
+                    
+                      <p class="inactiveNav" id="polygon">Polygon</p>
+                    
+                  </div>""",
+                  """<div id="frame7">
+                      <p class="inactiveNav" id="bsc">BSC</p>
+                    
+                  </div>"""]
+    for i in range(0,5):
+        if i==blockchain:
+            navbar=navbar+inactiveLinks[i]
+        else:
+            navbar=navbar+activeLinks[i]
+    print(navbar)
+    return navbar
 
 def init_app(app,red) :
     app.add_url_rule('/wallet-link',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
@@ -86,41 +135,41 @@ def dapp_wallet(red):
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(1))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(1))
         if(blockchain=="fantom"):
             session['blockchain']="fantom"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demoFTM.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(2))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(2))
         if(blockchain=="polygon"):
             session['blockchain']="polygon"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demoPOL.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(3))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(3))
         if(blockchain=="bsc"):
             session['blockchain']="bsc"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demoBSC.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
             if not request.MOBILE:
-                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(0))
             else:
-                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign")
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(0))
 
             
     else :
@@ -318,8 +367,9 @@ def serve_static(filename):
 if __name__ == '__main__':
     logging.info("app init")
     
+    init_app(app,red)
 
-    app.run( host = mode.IP, port= mode.port, debug =True)
+    app.run( host = mode.IP, port= mode.port, debug =True,ssl_context='adhoc')
 
-init_app(app,red)
 """,ssl_context='adhoc'"""
+

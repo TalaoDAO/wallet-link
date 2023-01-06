@@ -108,11 +108,7 @@
               </div>
               <div id="leftMid">
                 <div id="frame4">
-                  <div id="frame7">
-                    <p id="tezos">Tezos</p>
-                  </div>
-                  <div id="frame8">
-                  </div>
+                  {{navbar|safe}}
                 </div>
                 <div id="frame11">
                   <div id="frame1">
@@ -169,7 +165,7 @@
                         </div>
                       </div>
                     </button>
-                    <button id="requestPermission2" class="transparent">
+                    <!--<button id="requestPermission2" class="transparent">
                       <div class="box2">
                         <div class="underbox2">
                           <div class="frame2">
@@ -181,7 +177,7 @@
                           <div class="frame3"><img class="vector" src="/wallet-link/static/vector.png"></div>
                         </div>
                       </div>
-                    </button>
+                    </button>-->
 
 
 
@@ -748,9 +744,9 @@
     document.getElementById('requestPermission').addEventListener('click', () => {
       requestPermission()
     })
-    document.getElementById('requestPermission2').addEventListener('click', () => {
+    /*document.getElementById('requestPermission2').addEventListener('click', () => {
       requestPermission()
-    })
+    })*/
     document.getElementById('requestPermission3').addEventListener('click', () => {
       requestPermission()
     })
