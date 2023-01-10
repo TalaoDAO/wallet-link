@@ -179,7 +179,7 @@ def dapp_wallet(red):
         logging.info("address verified "+session["addressVerified"])
         red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
-                                        "cryptoWalletPayload" : str(session['cryptoWalletPayload']),
+                                        "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
         return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
@@ -240,7 +240,6 @@ async def wallet_link_endpoint(id, red):
         credential_manifest['issuer']['id'] = issuer_did
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
         credential['id'] = "urn:uuid:random" # for preview
-        credential['credentialSubject']['id'] = "did:wallet" # for preview
         credential_offer = {
             "type": "CredentialOffer",
             "credentialPreview": credential,
@@ -251,7 +250,9 @@ async def wallet_link_endpoint(id, red):
 
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
-        credential['evidence'][0]['id'] = request.form['subject_id']
+        credential['credentialSubject']['id'] = request.form['subject_id'] # for preview
+
+        credential['evidence'][0]['id'] = "https://github.com/TalaoDAO/context#evidence"
 
         try :
             presentation = json.loads(request.form['presentation']) 
