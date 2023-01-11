@@ -56,9 +56,7 @@ def create_payload (input, type) :
   bytes = char2Bytes(formattedInput)
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
-def navBarMaker(blockchain):
-    navbar=""
-    activeLinks=["""<div id="frame7">
+activeLinks=["""<div id="frame7">
                     <a href="/wallet-link?blockchain=tezos"><p class="activeNav" id="tezos">Tezos</p></a>
                   </div>""","""<div id="frame7">
                     <a href="/wallet-link?blockchain=ethereum">
@@ -78,7 +76,7 @@ def navBarMaker(blockchain):
                       <p class="activeNav" id="bsc">BSC</p>
                     </a>
                   </div>"""]
-    inactiveLinks=["""<div id="frame7">
+inactiveLinks=["""<div id="frame7">
                     <p class="inactiveNav" id="tezos">Tezos</p>
                   </div>""",
                   """<div id="frame7">
@@ -98,6 +96,10 @@ def navBarMaker(blockchain):
                       <p class="inactiveNav" id="bsc">BSC</p>
                     
                   </div>"""]
+
+def navBarMaker(blockchain):
+    navbar=""
+
     for i in range(0,5):
         if i==blockchain:
             navbar=navbar+inactiveLinks[i]
@@ -130,7 +132,7 @@ def dapp_wallet(red):
             blockchain="tezos"
         else:
             blockchain=request.args['blockchain']
-        if(blockchain=="ethereum"):
+        """if(blockchain=="ethereum"):
             session['blockchain']="ethereum"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
@@ -161,15 +163,21 @@ def dapp_wallet(red):
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))"""
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
             if not request.MOBILE:
-                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(0))
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",
+                #navbar=navBarMaker(0)
+                navbar=inactiveLinks[0]
+                )
             else:
-                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(0))
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",
+                #navbar=navBarMaker(0)
+                navbar=inactiveLinks[0]
+                )
 
             
     else :
@@ -210,15 +218,15 @@ async def wallet_link_endpoint(id, red):
     logging.info("blockchain")
     credential=None
     if blockchain=="tezos":
-        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('TezosPooAddress.jsonld', 'r'))
     if blockchain=="ethereum":
-        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('EthereumPooAddress.jsonld', 'r'))
     if blockchain=="fantom":
-        credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('FantomPooAddress.jsonld', 'r'))
     if blockchain=="polygon":
-        credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('PolygonPooAddress.jsonld', 'r'))
     if blockchain=="bsc":
-        credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('BinancePooAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -226,15 +234,15 @@ async def wallet_link_endpoint(id, red):
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
-            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('TezosPooAddress_credential_manifest.json', 'r'))
         if blockchain=="ethereum":
-            credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('EthereumPooAddress_credential_manifest.json', 'r'))
         if blockchain=="fantom":
-            credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('FantomPooAddress_credential_manifest.json', 'r')) 
         if blockchain=="bsc":
-            credential_manifest = json.load(open('BinanceAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('BinancePooAddress_credential_manifest.json', 'r')) 
         if blockchain=="polygon":
-            credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('PolygonPooAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
         #credential_manifest['evidence']['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
