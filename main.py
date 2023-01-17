@@ -23,7 +23,7 @@ issuer_vm = "did:web:app.altme.io:issuer#key-1"
 issuer_did = "did:web:app.altme.io:issuer"
 w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
 
-app = Flask(__name__,static_folder=os.path.abspath('/home/achille/wallet-link/static'))
+app = Flask(__name__,static_folder=os.path.abspath('/home/achille/altme-identity/static'))
 QRcode(app)
 app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 
@@ -57,22 +57,22 @@ def create_payload (input, type) :
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
 activeLinks=["""<div id="frame7">
-                    <a href="/wallet-link?blockchain=tezos"><p class="activeNav" id="tezos">Tezos</p></a>
+                    <a href="/altme-identity?blockchain=tezos"><p class="activeNav" id="tezos">Tezos</p></a>
                   </div>""","""<div id="frame7">
-                    <a href="/wallet-link?blockchain=ethereum">
+                    <a href="/altme-identity?blockchain=ethereum">
                       <p class="activeNav" id="ethereum">Ethereum</p>
                     </a>
                   </div>""",
                   """<div id="frame7">
-                    <a href="/wallet-link?blockchain=fantom"><p class="activeNav" id="fantom">Fantom</p></a>
+                    <a href="/altme-identity?blockchain=fantom"><p class="activeNav" id="fantom">Fantom</p></a>
                   </div>""",
                   """<div id="frame7">
-                    <a href="/wallet-link?blockchain=polygon">
+                    <a href="/altme-identity?blockchain=polygon">
                       <p class="activeNav" id="polygon">Polygon</p>
                     </a>
                   </div>""",
                   """<div id="frame7">
-                    <a href="/wallet-link?blockchain=bsc">
+                    <a href="/altme-identity?blockchain=bsc">
                       <p class="activeNav" id="bsc">BSC</p>
                     </a>
                   </div>"""]
@@ -109,14 +109,14 @@ def navBarMaker(blockchain):
     return navbar
 
 def init_app(app,red) :
-    app.add_url_rule('/wallet-link',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
-    app.add_url_rule('/wallet-link/validate_sign' , view_func=validate_sign,methods=['GET'])
+    app.add_url_rule('/altme-identity',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
+    app.add_url_rule('/altme-identity/validate_sign' , view_func=validate_sign,methods=['GET'])
 
     # credential issuer routes
-    app.add_url_rule('/wallet-link/qrcode',  view_func=wallet_link_qrcode, methods = ['GET', 'POST'], defaults={'mode' : mode})
-    app.add_url_rule('/wallet-link/endpoint/<id>',  view_func=wallet_link_endpoint, methods = ['GET', 'POST'], defaults={'red' : red})
-    app.add_url_rule('/wallet-link/stream',  view_func=wallet_link_stream, methods = ['GET', 'POST'], defaults={'red' : red})
-    app.add_url_rule('/wallet-link/followup',  view_func=wallet_link_followup, methods = ['GET'])
+    app.add_url_rule('/altme-identity/qrcode',  view_func=wallet_link_qrcode, methods = ['GET', 'POST'], defaults={'mode' : mode})
+    app.add_url_rule('/altme-identity/endpoint/<id>',  view_func=wallet_link_endpoint, methods = ['GET', 'POST'], defaults={'red' : red})
+    app.add_url_rule('/altme-identity/stream',  view_func=wallet_link_stream, methods = ['GET', 'POST'], defaults={'red' : red})
+    app.add_url_rule('/altme-identity/followup',  view_func=wallet_link_followup, methods = ['GET'])
     return
 
 
@@ -137,44 +137,44 @@ def dapp_wallet(red):
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(1))
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(1))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(1))
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(1))
         if(blockchain=="fantom"):
             session['blockchain']="fantom"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(2))
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(2))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(2))
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(2))
         if(blockchain=="polygon"):
             session['blockchain']="polygon"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(3))
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(3))
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
         if(blockchain=="bsc"):
             session['blockchain']="bsc"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(4))
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"wallet-link/validate_sign",navbar=navBarMaker(4))"""
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(4))"""
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
             if not request.MOBILE:
-                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",
+                return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"altme-identity/validate_sign",
                 #navbar=navBarMaker(0)
                 navbar=inactiveLinks[0]
                 )
             else:
-                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"wallet-link/validate_sign",
+                return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"altme-identity/validate_sign",
                 #navbar=navBarMaker(0)
                 navbar=inactiveLinks[0]
                 )
@@ -190,10 +190,10 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect (mode.server+'wallet-link/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
+        return redirect (mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
 
 
-# route '/wallet-link/qrcode'
+# route '/altme-identity/qrcode'
 def wallet_link_qrcode(mode) :
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
@@ -204,12 +204,12 @@ def wallet_link_qrcode(mode) :
 
     logging.info("blockchain")
 
-    url =mode.server+'wallet-link/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
+    url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
     return render_template('qrcode.html', url=url, id=id)
 
 
-# route '/wallet-link/endpoint/
+# route '/altme-identity/endpoint/
 async def wallet_link_endpoint(id, red):  
     blockchain = request.args['blockchain']
     logging.info("blockchain")
@@ -283,7 +283,7 @@ async def wallet_link_endpoint(id, red):
             # followup function call through js
             data = json.dumps({"id" : id,
                          'message' : 'Server error'})
-            red.publish('wallet-link', data)
+            red.publish('altme-identity', data)
             return jsonify('server error'), 500 # sent to wallet
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
@@ -304,7 +304,7 @@ async def wallet_link_endpoint(id, red):
         # followup function call through js
         data = json.dumps({"id" : id,
                          'message' : 'Ok credential transfered'})
-        red.publish('wallet-link', data)
+        red.publish('altme-identity', data)
         red.delete(id)
         # cerdential sent to wallet
         return jsonify(signed_credential)
@@ -322,7 +322,7 @@ def wallet_link_followup():
 def wallet_link_stream(red):
     def event_stream(red):
         pubsub = red.pubsub()
-        pubsub.subscribe('wallet-link')
+        pubsub.subscribe('altme-identity')
         for message in pubsub.listen():
             if message['type']=='message':
                 yield 'data: %s\n\n' % message['data'].decode()  
@@ -353,19 +353,19 @@ def validate_sign():
             session.get('cryptoWalletPayload')))
             logging.info("address verified : " +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
             if(key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()!=request.headers.get('address')):
-                return redirect (mode.server+'wallet-link/error',403)
+                return redirect (mode.server+'altme-identity/error',403)
             session["addressVerified"]=key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()
             return({'status':'ok'}),200
         except ValueError:
             pass
-            return redirect (mode.server+'wallet-link/error',403)
+            return redirect (mode.server+'altme-identity/error',403)
 
-@app.route('/wallet-link/error',methods=['GET'])
+@app.route('/altme-identity/error',methods=['GET'])
 def error():
     logging.info(error)
     return render_template("error.html")
 
-@app.route('/wallet-link/static/<filename>',methods=['GET'])
+@app.route('/altme-identity/static/<filename>',methods=['GET'])
 def serve_static(filename):
     logging.info(filename)
     return send_file('./static/'+filename, download_name=filename)

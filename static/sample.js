@@ -1,7 +1,7 @@
 //To enable wallet connect, an infuraID is needed, so this should be set first
 KV.set_infuraID("f2be8a3bf04d4a528eb416566f7b5ad6");
 //The wallet connection system can be then be initialised, and other dependency scripts can be added
-KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
+KV.init(["/altme-identity/static/KV.WalletUIHandler.latest.min.js"]).then(function (res) {
   console.log(KV.rpc_codes)
   let walletui = new KV.WalletUIHandler({
     parent_container: document.getElementById("connect_box"),
@@ -47,7 +47,7 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
       console.log("here")
       KV.wallet.web3().eth.personal.sign(hexMessage, account[0]).then(function (signature) {
         console.log("request sign")
-        let link = "https://talao.co/wallet-link/validate_sign";
+        let link = "https://talao.co/altme-identity/validate_sign";
 
 
 
@@ -63,7 +63,7 @@ KV.init(["/wallet-link/static/KV.WalletUIHandler.latest.min.js"]).then(function 
                 catch(e){
                   walletName="Metamask"
                 }
-                fetch("/wallet-link", { method: "POST", headers: { wallet: walletName, cryptoWalletSignature: signature } }).then((res) => {
+                fetch("/altme-identity", { method: "POST", headers: { wallet: walletName, cryptoWalletSignature: signature } }).then((res) => {
                   document.location.href = res.url
                   console.log(res)
                 })
