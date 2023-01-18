@@ -710,9 +710,25 @@
                           let element2 = document.getElementById('frame4');
                           element2.remove();
                           var qr = document.createElement("div");
-                          qr.setAttribute('id','qrcode')
+                          qr.setAttribute('id', 'qrcode')
                           document.getElementById("leftMid").appendChild(qr);
                           new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                          var source = new EventSource('/altme-identity/stream');
+                          source.onmessage = function (event) {
+                            const data = JSON.parse(event.data)
+                            // voir ce que l on fait apres
+                            if (data.id == qrcodeLink.id) {
+                              document.getElementById('qrcode').remove()
+                              let greenlogo=document.createElement("img")
+                              document.getElementById("leftMid").appendChild(greenlogo);
+                              greenlogo.setAttribute('id','qrcode')
+                              document.getElementById('qrcode').setAttribute('src','/altme-identity/static/tick-circle.png')
+                              let success=document.createElement("p")
+                              document.getElementById("leftMid").appendChild(success);
+                              success.setAttribute('id','success')
+                              success.innerHTML="Success !"
+                            }
+                          };
                         }
                         )
                       })

@@ -207,7 +207,7 @@ def wallet_link_qrcode(mode) :
     url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
     #return render_template('qrcode.html', url=url, id=id)
-    return json.dumps({"url":url})
+    return json.dumps({"url":url,"id":id})
 
 
 
