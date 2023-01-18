@@ -12,7 +12,7 @@
   <script src="/altme-identity/static/walletbeacon.min.js"></script>
   <link rel="stylesheet" href="/altme-identity/static/style.css">
   <link rel="icon" type="image/png" href="/altme-identity/static/altmeIcon.png" sizes="16x16">
-
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -80,7 +80,7 @@
             </div>
             <div id="textTop">
               <p id="textTopP">Start using secure and verifiable digital credentials with your favorite wallet by
-                verifying your blockchain address and obtaining “Proof of ownership” in Altme wallet !</p>
+                verifying your blockchain address and obtaining a “Proof of ownership” in Altme wallet !</p>
             </div>
 
 
@@ -693,11 +693,32 @@
         if (activeAccount) {
           fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
+              /*console.log("data");
               console.log(data);
+              console.log("data");*/
               if (data.status === "ok") {
                 fetch("/altme-identity", { method: "POST", headers: { wallet: wallet, cryptoWalletSignature: signature.signature } }).then((res) => {
-                  document.location.href = res.url
-                  console.log(res)
+                  //document.location.href = res.url
+                  console.log("res")
+                  res.json().then(
+                    (urlJson) => {
+                      fetch(urlJson.url).then((qrcode) => {
+                        qrcode.json().then((qrcodeLink) => {
+                          console.log(qrcodeLink.url)
+                          let element = document.getElementById('frame11');
+                          element.remove();
+                          let element2 = document.getElementById('frame4');
+                          element2.remove();
+                          var qr = document.createElement("div");
+                          qr.setAttribute('id','qrcode')
+                          document.getElementById("leftMid").appendChild(qr);
+                          new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                        }
+                        )
+                      })
+                    }
+                  )
+
                 })
               }
             });
@@ -718,7 +739,7 @@
           try {
             wallet = permissions.appMetadata.name
             console.log(wallet)
-          } catch (e) { console.log(e)}
+          } catch (e) { console.log(e) }
           if (callback) {
             callback(permissions)
           }

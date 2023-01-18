@@ -190,8 +190,8 @@ def dapp_wallet(red):
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
                                 }))        
-        return redirect (mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
-
+        #return redirect (mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
+        return json.dumps({"url":mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"]})
 
 # route '/altme-identity/qrcode'
 def wallet_link_qrcode(mode) :
@@ -206,7 +206,11 @@ def wallet_link_qrcode(mode) :
 
     url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
-    return render_template('qrcode.html', url=url, id=id)
+    #return render_template('qrcode.html', url=url, id=id)
+    return json.dumps({"url":url})
+
+
+
 
 
 # route '/altme-identity/endpoint/
@@ -214,8 +218,12 @@ async def wallet_link_endpoint(id, red):
     blockchain = request.args['blockchain']
     logging.info("blockchain")
     logging.info(blockchain)
-
     logging.info("blockchain")
+    address= request.args['address']
+    logging.info("address")
+    logging.info(address)
+    logging.info("address")
+
     credential=None
     if blockchain=="tezos":
         credential = json.load(open('TezosPooAddress.jsonld', 'r'))
@@ -230,7 +238,7 @@ async def wallet_link_endpoint(id, red):
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
-    credential["credentialSubject"]["associatedAddress"]=request.args['address']
+    credential["credentialSubject"]["associatedAddress"]=address
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
@@ -259,7 +267,7 @@ async def wallet_link_endpoint(id, red):
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
         credential['credentialSubject']['id'] = request.form['subject_id'] # for preview
-
+        logging.info(request.form['subject_id'])
         credential['evidence'][0]['id'] = "https://github.com/TalaoDAO/context#evidence"
 
         try :
@@ -373,6 +381,7 @@ def serve_static(filename):
 if __name__ == '__main__':
     logging.info("app init")
     
+
     
 
 
