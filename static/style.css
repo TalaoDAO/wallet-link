@@ -1657,3 +1657,6 @@ nav a {
 #logout{
     font-size: 14px;
 }
+.hidden{
+    visibility: hidden;
+}

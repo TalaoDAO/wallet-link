@@ -69,7 +69,7 @@
             </div>
 
           </div>
-          <button visibility="hidden" id="logout">Disconnect Wallet</button>
+          <button class="hidden" id="logout">Disconnect Wallet</button>
 
         </nav>
 
@@ -692,7 +692,7 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
-          document.getElementById('logout').setAttribute('visibility','visible')
+          document.getElementById('logout').setAttribute('class','')
 
           fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
@@ -775,7 +775,7 @@
 
     document.getElementById('logout').addEventListener('click', () => {
       client.disconnect();
-      document.getElementById('logout').setAttribute('visibility','hidden')
+      document.getElementById('logout').setAttribute('class','hidden')
     })
 
 
