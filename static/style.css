@@ -514,6 +514,7 @@ frame8 {
     position: relative;
     bottom: 15px;
 }
+
 #fantom {
     /* Tezos */
 
@@ -539,6 +540,7 @@ frame8 {
     bottom: 15px;
     left: 30px;
 }
+
 #bsc {
     /* Tezos */
 
@@ -564,6 +566,7 @@ frame8 {
     bottom: 15px;
     left: 30px;
 }
+
 #polygon {
     /* Tezos */
 
@@ -589,6 +592,7 @@ frame8 {
     bottom: 15px;
     left: 30px;
 }
+
 #frame11 {
     /* Frame 11 */
 
@@ -1639,24 +1643,39 @@ nav a {
     background-color: transparent;
     border: transparent;
 }
-#frame7 a{
+
+#frame7 a {
     text-decoration: none;
 }
-.activeNav{
+
+.activeNav {
     color: #544A62;
 
 }
-.inactiveNav{
+
+.inactiveNav {
     color: #330080;
 
 }
-.nav-02__logo_img{
+
+.nav-02__logo_img {
     width: 70px;
     height: 70px;
 }
-#logout{
+
+#logout {
     font-size: 14px;
+    position: absolute;
+    top: 23px;
+    height: 44px;
+    border: none;
+    border-radius: 4px;
 }
-.hidden{
-    visibility: hidden;
+
+.hidden {
+    visibility: collapse;
+}
+
+nav {
+    align-items: center;
 }
