@@ -1004,7 +1004,7 @@ frame8 {
 
 #success {
     /* Connect wallet */
-
+    margin: 0;
     width: 549px;
     height: 29px;
 
@@ -1649,4 +1649,12 @@ nav a {
 .inactiveNav{
     color: #330080;
 
+}
+.nav-02__logo_img{
+    width: 70px;
+    height: 70px;
+}
+#logout{
+    visibility: hidden;
+    font-size: 14px;
 }

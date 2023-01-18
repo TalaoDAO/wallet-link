@@ -23,7 +23,7 @@
           <div class="nav-02__box">
             <div class="nav-02__logo"><a class="nav-02__link" href="https://altme.io/" target="_self">
                 <img loading="lazy" class="nav-02__logo_img"
-                  src="https://ucarecdn.com/1e7c036a-046a-4447-8dd2-91139cedc3ef/" height="70" alt="Logo" />
+                  src="/altme-identity/static/altmeIcon.png" height="70" alt="Logo" />
               </a></div>
 
             <div class="nav-02__list_wrapper  ">
@@ -63,6 +63,7 @@
                     </div>
                   </a>
                 </div>
+                <button id="logout">Disconnect Wallet</button>
               </div>
 
 
@@ -691,6 +692,8 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
+          document.getElementById('logout').setAttribute('visibility','visible')
+
           fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
               /*console.log("data");
@@ -713,6 +716,9 @@
                           qr.setAttribute('id', 'qrcode')
                           document.getElementById("leftMid").appendChild(qr);
                           new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                          document.getElementById('step1').innerHTML="Step 2 : Scan this QR code with Altme"
+                          document.getElementById('choose').innerHTML=""
+
                           var source = new EventSource('/altme-identity/stream');
                           source.onmessage = function (event) {
                             const data = JSON.parse(event.data)
@@ -767,6 +773,10 @@
         })
     }
 
+    document.getElementById('logout').addEventListener('click', () => {
+      client.disconnect();
+      document.getElementById('logout').setAttribute('visibility','hidden')
+    })
 
 
     // Add event listener to the button
