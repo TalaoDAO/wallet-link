@@ -167,22 +167,6 @@
                         </div>
                       </div>
                     </button>
-                    <!--<button id="requestPermission2" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/altme-identity/static/temple-wallet.png">
-
-                            <p class="walletText">Temple Web Extension</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>-->
-
-
-
                     <button id="requestPermission" class="transparent">
                       <div class="box1">
                         <div class="underbox1">
@@ -337,49 +321,7 @@
 
           </div>
         </button>
-        <!--
-        <button id="showAnswer17" class="showAnswerButton">
-          <div id="question17" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I get Altme wallet ? </p>
-              <img id="arrow17" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
 
-            <p class="inactiveAnswer" id="answer17"> The Altme SSI wallet is available for download on the Google Play
-              store and the Apple App store : https://altme.io 
-              Simply download the app and follow the instructions to create your wallet and start using it.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer18" class="showAnswerButton">
-          <div id="question18" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Is the Altme SSI wallet available in other languages besides English?</p>
-              <img id="arrow18" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer18">Currently, the Altme SSI wallet is only available in English.
-              However, we are working on expanding the availability of the wallet to other languages in the future.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer19" class="showAnswerButton">
-          <div id="question19" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I contact Altme if I need supports ? </p>
-              <img id="arrow19" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer19"> You can contact us by using our support email : support@altme.io 
-              Feel free to reach us if you have any question. 
-            </p>
-
-          </div>
-
-        </button>-->
       </div>
       <div id="securityQuestions" class="inactiveQuestions">
         <button id="showAnswer21" class="showAnswerButton">
@@ -563,60 +505,7 @@
 
           </div>
         </button>
-        <!--
-        <button id="showAnswer36" class="showAnswerButton">
-          <div id="question36" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Decentralize ID ? </p>
-              <img id="arrow36" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
 
-            </div>
-
-            <p class="inactiveAnswer" id="answer36"> As conceptualized and standardized by the W3C, Decentralized
-              Identifier, or DID, are one of the three pillars of self-sovereign identity. They are cryptographically
-              verifiable and do not need a centralized registration authority. They can be used to identify people,
-              organizations, companies, IoT objects...
-              DIDs will help increase the security and privacy of online interactions, as well as reduce the reliance on
-              centralized identity systems.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer37" class="showAnswerButton">
-          <div id="question37" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Zero Knowledge Proof (ZKP) ? </p>
-              <img id="arrow37" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer37"> Zero knowledge proof is a type of cryptographic protocol that
-              allows one party (the prover) to prove to another party (the verifier) that they know a certain piece of
-              information, without revealing the actual information itself. This is achieved through the use of complex
-              mathematical algorithms that allow the prover to generate a proof that the verifier can verify, without
-              needing to know the underlying information. For example, verify the identity of an individual without
-              revealing their actual identity.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer38" class="showAnswerButton">
-          <div id="question38" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is "selective disclosure" ? </p>
-              <img id="arrow38" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer38"> In the context of self-sovereign identity (SSI), selective
-              disclosure refers to the ability of an individual or entity to selectively reveal certain pieces of
-              information about their identity, without disclosing all of their personal information.
-              Selective disclosure can help to increase the security of online interactions, by allowing individuals and
-              entities to prove their identity without needing to disclose sensitive information. For exemple, reveal
-              that you are "Over 18" without revealing your name or address.
-            </p>
-
-          </div>
-        </button>-->
 
 
       </div>
@@ -625,7 +514,6 @@
 
 
     </div>
-    <!--<img id="templeRight" src="/altme-identity/static/temple-wallet.png"><img id="kukaiRight" src="/altme-identity/static/kukai.png">-->
 
   </div>
 
@@ -702,13 +590,55 @@
 
       client.getActiveAccount().then((activeAccount) => {
         if (activeAccount) {
+          document.getElementById('logout').setAttribute('class','')
+
           fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
             res.json().then((data) => {
+              /*console.log("data");
               console.log(data);
+              console.log("data");*/
               if (data.status === "ok") {
                 fetch("/altme-identity", { method: "POST", headers: { wallet: wallet, cryptoWalletSignature: signature.signature } }).then((res) => {
-                  document.location.href = res.url
-                  console.log(res)
+                  //document.location.href = res.url
+                  console.log("res")
+                  res.json().then(
+                    (urlJson) => {
+                      fetch(urlJson.url).then((qrcode) => {
+                        qrcode.json().then((qrcodeLink) => {
+                          console.log(qrcodeLink.url)
+                          let element = document.getElementById('frame11');
+                          element.remove();
+                          let element2 = document.getElementById('frame4');
+                          element2.remove();
+                          var qr = document.createElement("div");
+                          qr.setAttribute('id', 'qrcode')
+                          document.getElementById("leftMid").appendChild(qr);
+                          new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                          document.getElementById('step1').innerHTML="Step 2 : Scan this QR code with Altme"
+                          document.getElementById('choose').innerHTML=""
+
+                          var source = new EventSource('/altme-identity/stream');
+                          source.onmessage = function (event) {
+                            const data = JSON.parse(event.data)
+                            // voir ce que l on fait apres
+                            if (data.id == qrcodeLink.id) {
+                              document.getElementById('qrcode').remove()
+                              let greenlogo=document.createElement("img")
+                              document.getElementById("leftMid").appendChild(greenlogo);
+                              greenlogo.setAttribute('id','qrcode')
+                              document.getElementById('qrcode').setAttribute('src','/altme-identity/static/tick-circle.png')
+                              let success=document.createElement("p")
+                              document.getElementById("leftMid").appendChild(success);
+                              success.setAttribute('id','success')
+                              success.innerHTML="Success !"
+                            }
+                          };
+                        }
+                        )
+                      })
+                    }
+                  )
+
                 })
               }
             });
@@ -785,7 +715,7 @@
       document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
       document.getElementById('SSIQuestions').setAttribute("class", "activeQuestions");
     })
-    
+
     document.getElementById('showAnswer11').addEventListener('click', () => {
       console.log(document.getElementById('answer11').getAttribute("class"))
       if (document.getElementById('answer11').getAttribute("class") === "inactiveAnswer") {
