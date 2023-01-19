@@ -5,8 +5,8 @@
 
 #logo {}
 
-.noScroll{
-    overflow:hidden;
+.noScroll {
+    overflow: hidden;
 }
 
 #draw {
@@ -250,10 +250,17 @@ header {
     background: linear-gradient(180deg, #F8F8FB 0%, #FFFFFF 50%);
 }
 
+#logout {
+    font-size: 14px;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+}
+
 #leftTop {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px;
 
 
@@ -502,6 +509,7 @@ frame8 {
     flex-grow: 0;
 
 }
+
 #bsc {
     /* Tezos */
 
@@ -524,6 +532,7 @@ frame8 {
     flex-grow: 0;
 
 }
+
 #polygon {
     /* Tezos */
 
@@ -546,9 +555,11 @@ frame8 {
     flex-grow: 0;
 
 }
-#qrcodelogo{
+
+#qrcodelogo {
     width: 60%;
 }
+
 #frame11 {
     /* Frame 11 */
 
@@ -1450,7 +1461,7 @@ nav a {
     font-size: 0;
 }
 
-.inactiveQuestions #text{
+.inactiveQuestions #text {
     visibility: collapse;
     height: 0px;
     font-size: 0;
@@ -1552,16 +1563,19 @@ nav a {
 
     font-size: 0;
 }
-.inactiveAnswer p{
+
+.inactiveAnswer p {
     visibility: collapse;
 
     font-size: 0;
 }
-.inactiveQuestions p{
+
+.inactiveQuestions p {
     visibility: collapse;
 
     font-size: 0;
 }
+
 /*#buttonMenuLogo {
     width: 12px;
     height: 2px;
@@ -1656,20 +1670,26 @@ nav a {
     left: 18px;
     bottom: 1px;
 }
+
 #frame7 a {
     text-decoration: none;
 }
-.activeNav{
+
+.activeNav {
     color: #544A62;
 
 }
-.inactiveNav{
+
+.inactiveNav {
     color: #330080;
 
 }
-#buttonDeepLink{
+
+#buttonDeepLink {
     width: 70%;
     background-color: #6600FF;
     border: none;
     color: white;
+    font-size: 20px;
+    padding: 8px;
 }
