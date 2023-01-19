@@ -255,6 +255,7 @@ header {
     border: none;
     padding: 6px;
     border-radius: 4px;
+    order: 2;
 }
 
 #leftTop {
@@ -948,8 +949,15 @@ frame8 {
     flex-grow: 0;
 }
 
-#qrcode {}
-
+#qrcode {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.hidden {
+    visibility: collapse;
+}
 #success {
     /* Connect wallet */
 
@@ -1686,7 +1694,6 @@ nav a {
 }
 
 #buttonDeepLink {
-    width: 70%;
     background-color: #6600FF;
     border: none;
     color: white;
