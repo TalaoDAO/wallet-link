@@ -614,10 +614,9 @@
                           var qr = document.createElement("div");
                           qr.setAttribute('id', 'qrcode')
                           document.getElementById("leftMid").appendChild(qr);
-                          let buttonLink = document.createElement('button')
-                          buttonLink.addEventListener('click', () => {
-                            document.location.href=qrcodeLink.url
-                          })
+                          let buttonLink = document.createElement('a')
+                          buttonLink.setAttribute('href', qrcodeLink.url)
+                          buttonLink.innerHTML="Open your wallet"
                           document.getElementById("qrcode").appendChild(buttonLink)
                           //new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
                           document.getElementById('step1').innerHTML = "Step 2 : Scan this QR code with Altme"
