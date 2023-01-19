@@ -1667,3 +1667,8 @@ nav a {
     color: #330080;
 
 }
+#buttonDeepLink{
+    width: 70%;
+    background-color: 6600FF;
+    border: none;
+}

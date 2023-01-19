@@ -614,10 +614,14 @@
                           var qr = document.createElement("div");
                           qr.setAttribute('id', 'qrcode')
                           document.getElementById("leftMid").appendChild(qr);
-                          let buttonLink = document.createElement('a')
-                          buttonLink.setAttribute('href', qrcodeLink.url)
+                          let aLink = document.createElement('a')
+                          aLink.setAttribute('href', "https://app.altme.io/app/download?uri="+qrcodeLink.url)
+                          document.getElementById("qrcode").appendChild(aLink)
+                          let buttonLink = document.createElement('input')
+                          buttonLink.setAttribute('type','button')
                           buttonLink.innerHTML="Open your wallet"
-                          document.getElementById("qrcode").appendChild(buttonLink)
+                          buttonLink.setAttribute('id','buttonDeepLink')
+
                           //new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
                           document.getElementById('step1').innerHTML = "Step 2 : Scan this QR code with Altme"
                           document.getElementById('choose').innerHTML = ""
