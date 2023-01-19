@@ -13,8 +13,6 @@
   <link rel="stylesheet" href="/altme-identity/static/styleMobile.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="/altme-identity/static/altmeIcon.png" sizes="16x16">
-  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-
 </head>
 
 <body>
@@ -616,7 +614,12 @@
                           var qr = document.createElement("div");
                           qr.setAttribute('id', 'qrcode')
                           document.getElementById("leftMid").appendChild(qr);
-                          new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                          let buttonLink = document.createElement('button')
+                          buttonLink.addEventListener('click', () => {
+                            document.location.href=qrcodeLink.url
+                          })
+                          document.getElementById("qrcode").appendChild(buttonLink)
+                          //new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
                           document.getElementById('step1').innerHTML = "Step 2 : Scan this QR code with Altme"
                           document.getElementById('choose').innerHTML = ""
 
@@ -628,8 +631,8 @@
                               document.getElementById('qrcode').remove()
                               let greenlogo = document.createElement("img")
                               document.getElementById("leftMid").appendChild(greenlogo);
-                              greenlogo.setAttribute('id', 'qrcode')
-                              document.getElementById('qrcode').setAttribute('src', '/altme-identity/static/tick-circle.png')
+                              greenlogo.setAttribute('id', 'qrcodelogo')
+                              document.getElementById('qrcodelogo').setAttribute('src', '/altme-identity/static/tick-circle.png')
                               let success = document.createElement("p")
                               document.getElementById("leftMid").appendChild(success);
                               success.setAttribute('id', 'success')
@@ -795,42 +798,7 @@
 
       }
     })
-    /*document.getElementById('showAnswer17').addEventListener('click', () => {
-      console.log(document.getElementById('answer17').getAttribute("class"))
-      if (document.getElementById('answer17').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer17').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow17').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer17').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer17').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow17').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
 
-      }
-    })
-    document.getElementById('showAnswer18').addEventListener('click', () => {
-      console.log(document.getElementById('answer18').getAttribute("class"))
-      if (document.getElementById('answer18').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer18').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow18').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer18').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer18').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow18').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer19').addEventListener('click', () => {
-      console.log(document.getElementById('answer19').getAttribute("class"))
-      if (document.getElementById('answer19').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer19').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow19').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer19').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer19').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow19').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })*/
     document.getElementById('showAnswer21').addEventListener('click', () => {
       console.log(document.getElementById('answer21').getAttribute("class"))
       if (document.getElementById('answer21').getAttribute("class") === "inactiveAnswer") {

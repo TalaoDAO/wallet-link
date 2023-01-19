@@ -546,7 +546,9 @@ frame8 {
     flex-grow: 0;
 
 }
-
+#qrcodelogo{
+    width: 60%;
+}
 #frame11 {
     /* Frame 11 */
 
