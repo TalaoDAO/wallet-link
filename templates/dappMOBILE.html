@@ -117,33 +117,6 @@
                 </div>
                 <div id="frame11">
                   <div id="frame1">
-                    <button id="requestPermission4" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/altme-identity/static/airgap.png">
-
-                            <p class="walletText">Air Gap Wallet</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission3" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/altme-identity/static/digitalartautonomy.webp"></div>
-                            <div>
-                              <p class="walletText">Digital Art Autonomy
-                              </p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
                     <button id="requestPermission5" class="transparent">
                       <div class="box1">
                         <div class="underbox1">
@@ -151,6 +124,20 @@
                             <div><img id="beaconlogo" src="/altme-identity/static/kukai.png"></div>
                             <div>
                               <p class="walletText">Kukai Wallet</p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission1" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/altme-identity/static/trustwallet.png"></div>
+                            <div>
+                              <p class="walletText">Trust Wallet
+                              </p>
                             </div>
                           </div>
                           <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
@@ -183,9 +170,52 @@
                         </div>
                       </div>
                     </button>
+                    <button id="requestPermission2" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/altme-identity/static/temple-wallet.png">
+
+                            <p class="walletText">Temple Web Extension</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission4" class="transparent">
+                      <div class="box2">
+                        <div class="underbox2">
+                          <div class="frame2">
+                            <img id="templelogo" src="/altme-identity/static/airgap.png">
+
+                            <p class="walletText">Air Gap Wallet</p>
+
+                          </div>
+                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    <button id="requestPermission3" class="transparent">
+                      <div class="box1">
+                        <div class="underbox1">
+                          <div class="frame2">
+                            <div><img id="beaconlogo" src="/altme-identity/static/digitalartautonomy.webp"></div>
+                            <div>
+                              <p class="walletText">Digital Art Autonomy
+                              </p>
+                            </div>
+                          </div>
+                          <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
+                        </div>
+                      </div>
+                    </button>
+                    
+                    
                   </div>
                 </div>
               </div>
+
               <div id="frame6">
                 <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
                   they
@@ -692,9 +722,12 @@
     document.getElementById('requestPermission').addEventListener('click', () => {
       requestPermission()
     })
-    /*document.getElementById('requestPermission2').addEventListener('click', () => {
+    document.getElementById('requestPermission1').addEventListener('click', () => {
       requestPermission()
-    })*/
+    })
+    document.getElementById('requestPermission2').addEventListener('click', () => {
+      requestPermission()
+    })
     document.getElementById('requestPermission3').addEventListener('click', () => {
       requestPermission()
     })
@@ -937,43 +970,6 @@
 
       }
     })
-    /*
-    document.getElementById('showAnswer36').addEventListener('click', () => {
-      console.log(document.getElementById('answer36').getAttribute("class"))
-      if (document.getElementById('answer36').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer36').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer36').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer36').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer37').addEventListener('click', () => {
-      console.log(document.getElementById('answer37').getAttribute("class"))
-      if (document.getElementById('answer37').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer37').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow37').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer37').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer37').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow37').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer38').addEventListener('click', () => {
-      console.log(document.getElementById('answer38').getAttribute("class"))
-      if (document.getElementById('answer38').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer38').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow38').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer38').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer38').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow38').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })*/
 
     document.getElementById('buttonMenu').addEventListener('click', () => {
       //console.log(document.getElementById('buttonMenu').getAttribute("class"))
