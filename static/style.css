@@ -22,19 +22,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 90px 0px 0px;
+    margin-top: 130px;
     gap: 68px;
 
     width: 1170px;
-    height: 800px;
+    height: 850px;
 
 
     /* Inside auto layout */
     flex: none;
     order: 1;
     flex-grow: 1;
-    position: relative;
-    top: 40px;
+
 }
 
 #titles {
@@ -46,7 +45,6 @@
     gap: 4px;
 
     width: 1124px;
-    height: 109px;
 
 
     /* Inside auto layout */
@@ -223,7 +221,6 @@ header {
     padding: 0px;
 
     width: 1170px;
-    height: 29px;
 
 
     /* Inside auto layout */
@@ -235,7 +232,6 @@ header {
 
 #textTopP {
     width: 1170px;
-    height: 29px;
 
     /* Paragraph/18/regular */
     font-family: 'Nunito';
@@ -254,8 +250,7 @@ header {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 25px;
+
 }
 
 #large {
@@ -288,8 +283,7 @@ header {
     order: 0;
     align-self: stretch;
     flex-grow: 0;
-    position: relative;
-    bottom: 20px;
+
 }
 
 #step1Div {
@@ -370,8 +364,7 @@ header {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
+
 }
 
 #leftMid {
@@ -386,7 +379,6 @@ header {
     gap: 32px;
 
     width: 549px;
-    height: 278px;
 
 
     /* Inside auto layout */
@@ -419,8 +411,7 @@ header {
     order: 0;
     align-self: stretch;
     flex-grow: 0;
-    position: relative;
-    top: 15px;
+
 }
 
 frame7 {
@@ -485,8 +476,7 @@ frame8 {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
+
 }
 
 #ethereum {
@@ -511,8 +501,7 @@ frame8 {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
+
 }
 
 #fantom {
@@ -536,9 +525,7 @@ frame8 {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
-    left: 30px;
+
 }
 
 #bsc {
@@ -562,9 +549,7 @@ frame8 {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
-    left: 30px;
+
 }
 
 #polygon {
@@ -588,9 +573,7 @@ frame8 {
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: relative;
-    bottom: 15px;
-    left: 30px;
+
 }
 
 #frame11 {
@@ -1070,6 +1053,7 @@ frame8 {
     flex-direction: row;
     justify-content: space-between;
     width: 1090px;
+    align-items: center;
 }
 
 .activeAnswer {
@@ -1107,6 +1091,7 @@ frame8 {
 
     /* Secondary */
     color: #000000;
+    height: fit-content;
 }
 
 .answerP {
@@ -1252,7 +1237,6 @@ footer {
 .nav-02__list {
     display: flex;
     flex-direction: row;
-    width: 570px;
     justify-content: space-between;
     align-items: center;
 }
@@ -1659,7 +1643,6 @@ nav a {
 }
 
 .nav-02__logo_img {
-    width: 70px;
     height: 70px;
 }
 
@@ -1680,3 +1663,4 @@ nav a {
 nav {
     align-items: center;
 }
+p{margin: 0;}
