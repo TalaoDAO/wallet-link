@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 import didkit
 from pytezos.crypto import key
 import logging
+import requests
 logging.basicConfig(level=logging.INFO)
 issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_vm = "did:web:app.altme.io:issuer#key-1"
@@ -311,6 +312,18 @@ async def wallet_link_endpoint(id, red):
         red.publish('altme-identity', data)
         red.delete(id)
         # cerdential sent to wallet
+        if blockchain=="tezos":
+            data = {"vc": "tezosassociatedaddress", "count": "1"}
+        if blockchain=="ethereum":
+            data = {"vc": "ethereumassociatedaddress", "count": "1"}
+        if blockchain=="fantom":
+            data = {"vc":  "fantomassociatedaddress", "count": "1"}
+        if blockchain=="polygon":
+            data = {"vc": "polygonassociatedaddress" , "count": "1"}
+        if blockchain=="bsc":
+            data = {"vc":"binanceassociatedaddress"  , "count": "1"}
+        
+        logging.info(requests.post('https://issuer.talao.co/counter/update', data=data).json())
         return jsonify(signed_credential)
 
 
