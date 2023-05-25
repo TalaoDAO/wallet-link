@@ -22,8 +22,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 130px;
-    gap: 68px;
+    margin-top: 150px;
+    gap: 40px;
 
     width: 1170px;
     height: 850px;
@@ -77,7 +77,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 0px;
-    gap: 40px;
+    gap: 25px;
 
     width: 549px;
     height: 500px;
@@ -376,7 +376,6 @@ header {
     justify-content: center;
     align-items: center;
     padding: 0px;
-    gap: 32px;
 
     width: 549px;
 
@@ -1239,6 +1238,7 @@ footer {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 30px;
 }
 
 .nav-02__list_wrapper {
@@ -1281,8 +1281,7 @@ nav a {
 }
 
 #faqNav {
-    position: relative;
-    left: 14.5px;
+
 }
 
 .linkP:hover {
