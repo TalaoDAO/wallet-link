@@ -116,7 +116,6 @@ def init_app(app,red) :
     app.add_url_rule('/altme-identity/qrcode',  view_func=wallet_link_qrcode, methods = ['GET', 'POST'], defaults={'mode' : mode})
     app.add_url_rule('/altme-identity/endpoint/<id>',  view_func=wallet_link_endpoint, methods = ['GET', 'POST'], defaults={'red' : red})
     app.add_url_rule('/altme-identity/stream',  view_func=wallet_link_stream, methods = ['GET', 'POST'], defaults={'red' : red})
-    app.add_url_rule('/altme-identity/followup',  view_func=wallet_link_followup, methods = ['GET'])
     return
 
 
@@ -206,7 +205,6 @@ def wallet_link_qrcode(mode) :
 
     url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
-    #return render_template('qrcode.html', url=url, id=id)
     return json.dumps({"url":url,"id":id})
 
 
@@ -226,15 +224,15 @@ async def wallet_link_endpoint(id, red):
 
     credential=None
     if blockchain=="tezos":
-        credential = json.load(open('TezosPooAddress.jsonld', 'r'))
+        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
     if blockchain=="ethereum":
-        credential = json.load(open('EthereumPooAddress.jsonld', 'r'))
+        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     if blockchain=="fantom":
-        credential = json.load(open('FantomPooAddress.jsonld', 'r'))
+        credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
     if blockchain=="polygon":
-        credential = json.load(open('PolygonPooAddress.jsonld', 'r'))
+        credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bsc":
-        credential = json.load(open('BinancePooAddress.jsonld', 'r'))
+        credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -242,15 +240,15 @@ async def wallet_link_endpoint(id, red):
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
-            credential_manifest = json.load(open('TezosPooAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="ethereum":
-            credential_manifest = json.load(open('EthereumPooAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="fantom":
-            credential_manifest = json.load(open('FantomPooAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
         if blockchain=="bsc":
-            credential_manifest = json.load(open('BinancePooAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('BinanceAssociatedAddress_credential_manifest.json', 'r')) 
         if blockchain=="polygon":
-            credential_manifest = json.load(open('PolygonPooAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
         #credential_manifest['evidence']['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
@@ -318,12 +316,6 @@ async def wallet_link_endpoint(id, red):
         return jsonify(signed_credential)
 
 
-# followup function
-def wallet_link_followup():
-    if not session['is_connected'] :
-        return jsonify('Unauthorized'), 403
-    # a voir si utile ???
-    return render_template("validation.html")
 
 
 # server event push for user agent EventSource
