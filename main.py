@@ -303,6 +303,7 @@ async def wallet_link_endpoint(id, red):
             "proofPurpose": "assertionMethod",
             "verificationMethod": issuer_vm
             }
+        logging.info(credential)
         signed_credential =  await didkit.issue_credential(json.dumps(credential),didkit_options.__str__().replace("'", '"'),issuer_key)
         # followup function call through js
         data = json.dumps({"id" : id,
