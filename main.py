@@ -18,14 +18,14 @@ import didkit
 from pytezos.crypto import key
 import logging
 logging.basicConfig(level=logging.INFO)
-issuer_key = """json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])"""
+issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_vm = "did:web:app.altme.io:issuer#key-1"
 issuer_did = "did:web:app.altme.io:issuer"
-w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+"""json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])"""))
+w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
 
 app = Flask(__name__,static_folder=os.path.abspath('/home/achille/altme-identity/static'))
 QRcode(app)
-app.secret_key ="""json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])"""
+app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 
 Mobility(app)
 
@@ -303,10 +303,7 @@ async def wallet_link_endpoint(id, red):
             "proofPurpose": "assertionMethod",
             "verificationMethod": issuer_vm
             }
-        signed_credential =  await didkit.issue_credential(
-                json.dumps(credential),
-                didkit_options.__str__().replace("'", '"'),
-                issuer_key)
+        signed_credential =  await didkit.issue_credential(json.dumps(credential),didkit_options.__str__().replace("'", '"'),issuer_key)
         # followup function call through js
         data = json.dumps({"id" : id,
                          'message' : 'Ok credential transfered'})
