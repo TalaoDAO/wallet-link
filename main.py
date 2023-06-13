@@ -210,7 +210,9 @@ async def wallet_link_endpoint(id, red):
     address= request.args['address']
     credential=None
     if blockchain=="tezos":
+        logging.info("loading credential")
         credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+        logging.info("credential loaded")
     if blockchain=="ethereum":
         credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     if blockchain=="fantom":
@@ -219,13 +221,11 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bsc":
         credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
-    print(credential)
-
+    
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     credential["credentialSubject"]["associatedAddress"]=address
-    print(credential)
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
@@ -366,7 +366,6 @@ def error():
 
 @app.route('/altme-identity/static/<filename>',methods=['GET'])
 def serve_static(filename):
-    logging.info(filename)
     return send_file('./static/'+filename, download_name=filename)
 
 if __name__ == '__main__':
