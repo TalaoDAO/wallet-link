@@ -188,26 +188,35 @@ def dapp_wallet(red):
         red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : str(session['nonce']),
-                                        "cryptoWalletSignature" : request.headers["cryptoWalletSignature"]
+                                        "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
+                                        "blockchain":blockchain
                                 }))        
         #return redirect (mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"])
-        return json.dumps({"url":mode.server+'altme-identity/qrcode' + "?id=" + id+"&blockchain="+session.get('blockchain')+"&address="+session["addressVerified"]})
+        return json.dumps({"url":mode.server+'altme-identity/qrcode' + "?id=" + id})
 
 # route '/altme-identity/qrcode'
 def wallet_link_qrcode(mode) :
     if not session['is_connected'] :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
-    blockchain = request.args['blockchain']
-    url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
+    url =mode.server+'altme-identity/endpoint/' + id
     logging.info('qr code = %s', url)
     return json.dumps({"url":url,"id":id})
 
 
 # route '/altme-identity/endpoint/
 async def wallet_link_endpoint(id, red):  
-    blockchain = request.args['blockchain']
-    address= request.args['address']
+    try :
+            data = json.loads(red.get(id).decode())
+    except :
+            logging.error('redis id is expired or deleted')
+            # followup function call through js
+            data = json.dumps({"id" : id,
+                         'message' : 'Server error'})
+            red.publish('altme-identity', data)
+            return jsonify('server error'), 500 # sent to wallet
+    blockchain = data['blockchain']
+    address= data["associatedAddress"]
     credential=None
     if blockchain=="tezos":
         logging.info("loading credential")
@@ -271,15 +280,7 @@ async def wallet_link_endpoint(id, red):
             return jsonify('Unauthorized'), 401
         
 
-        try :
-            data = json.loads(red.get(id).decode())
-        except :
-            logging.error('redis id is expired or deleted')
-            # followup function call through js
-            data = json.dumps({"id" : id,
-                         'message' : 'Server error'})
-            red.publish('altme-identity', data)
-            return jsonify('server error'), 500 # sent to wallet
+        
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
@@ -380,3 +381,7 @@ init_app(app,red)
 
 """,ssl_context='adhoc'"""
 
+
+
+#/altme-identity/endpoint/28bee04e-09ef-11ee-bc27-0a1628958560?blockchain=tezos 400
+#/altme-identity/endpoint/a932c8a5-09ef-11ee-acaf-0a1628958560?blockchain=tezos&address=tz1ffSbKGjzM83nYvMGuGTj4a9DvzqVn4iwX
