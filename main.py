@@ -215,14 +215,7 @@ def wallet_link_qrcode(mode) :
 # route '/altme-identity/endpoint/
 async def wallet_link_endpoint(id, red):  
     blockchain = request.args['blockchain']
-    logging.info("blockchain")
-    logging.info(blockchain)
-    logging.info("blockchain")
     address= request.args['address']
-    logging.info("address")
-    logging.info(address)
-    logging.info("address")
-
     credential=None
     if blockchain=="tezos":
         credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
@@ -238,6 +231,7 @@ async def wallet_link_endpoint(id, red):
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     credential["credentialSubject"]["associatedAddress"]=address
+    print(credential)
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
