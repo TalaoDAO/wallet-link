@@ -199,17 +199,9 @@ def wallet_link_qrcode(mode) :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
     blockchain = request.args['blockchain']
-    logging.info("blockchain")
-    logging.info(blockchain)
-
-    logging.info("blockchain")
-
     url =mode.server+'altme-identity/endpoint/' + id +"?blockchain="+blockchain+"&address="+request.args['address']
     logging.info('qr code = %s', url)
     return json.dumps({"url":url,"id":id})
-
-
-
 
 
 # route '/altme-identity/endpoint/
@@ -227,6 +219,8 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bsc":
         credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
+    print(credential)
+
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
