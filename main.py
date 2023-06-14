@@ -127,6 +127,7 @@ def dapp_wallet(red):
             blockchain="tezos"
     else:
             blockchain=request.args['blockchain']
+    logging.info("working with %s",blockchain)
     if request.method == 'GET' :
         session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(6))
@@ -225,6 +226,7 @@ async def wallet_link_endpoint(id, red):
             red.publish('altme-identity', data)
             return jsonify('server error'), 500 # sent to wallet
     blockchain = data['blockchain']
+    logging.info("loading credential for %s",blockchain)
     address= data["associatedAddress"]
     credential=None
     if blockchain=="tezos":
