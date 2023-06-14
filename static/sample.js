@@ -64,9 +64,44 @@ KV.init(["/altme-identity/static/KV.WalletUIHandler.latest.min.js"]).then(functi
                   walletName="Metamask"
                 }
                 fetch("/altme-identity", { method: "POST", headers: { wallet: walletName, cryptoWalletSignature: signature } }).then((res) => {
-                  //document.location.href = res.url
-                  console.log(res)
-                  console.log(res.url)
+                  console.log("res")
+                  res.json().then(
+                    (urlJson) => {
+                      fetch(urlJson.url).then((qrcode) => {
+                        qrcode.json().then((qrcodeLink) => {
+                          console.log(qrcodeLink.url)
+                          let element = document.getElementById('frame11');
+                          element.remove();
+                          let element2 = document.getElementById('frame4');
+                          element2.remove();
+                          var qr = document.createElement("div");
+                          qr.setAttribute('id', 'qrcode')
+                          document.getElementById("leftMid").appendChild(qr);
+                          new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
+                          document.getElementById('step1').innerHTML="Step 2 : Scan this QR code with Altme"
+                          document.getElementById('choose').innerHTML=""
+
+                          var source = new EventSource('/altme-identity/stream');
+                          source.onmessage = function (event) {
+                            const data = JSON.parse(event.data)
+                            // voir ce que l on fait apres
+                            if (data.id == qrcodeLink.id) {
+                              document.getElementById('qrcode').remove()
+                              let greenlogo=document.createElement("img")
+                              document.getElementById("leftMid").appendChild(greenlogo);
+                              greenlogo.setAttribute('id','qrcode')
+                              document.getElementById('qrcode').setAttribute('src','/altme-identity/static/tick-circle.png')
+                              let success=document.createElement("p")
+                              document.getElementById("leftMid").appendChild(success);
+                              success.setAttribute('id','success')
+                              success.innerHTML="Success !"
+                            }
+                          };
+                        }
+                        )
+                      })
+                    }
+                  )
                 })
               }
             });
