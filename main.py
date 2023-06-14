@@ -200,7 +200,9 @@ def dapp_wallet(red):
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
                                         "blockchain":blockchain
                                 })
-        return json.dumps({"url":mode.server+'altme-identity/qrcode' + "?id=" + id})
+        data={"url":mode.server+'altme-identity/qrcode' + "?id=" + id}
+        logging.info(data)
+        return json.dumps(data)
 
 # route '/altme-identity/qrcode'
 def wallet_link_qrcode(mode) :
