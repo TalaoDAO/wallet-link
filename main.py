@@ -106,7 +106,6 @@ def navBarMaker(blockchain):
             navbar=navbar+inactiveLinks[i]
         else:
             navbar=navbar+activeLinks[i]
-    print(navbar)
     return navbar
 
 
@@ -122,24 +121,16 @@ def init_app(app,red) :
 
 
 def dapp_wallet(red):
-    logging.info("dapp_wallet")
-    
     if request.method == 'GET' :
         if not request.args.__contains__('blockchain'):
-            logging.info("setting bc to tezos")
             blockchain="tezos"
         else:
             blockchain=request.args['blockchain']
-        logging.info("working with %s",blockchain)
         session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(6))
-        session["nonce"] = "Verify address owning for Altme : " + nonce
-        logging.info("nonce " +session.get('nonce'))
-        
-        
+        session["nonce"] = "Verify address owning for Altme : " + nonce        
         """if(blockchain=="ethereum"):
             session['blockchain']="ethereum"     
-            logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(1))
@@ -147,7 +138,6 @@ def dapp_wallet(red):
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(1))
         if(blockchain=="fantom"):
             session['blockchain']="fantom"     
-            logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(2))
@@ -155,7 +145,6 @@ def dapp_wallet(red):
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(2))
         if(blockchain=="polygon"):
             session['blockchain']="polygon"     
-            logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
@@ -164,7 +153,6 @@ def dapp_wallet(red):
         """
         if(blockchain=="bsc"):
             session['blockchain']="bsc"     
-            logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
@@ -172,7 +160,6 @@ def dapp_wallet(red):
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
-            logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
             if not request.MOBILE:
                 return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"altme-identity/validate_sign",
@@ -184,28 +171,25 @@ def dapp_wallet(red):
                 #navbar=navBarMaker(0)
                 navbar=inactiveLinks[0]+activeLinks[4]
                 )
-
-            
     else :
         if not session['is_connected'] :
             return jsonify('Unauthorized'), 403
         id = str(uuid.uuid1())
-        logging.info("address verified "+session["addressVerified"])
         red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
                                         "blockchain":session.get('blockchain')
                                 }))        
-        print({"associatedAddress" : session["addressVerified"],
+        logging.info({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
                                         "blockchain":session.get('blockchain')
                                 })
         data={"url":mode.server+'altme-identity/qrcode' + "?id=" + id}
-        logging.info(data)
         return json.dumps(data)
+
 
 # route '/altme-identity/qrcode'
 def wallet_link_qrcode(mode) :
@@ -228,13 +212,10 @@ async def wallet_link_endpoint(id, red):
             red.publish('altme-identity', data)
             return jsonify('server error'), 500 # sent to wallet
     blockchain = data['blockchain']
-    logging.info("loading credential for %s",blockchain)
     address= data["associatedAddress"]
     credential=None
     if blockchain=="tezos":
-        logging.info("loading credential")
         credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
-        logging.info("credential loaded")
     if blockchain=="ethereum":
         credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
     if blockchain=="fantom":
@@ -243,7 +224,6 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bsc":
         credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
-    
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -276,7 +256,6 @@ async def wallet_link_endpoint(id, red):
     else :  #POST
         credential['id'] = "urn:uuid:" + str(uuid.uuid1())
         credential['credentialSubject']['id'] = request.form['subject_id'] # for preview
-        logging.info(request.form['subject_id'])
         credential['evidence'][0]['id'] = "https://github.com/TalaoDAO/context#evidence"
 
         try :
@@ -291,22 +270,17 @@ async def wallet_link_endpoint(id, red):
         if not json.loads(presentation_result)['errors'] :
             logging.warning("presentation failed  %s", presentation_result)
             return jsonify('Unauthorized'), 401
-        
-
-        
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
         credential['credentialSubject']['accountName'] = data['accountName']
         credential['credentialSubject']['issuedBy']['name'] = 'Altme'
         logging.info('credential = %s', credential)
-
         # credential signature 
         didkit_options = {
             "proofPurpose": "assertionMethod",
             "verificationMethod": issuer_vm
             }
-        logging.info(credential)
         signed_credential =  await didkit.issue_credential(json.dumps(credential),didkit_options.__str__().replace("'", '"'),issuer_key)
         # followup function call through js
         data = json.dumps({"id" : id,
@@ -324,11 +298,8 @@ async def wallet_link_endpoint(id, red):
             data = {"vc": "polygonassociatedaddress" , "count": "1"}
         if blockchain=="bsc":
             data = {"vc":"binanceassociatedaddress"  , "count": "1"}
-        
-        logging.info(requests.post('https://issuer.talao.co/counter/update', data=data).json())
+        requests.post('https://issuer.talao.co/counter/update', data=data)
         return jsonify(signed_credential)
-
-
 
 
 # server event push for user agent EventSource
@@ -348,12 +319,8 @@ def wallet_link_stream(red):
 def validate_sign():
     if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bsc" or session.get('blockchain')=="polygon"):
         try:
-            logging.info("verifying "+session.get('blockchain'))
             message_hash = defunct_hash_message(text=session.get('nonce'))
-            print(message_hash)
-            print(session.get('nonce'))
             address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
-            logging.info("address verified : " +address)
             session["addressVerified"]=address
             return({'status':'ok'}),200
         except ValueError:
@@ -361,9 +328,7 @@ def validate_sign():
             return({'status':'error'}),403
     if(session.get('blockchain')=="tezos"):
         try:
-            logging.info("verifying tezos")
-            logging.info(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), 
-            session.get('cryptoWalletPayload')))
+            logging.info(key.Key.from_encoded_key(request.headers.get('pubKey')).verify(request.headers.get('signature'), session.get('cryptoWalletPayload')))
             logging.info("address verified : " +key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash())
             if(key.Key.from_encoded_key(request.headers.get('pubKey')).public_key_hash()!=request.headers.get('address')):
                 return redirect (mode.server+'altme-identity/error',403)
@@ -373,28 +338,21 @@ def validate_sign():
             pass
             return redirect (mode.server+'altme-identity/error',403)
 
+
 @app.route('/altme-identity/error',methods=['GET'])
 def error():
     logging.info(error)
     return render_template("error.html")
 
+
 @app.route('/altme-identity/static/<filename>',methods=['GET'])
 def serve_static(filename):
     return send_file('./static/'+filename, download_name=filename)
+
 
 if __name__ == '__main__':
     logging.info("app init")
 
 
-    
-
-
     app.run( host = mode.IP, port= mode.port, debug =True)
 init_app(app,red)
-
-""",ssl_context='adhoc'"""
-
-
-
-#/altme-identity/endpoint/28bee04e-09ef-11ee-bc27-0a1628958560?blockchain=tezos 400
-#/altme-identity/endpoint/a932c8a5-09ef-11ee-acaf-0a1628958560?blockchain=tezos&address=tz1ffSbKGjzM83nYvMGuGTj4a9DvzqVn4iwX
