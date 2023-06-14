@@ -123,13 +123,14 @@ def init_app(app,red) :
 
 def dapp_wallet(red):
     logging.info("dapp_wallet")
-    if not request.args.__contains__('blockchain'):
+    
+    if request.method == 'GET' :
+        if not request.args.__contains__('blockchain'):
             logging.info("setting bc to tezos")
             blockchain="tezos"
-    else:
+        else:
             blockchain=request.args['blockchain']
-    logging.info("working with %s",blockchain)
-    if request.method == 'GET' :
+        logging.info("working with %s",blockchain)
         session['is_connected'] = True
         nonce = ''.join(random.choice(characters) for i in range(6))
         session["nonce"] = "Verify address owning for Altme : " + nonce
@@ -194,13 +195,13 @@ def dapp_wallet(red):
                                         "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
-                                        "blockchain":blockchain
+                                        "blockchain":session.get('blockchain')
                                 }))        
         print({"associatedAddress" : session["addressVerified"],
                                         "accountName" : request.headers["wallet"],
                                         "cryptoWalletPayload" : str(session['nonce']),
                                         "cryptoWalletSignature" : request.headers["cryptoWalletSignature"],
-                                        "blockchain":blockchain
+                                        "blockchain":session.get('blockchain')
                                 })
         data={"url":mode.server+'altme-identity/qrcode' + "?id=" + id}
         logging.info(data)
