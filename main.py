@@ -53,10 +53,10 @@ def create_payload (input, type) :
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
 
-activeLinks=["""<div id="frame7">
+activeLinks=["""
                     <a href="/altme-identity?blockchain=tezos">
                     <p class="activeNav" id="tezos">Tezos</p></a>
-                  </div>""",
+                  """,
                   """<div id="frame7">
                     <a href="/altme-identity?blockchain=ethereum">
                       <p class="activeNav" id="ethereum">Ethereum</p>
@@ -71,15 +71,15 @@ activeLinks=["""<div id="frame7">
                       <p class="activeNav" id="polygon">Polygon</p>
                     </a>
                   </div>""",
-                  """<div id="frame7">
+                  """
                     <a href="/altme-identity?blockchain=bsc">
                       <p class="activeNav" id="bsc">BSC</p>
                     </a>
-                  </div>"""]
-inactiveLinks=["""<div id="frame7">
+                  """]
+inactiveLinks=["""
                     <p class="inactiveNav" id="tezos">Tezos</p>
                   </div>""",
-                  """<div id="frame7">
+                  """
                     
                       <p class="inactiveNav" id="ethereum">Ethereum</p>
                     
@@ -92,10 +92,10 @@ inactiveLinks=["""<div id="frame7">
                       <p class="inactiveNav" id="polygon">Polygon</p>
                     
                   </div>""",
-                  """<div id="frame7">
+                  """
                       <p class="inactiveNav" id="bsc">BSC</p>
                     
-                  </div>"""]
+                  """]
 
 
 def navBarMaker(blockchain):
