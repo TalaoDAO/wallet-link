@@ -164,9 +164,9 @@ def dapp_wallet(red):
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=inactiveLinks[4]+activeLinks[0])
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=inactiveLinks[4]+activeLinks[0])
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))

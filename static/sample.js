@@ -64,8 +64,9 @@ KV.init(["/altme-identity/static/KV.WalletUIHandler.latest.min.js"]).then(functi
                   walletName="Metamask"
                 }
                 fetch("/altme-identity", { method: "POST", headers: { wallet: walletName, cryptoWalletSignature: signature } }).then((res) => {
-                  document.location.href = res.url
+                  //document.location.href = res.url
                   console.log(res)
+                  console.log(res.url)
                 })
               }
             });
