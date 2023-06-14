@@ -15,7 +15,7 @@ import os
 import environment
 from datetime import datetime, timedelta
 import didkit
-from pytezos.crypto import key
+#from pytezos.crypto import key
 import logging
 import requests
 logging.basicConfig(level=logging.INFO)
@@ -57,20 +57,20 @@ activeLinks=["""
                     <a href="/altme-identity?blockchain=tezos">
                     <p class="activeNav" id="tezos">Tezos</p></a>
                   """,
-                  """<div id="frame7">
+                  """
                     <a href="/altme-identity?blockchain=ethereum">
                       <p class="activeNav" id="ethereum">Ethereum</p>
                     </a>
-                  </div>""",
-                  """<div id="frame7">
+                  """,
+                  """
                     <a href="/altme-identity?blockchain=fantom">
                     <p class="activeNav" id="fantom">Fantom</p></a>
-                  </div>""",
-                  """<div id="frame7">
+                  """,
+                  """
                     <a href="/altme-identity?blockchain=polygon">
                       <p class="activeNav" id="polygon">Polygon</p>
                     </a>
-                  </div>""",
+                  """,
                   """
                     <a href="/altme-identity?blockchain=bsc">
                       <p class="activeNav" id="bsc">BSC</p>
@@ -78,20 +78,20 @@ activeLinks=["""
                   """]
 inactiveLinks=["""
                     <p class="inactiveNav" id="tezos">Tezos</p>
-                  </div>""",
+                  """,
                   """
                     
                       <p class="inactiveNav" id="ethereum">Ethereum</p>
                     
-                  </div>""",
-                  """<div id="frame7">
+                  """,
+                  """
                     <p class="inactiveNav" id="fantom">Fantom</p>
-                  </div>""",
-                  """<div id="frame7">
+                  """,
+                  """
                     
                       <p class="inactiveNav" id="polygon">Polygon</p>
                     
-                  </div>""",
+                  """,
                   """
                       <p class="inactiveNav" id="bsc">BSC</p>
                     
@@ -353,6 +353,6 @@ def serve_static(filename):
 if __name__ == '__main__':
     logging.info("app init")
 
-
+    
     app.run( host = mode.IP, port= mode.port, debug =True)
 init_app(app,red)

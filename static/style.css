@@ -376,7 +376,7 @@ header {
     justify-content: center;
     align-items: center;
     padding: 0px;
-
+    gap: 22px;
     width: 549px;
 
 
@@ -665,8 +665,7 @@ frame8 {
     order: 1;
     align-self: stretch;
     flex-grow: 0;
-    position: relative;
-    top: 20px;
+
 }
 
 .box1 {
@@ -1638,7 +1637,7 @@ nav a {
 
 .inactiveNav {
     color: #330080;
-
+    margin: 0;
 }
 
 .nav-02__logo_img {
@@ -1663,3 +1662,8 @@ nav {
     align-items: center;
 }
 p{margin: 0;}
+
+
+a {
+    text-decoration: none;
+}
