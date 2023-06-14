@@ -19,26 +19,21 @@ from pytezos.crypto import key
 import logging
 import requests
 logging.basicConfig(level=logging.INFO)
+
 issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
 issuer_vm = "did:web:app.altme.io:issuer#key-1"
 issuer_did = "did:web:app.altme.io:issuer"
 w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
-
 app = Flask(__name__,static_folder=os.path.abspath('/home/achille/altme-identity/static'))
 QRcode(app)
 app.secret_key =json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
-
 Mobility(app)
-
 characters = string.digits
-
 #init environnement variable
 myenv = os.getenv('MYENV')
 if not myenv :
    myenv='thierry'
-
 mode = environment.currentMode(myenv)
-
 red= redis.Redis(host='127.0.0.1', port=6379, db=0)
 
 
@@ -57,15 +52,19 @@ def create_payload (input, type) :
   bytes = char2Bytes(formattedInput)
   return  sep + '01' + '00' + char2Bytes(str(len(bytes)))  + bytes
 
+
 activeLinks=["""<div id="frame7">
-                    <a href="/altme-identity?blockchain=tezos"><p class="activeNav" id="tezos">Tezos</p></a>
-                  </div>""","""<div id="frame7">
+                    <a href="/altme-identity?blockchain=tezos">
+                    <p class="activeNav" id="tezos">Tezos</p></a>
+                  </div>""",
+                  """<div id="frame7">
                     <a href="/altme-identity?blockchain=ethereum">
                       <p class="activeNav" id="ethereum">Ethereum</p>
                     </a>
                   </div>""",
                   """<div id="frame7">
-                    <a href="/altme-identity?blockchain=fantom"><p class="activeNav" id="fantom">Fantom</p></a>
+                    <a href="/altme-identity?blockchain=fantom">
+                    <p class="activeNav" id="fantom">Fantom</p></a>
                   </div>""",
                   """<div id="frame7">
                     <a href="/altme-identity?blockchain=polygon">
@@ -98,6 +97,7 @@ inactiveLinks=["""<div id="frame7">
                     
                   </div>"""]
 
+
 def navBarMaker(blockchain):
     navbar=""
 
@@ -108,6 +108,7 @@ def navBarMaker(blockchain):
             navbar=navbar+activeLinks[i]
     print(navbar)
     return navbar
+
 
 def init_app(app,red) :
     app.add_url_rule('/altme-identity',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
@@ -157,14 +158,15 @@ def dapp_wallet(red):
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
+        """
         if(blockchain=="bsc"):
             session['blockchain']="bsc"     
             logging.info(session.get('blockchain'))
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(4))
+                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=inactiveLinks[4]+activeLinks[0])
             else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(4))"""
+                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=inactiveLinks[4]+activeLinks[0])
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             logging.info(session.get('blockchain'))
@@ -172,12 +174,12 @@ def dapp_wallet(red):
             if not request.MOBILE:
                 return render_template('dapp.html',nonce= session['cryptoWalletPayload'],link=mode.server+"altme-identity/validate_sign",
                 #navbar=navBarMaker(0)
-                navbar=inactiveLinks[0]
+                navbar=inactiveLinks[0]+activeLinks[4]
                 )
             else:
                 return render_template('dappMOBILE.html',nonce= session['cryptoWalletPayload'],link=mode.server+"altme-identity/validate_sign",
                 #navbar=navBarMaker(0)
-                navbar=inactiveLinks[0]
+                navbar=inactiveLinks[0]+activeLinks[4]
                 )
 
             
@@ -206,7 +208,6 @@ def wallet_link_qrcode(mode) :
         return jsonify('Unauthorized'), 403
     id = request.args['id']
     url =mode.server+'altme-identity/endpoint/' + id
-    logging.info('qr code = %s', url)
     return json.dumps({"url":url,"id":id})
 
 
