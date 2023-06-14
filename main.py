@@ -124,6 +124,7 @@ def init_app(app,red) :
 def dapp_wallet(red):
     logging.info("dapp_wallet")
     if not request.args.__contains__('blockchain'):
+            logging.info("setting bc to tezos")
             blockchain="tezos"
     else:
             blockchain=request.args['blockchain']
