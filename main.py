@@ -15,7 +15,7 @@ import os
 import environment
 from datetime import datetime, timedelta
 import didkit
-#from pytezos.crypto import key
+from pytezos.crypto import key
 import logging
 import requests
 logging.basicConfig(level=logging.INFO)
