@@ -503,7 +503,7 @@ frame8 {
 
 }
 
-#bsc {
+#bnb {
     /* Tezos */
 
     height: 29px;
@@ -1641,4 +1641,12 @@ nav a {
 .inactiveNav {
     color: #330080;
 
+}
+
+#buttonDeepLink {
+    background-color: #6600FF;
+    border: none;
+    color: white;
+    font-size: 20px;
+    padding: 8px;
 }

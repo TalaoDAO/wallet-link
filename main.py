@@ -72,8 +72,8 @@ activeLinks=["""
                     </a>
                   """,
                   """
-                    <a href="/altme-identity?blockchain=bsc">
-                      <p class="activeNav" id="bsc">BSC</p>
+                    <a href="/altme-identity?blockchain=bnb">
+                      <p class="activeNav" id="bnb">BNB</p>
                     </a>
                   """]
 inactiveLinks=["""
@@ -93,7 +93,7 @@ inactiveLinks=["""
                     
                   """,
                   """
-                      <p class="inactiveNav" id="bsc">BSC</p>
+                      <p class="inactiveNav" id="bnb">BNB</p>
                     
                   """]
 
@@ -151,8 +151,8 @@ def dapp_wallet(red):
             else:
                 return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=navBarMaker(3))
         """
-        if(blockchain=="bsc"):
-            session['blockchain']="bsc"     
+        if(blockchain=="bnb"):
+            session['blockchain']="bnb"     
             session['cryptoWalletPayload'] = session['nonce']
             if not request.MOBILE:
                 return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
@@ -222,7 +222,7 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
     if blockchain=="polygon":
         credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
-    if blockchain=="bsc":
+    if blockchain=="bnb":
         credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
@@ -236,7 +236,7 @@ async def wallet_link_endpoint(id, red):
             credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="fantom":
             credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
-        if blockchain=="bsc":
+        if blockchain=="bnb":
             credential_manifest = json.load(open('BinanceAssociatedAddress_credential_manifest.json', 'r')) 
         if blockchain=="polygon":
             credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
@@ -296,7 +296,7 @@ async def wallet_link_endpoint(id, red):
             data = {"vc":  "fantomassociatedaddress", "count": "1"}
         if blockchain=="polygon":
             data = {"vc": "polygonassociatedaddress" , "count": "1"}
-        if blockchain=="bsc":
+        if blockchain=="bnb":
             data = {"vc":"binanceassociatedaddress"  , "count": "1"}
         requests.post('https://issuer.talao.co/counter/update', data=data)
         return jsonify(signed_credential)
@@ -306,7 +306,7 @@ async def wallet_link_endpoint(id, red):
 def wallet_link_stream(red):
     def event_stream(red):
         pubsub = red.pubsub()
-        pubsub.subscribe('altme-identity')
+        pubsub.subnbribe('altme-identity')
         for message in pubsub.listen():
             if message['type']=='message':
                 yield 'data: %s\n\n' % message['data'].decode()  
@@ -317,7 +317,7 @@ def wallet_link_stream(red):
         
 
 def validate_sign():
-    if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bsc" or session.get('blockchain')=="polygon"):
+    if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bnb" or session.get('blockchain')=="polygon"):
         try:
             message_hash = defunct_hash_message(text=session.get('nonce'))
             address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
