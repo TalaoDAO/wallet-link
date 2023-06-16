@@ -172,7 +172,7 @@ def dapp_wallet(red):
                 navbar=inactiveLinks[0]+activeLinks[4]
                 )
     else :
-        if not session['is_connected'] :
+        if not session.get('is_connected') :
             return jsonify('Unauthorized'), 403
         id = str(uuid.uuid1())
         red.setex(id, 180, json.dumps({"associatedAddress" : session["addressVerified"],
@@ -306,7 +306,7 @@ async def wallet_link_endpoint(id, red):
 def wallet_link_stream(red):
     def event_stream(red):
         pubsub = red.pubsub()
-        pubsub.subnbribe('altme-identity')
+        pubsub.subscribe('altme-identity')
         for message in pubsub.listen():
             if message['type']=='message':
                 yield 'data: %s\n\n' % message['data'].decode()  
