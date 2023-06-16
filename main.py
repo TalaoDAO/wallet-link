@@ -215,15 +215,15 @@ async def wallet_link_endpoint(id, red):
     address= data["associatedAddress"]
     credential=None
     if blockchain=="tezos":
-        credential = json.load(open('TezosAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('./credentials/TezosAssociatedAddress.jsonld', 'r'))
     if blockchain=="ethereum":
-        credential = json.load(open('EthereumAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('./credentials/EthereumAssociatedAddress.jsonld', 'r'))
     if blockchain=="fantom":
-        credential = json.load(open('FantomAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('./credentials/FantomAssociatedAddress.jsonld', 'r'))
     if blockchain=="polygon":
-        credential = json.load(open('PolygonAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('./credentials/PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bnb":
-        credential = json.load(open('BinanceAssociatedAddress.jsonld', 'r'))
+        credential = json.load(open('./credentials/BinanceAssociatedAddress.jsonld', 'r'))
     credential["issuer"] = issuer_did 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
@@ -231,15 +231,15 @@ async def wallet_link_endpoint(id, red):
     if request.method == 'GET': 
         credential_manifest=None
         if blockchain=="tezos":
-            credential_manifest = json.load(open('TezosAssociatedAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('./credentials_manifests/TezosAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="ethereum":
-            credential_manifest = json.load(open('EthereumAssociatedAddress_credential_manifest.json', 'r'))
+            credential_manifest = json.load(open('./credentials_manifests/EthereumAssociatedAddress_credential_manifest.json', 'r'))
         if blockchain=="fantom":
-            credential_manifest = json.load(open('FantomAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('./credentials_manifests/FantomAssociatedAddress_credential_manifest.json', 'r')) 
         if blockchain=="bnb":
-            credential_manifest = json.load(open('BinanceAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('./credentials_manifests/BinanceAssociatedAddress_credential_manifest.json', 'r')) 
         if blockchain=="polygon":
-            credential_manifest = json.load(open('PolygonAssociatedAddress_credential_manifest.json', 'r')) 
+            credential_manifest = json.load(open('./credentials_manifests/PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
         #credential_manifest['evidence']['id'] = str(uuid.uuid1())
         credential_manifest['issuer']['id'] = issuer_did
