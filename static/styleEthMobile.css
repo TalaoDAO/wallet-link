@@ -825,8 +825,8 @@ frame8 {
 
     /* Auto layout */
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     padding: 0px;
 
     justify-content: center;
@@ -836,8 +836,7 @@ frame8 {
     order: 2;
     align-self: stretch;
     flex-grow: 0;
-    position: relative;
-    top: 30px;
+
 }
 
 #ssi {
@@ -1310,14 +1309,13 @@ nav a {
 }
 
 .activeButtonFAQ p {
-    width: 66px;
-    height: 29px;
+
 
     /* Paragraph/18/bold */
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 161.7%;
 
     /* or 29px */
@@ -1353,14 +1351,13 @@ nav a {
 }
 
 .inactiveButtonFAQ p {
-    width: 67px;
-    height: 29px;
+
 
     /* Paragraph/18/regular */
     font-family: 'Nunito';
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 161.7%;
 
     /* or 29px */
@@ -1649,4 +1646,11 @@ nav a {
     color: white;
     font-size: 20px;
     padding: 8px;
+}
+#logout {
+    font-size: 14px;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    order: 2;
 }

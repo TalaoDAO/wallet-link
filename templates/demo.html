@@ -18,12 +18,13 @@
           <div class="nav-02__box">
             <div class="nav-02__logo"><a class="nav-02__link" href="https://altme.io/" target="_self">
                 <img loading="lazy" class="nav-02__logo_img"
-                  src="/altme-identity/static/altme-decentralized-identity-wallet-did-logo.webp" height="70" alt="Logo" />
+                  src="/altme-identity/static/altme-decentralized-identity-wallet-did-logo.webp" height="70"
+                  alt="Logo" />
               </a></div>
 
-              <div class="nav-02__list_wrapper  ">
-                <div class="nav-02__list nav-02__list--desktop">
-                  <!--<div class="nav-02__item">
+            <div class="nav-02__list_wrapper  ">
+              <div class="nav-02__list nav-02__list--desktop">
+                <!--<div class="nav-02__item">
                     <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
                       target="_self">
                       <p class="linkP"> Wallet features
@@ -43,25 +44,25 @@
   
                     </a>
                   </div>-->
-                  <div class="nav-02__item" id="faqNav">
-                    <a class="button   button--black-outline  button--empty " href="https://altme.io/" target="_self">
-                      <p class="linkP">Back to home</p>
-                    </a>
-                  </div>
-                  <div class="nav-02__item">
-  
-                    <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
-                      data-cancel-payment-url="" class="button button--accent-bg "
-                      href="mailto:contact@altme.io?cc=hugo@altme.io&subject=Altme" target="_blank">
-                      <div class="contactSpan">
-                        <p class="contactP">Contact</p>
-                      </div>
-                    </a>
-                  </div>
+                <div class="nav-02__item" id="faqNav">
+                  <a class="button   button--black-outline  button--empty " href="https://altme.io/" target="_self">
+                    <p class="linkP">Back to home</p>
+                  </a>
                 </div>
-  
-  
+                <div class="nav-02__item">
+
+                  <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
+                    data-cancel-payment-url="" class="button button--accent-bg "
+                    href="mailto:contact@altme.io?cc=hugo@altme.io&subject=Altme" target="_blank">
+                    <div class="contactSpan">
+                      <p class="contactP">Contact</p>
+                    </div>
+                  </a>
+                </div>
               </div>
+
+
+            </div>
 
           </div>
 
@@ -93,7 +94,7 @@
               </div>
               <div id="leftMid">
                 <div id="frame4">{{navbar|safe}}</div>
-                
+
                 <div id="frame11">
                   <div id="connect_box">
                     <div class="box1" id="boxWC1">
@@ -184,7 +185,7 @@
                         </div>
                       </div>
                     </div>
-                   
+
                     <div class="box1" id="boxWC6">
                       <div class="underbox1">
                         <div class="frame2">
@@ -207,7 +208,6 @@
                 <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
                   they
                   use across the web.</p>
-                  <button id="disconnect" onclick="disconnect()">Disconnect Wallet</button>
 
 
               </div>
@@ -215,423 +215,20 @@
 
             </div>
             <div id="rightBox"> <img id="draw" src="/altme-identity/static/Illustration.png">
+              <button id="logout" onclick="disconnect()">Disconnect Wallet</button>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="superFaq">
-      <p id="youHaveQuestions">You have questions ?
-        We have answers.</p>
-      <div id="underFrame19">
-        <button id="buttonGeneral" class="buttonFAQ">
-          <div id="divButtonGeneral" class="activeButtonFAQ">
-            <p id="frame16P">General</p>
-          </div>
-        </button>
-        <button id="buttonSecurity" class="buttonFAQ">
-          <div id="divButtonSecurity" class="inactiveButtonFAQ">
-            <p id="frame17P">Security</p>
-          </div>
-        </button>
-        <button id="buttonSSI" class="buttonFAQ">
-          <div id="divButtonSSI" class="inactiveButtonFAQ">
-            <p id="frame18P">SSI</p>
-          </div>
-        </button>
 
-        <!-- <div id="frame19"></div>-->
-      </div>
-      <div id="generalQuestions" class="activeQuestions">
-        <button id="showAnswer11" class="showAnswerButton">
-          <div id="question11" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Altme wallet and how can can I get it ? </p>
-              <img id="arrow11" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
+    {% include 'faq.html' %}
 
-            <p class="inactiveAnswer" id="answer11"> ● Altme is a free-to-use universal wallet that can manage digital
-              credentials (Identity card, Over 18 Proof, Membership cards…) as well as digital assets (Cryptos, Tokens,
-              NFTs…). <br>
-              ● The Altme SSI wallet is available for download on the Google Play store and the Apple App store :
-              <a href="https://altme.io">https://altme.io</a>
-            </p>
 
-          </div>
-        </button>
-        <button id="showAnswer12" class="showAnswerButton">
-          <div id="question12" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Why is Altme called a Universal wallet and why is it different from other digital
-                wallets ?</p>
-              <img id="arrow12" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
 
-            </div>
 
-            <p class="inactiveAnswer" id="answer12"> ● Altme is called a "Universal wallet" because just like a physical
-              wallet in which you can carry your ID cards and funds, you can use the Altme wallet to gather digital
-              credentials (Identity card, Age range proof, diploma, etc.) and digital assets (Cryptos, NFTs, tokens...).
-              <br>
-              ● The future of digital identity is being build on Self-Sovereign Identity (SSI standard), which is the
-              technology that powers Altme wallet and give its users the ability to manage digital credentials in a
-              privacy-preserving and decentralized manner.
-            </p>
 
-          </div>
-        </button>
-        <button id="showAnswer13" class="showAnswerButton">
-          <div id="question13" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What can I do with Altme ? </p>
-              <img id="arrow13" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer13"> Altme give users the ability to take back control of their personal
-              information and share these with Web 3 applications when its required. For example, with Altme users can
-              present digital credentials (Over 18 proof, KYC...) in order to access certain services or take advantage
-              of certain offers (membership card, loyalty card, Exclusive pass...).
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer14" class="showAnswerButton">
-          <div id="question14" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I use my existing crypto wallet with Altme ?</p>
-              <img id="arrow14" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer14">It's extremely simple ! All you have to do is to verify your
-              favorite wallet address and get a "Proof of ownership" credential in Altme. You can follow the process
-              above to start.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer15" class="showAnswerButton">
-          <div id="question15" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Which crypto wallets are compatible with Altme ? </p>
-              <img id="arrow15" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer15"> ● Right now, you can easily prove ownership of any Tezos wallets
-              like
-              Temple, Kukai, Naan, Autonomy, Ait Gap, Umami... <br>
-              ● Soon, you will be able to do the same with Ethereum and EVM compatible wallets like Metamask, Trust
-              wallet, etc. 
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer16" class="showAnswerButton">
-          <div id="question16" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I contact Altme if I need supports ?</p>
-              <img id="arrow16" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer16"> ● You can contact us by using our support email : support@altme.io
-              <br>
-              ● Feel free to reach us if you have any question.<br>
-              ● Currently, the Altme SSI wallet is only available in English. However, we are working on expanding the
-              availability of the wallet to other languages in the future.
-            </p>
-
-          </div>
-        </button>
-        <!--
-        <button id="showAnswer17" class="showAnswerButton">
-          <div id="question17" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I get Altme wallet ? </p>
-              <img id="arrow17" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer17"> The Altme SSI wallet is available for download on the Google Play
-              store and the Apple App store : https://altme.io 
-              Simply download the app and follow the instructions to create your wallet and start using it.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer18" class="showAnswerButton">
-          <div id="question18" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Is the Altme SSI wallet available in other languages besides English?</p>
-              <img id="arrow18" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer18">Currently, the Altme SSI wallet is only available in English.
-              However, we are working on expanding the availability of the wallet to other languages in the future.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer19" class="showAnswerButton">
-          <div id="question19" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I contact Altme if I need supports ? </p>
-              <img id="arrow19" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer19"> You can contact us by using our support email : support@altme.io 
-              Feel free to reach us if you have any question. 
-            </p>
-
-          </div>
-
-        </button>-->
-      </div>
-      <div id="securityQuestions" class="inactiveQuestions">
-        <button id="showAnswer21" class="showAnswerButton">
-          <div id="question21" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is the level of security of Altme wallet ?</p>
-              <img id="arrow21" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer21">Altme SSI wallet is self-custodial and protected by military grade
-              encryption and biometrics authentication. Your data are encrypted and stored on your device, enabling
-              better privacy and security.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer22" class="showAnswerButton">
-          <div id="question22" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What does it mean that Altme is “self-custodial” ?</p>
-              <img id="arrow22" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer22"> A self-custodial wallet (= non-custodial) means that your data are
-              encrypted and stored on your device. Only you can access your keys, data and assets. Not us. Not anyone
-              else.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer23" class="showAnswerButton">
-          <div id="question23" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Are there any risks related to verifying my address to get a "proof the ownership" in
-                Altme ? </p>
-              <img id="arrow23" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer23"> No there is zero risk. You don’t need to share or disclose any
-              passphrase or private keys to get a proof of ownership. All you have to do is scan a QR code with your
-              favorite crypto wallet (address) in order to get the credential that proves you hold the private key of
-              this address. Altme wallet is never connected your crypto wallet.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer24" class="showAnswerButton">
-          <div id="question24" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How does Altme wallet protect my personal information?</p>
-              <img id="arrow24" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer24"> Altme is built on Self-Sovereign Identity (SSI) technology which is
-              a new digital identity standard that enables the storage and management of personal information in a
-              decentralized, secure and private way.
-              All your personal information are encrypted and stored in your phone. Only you have the power to share
-              credentials information that are encrypted in your wallet.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer25" class="showAnswerButton">
-          <div id="question25" class="superQuestions">
-            <div class="question">
-              <p class="questionP">Where are my digital credentials stored in Altme ? </p>
-              <img id="arrow25" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer25"> Your digital credentials are encrypted and stored on your phone.
-              There is no central database or cloud that stores your data. This is why it is called “self-sovereign
-              identity” (SSI). Only you should own and access your data. 
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer26" class="showAnswerButton">
-          <div id="question26" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How do I backup my keys and credentials in Altme ?</p>
-              <img id="arrow26" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer26"> To backup your Altme wallet, you need to write down your passphrase
-              and download your digital credentials. It's important to store these in a secure location, such as a
-              password-protected file or a physical safe.
-              If you lose access to your Altme wallet, there is nothing we can do to help you. Altme is self-custodial
-              which means only you can control your keys and your credentials.
-            </p>
-
-          </div>
-        </button>
-
-
-      </div>
-      <div id="SSIQuestions" class="inactiveQuestions">
-        <button id="showAnswer31" class="showAnswerButton">
-          <div id="question31" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Self-Sovereign Identity (SSI) ?</p>
-              <img id="arrow31" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer31"> Self-Sovereign Identity, or SSI, is a new technology compatible
-              with blockchain that gives users and organizations the ability to control their own digital credentials
-              and identity data, rather than relying on a central authority or central database to manage their personal
-              information.
-              With SSI, users are able to store, manage and share their personal data in a decentralize manner, enabling
-              greater privacy and security. SSI also uses Zero-Knowledge Proof and "Selective Disclosure" to protect
-              users privacy.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer32" class="showAnswerButton">
-          <div id="question32" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What are Verifiable Credentials and why is it useful ?</p>
-              <img id="arrow32" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer32"> Verifiable Credentials (VCs) are an open standard for digital
-              claims. They can represent information such as identity card, an Over 18 Proof or a proof of ownership of
-              a crypto address. They have many advantages, including the fact that they are digitally signed, making
-              them tamper-proof, extremely secure and instantly verifiable by a third-party.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer33" class="showAnswerButton">
-          <div id="question33" class="superQuestions">
-            <div class="question">
-              <p class="questionP">How can I use my Altme SSI wallet to manage and share my verifiable credentials? </p>
-              <img id="arrow33" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer33"> When you receive a verifiable credential in the Altme wallet, it is
-              added to your digital identity. You can then use this credential to prove your identity or access certain
-              services. For example, you might use a membership credential to access a members-only area of a website,
-              or an "Over 18" proof to access a DeFi application.
-              You can use the “scan” button in Altme to share credentials when it is requested. It’s super easy. Just
-              scan the QR code, and accept the request to share your digital credentials.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer34" class="showAnswerButton">
-          <div id="question34" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Zero Knowledge Proof (ZKP) ? </p>
-              <img id="arrow34" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer34"> Zero knowledge proof is a type of cryptographic solution that
-              allows one party to prove to another party that they know a certain piece of information, without
-              revealing the actual information itself. For example, verify that an individual is Over 18 without
-              revealing their birthdate.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer35" class="showAnswerButton">
-          <div id="question35" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is "selective disclosure" ? </p>
-              <img id="arrow35" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer35"> Selective disclosure is a way for SSI users to reveal certain
-              pieces of information about their identity, without disclosing sensitive information. It helps increase
-              the security of online interactions. For exemple, reveal that you are "Over 18" without revealing your
-              name or address.
-            </p>
-
-          </div>
-        </button>
-        <!--
-        <button id="showAnswer36" class="showAnswerButton">
-          <div id="question36" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Decentralize ID ? </p>
-              <img id="arrow36" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer36"> As conceptualized and standardized by the W3C, Decentralized
-              Identifier, or DID, are one of the three pillars of self-sovereign identity. They are cryptographically
-              verifiable and do not need a centralized registration authority. They can be used to identify people,
-              organizations, companies, IoT objects...
-              DIDs will help increase the security and privacy of online interactions, as well as reduce the reliance on
-              centralized identity systems.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer37" class="showAnswerButton">
-          <div id="question37" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is Zero Knowledge Proof (ZKP) ? </p>
-              <img id="arrow37" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-            </div>
-
-            <p class="inactiveAnswer" id="answer37"> Zero knowledge proof is a type of cryptographic protocol that
-              allows one party (the prover) to prove to another party (the verifier) that they know a certain piece of
-              information, without revealing the actual information itself. This is achieved through the use of complex
-              mathematical algorithms that allow the prover to generate a proof that the verifier can verify, without
-              needing to know the underlying information. For example, verify the identity of an individual without
-              revealing their actual identity.
-            </p>
-
-          </div>
-        </button>
-        <button id="showAnswer38" class="showAnswerButton">
-          <div id="question38" class="superQuestions">
-            <div class="question">
-              <p class="questionP">What is "selective disclosure" ? </p>
-              <img id="arrow38" class="arrows" src="/altme-identity/static/arrow-circle-down.png">
-
-            </div>
-
-            <p class="inactiveAnswer" id="answer38"> In the context of self-sovereign identity (SSI), selective
-              disclosure refers to the ability of an individual or entity to selectively reveal certain pieces of
-              information about their identity, without disclosing all of their personal information.
-              Selective disclosure can help to increase the security of online interactions, by allowing individuals and
-              entities to prove their identity without needing to disclose sensitive information. For exemple, reveal
-              that you are "Over 18" without revealing your name or address.
-            </p>
-
-          </div>
-        </button>-->
-
-
-      </div>
-
-
-
-
-    </div>
-    <!--<img id="templeRight" src="/altme-identity/static/temple-wallet.png"><img id="kukaiRight" src="/altme-identity/static/kukai.png">-->
 
   </div>
 
@@ -896,7 +493,7 @@
 
       }
     })
-    document.getElementById('showAnswer26').addEventListener('click', () => {
+    /*document.getElementById('showAnswer26').addEventListener('click', () => {
       console.log(document.getElementById('answer26').getAttribute("class"))
       if (document.getElementById('answer26').getAttribute("class") === "inactiveAnswer") {
         document.getElementById('answer26').setAttribute("class", "activeAnswer");
@@ -907,7 +504,7 @@
         document.getElementById('arrow26').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
 
       }
-    })
+    })*/
     document.getElementById('showAnswer31').addEventListener('click', () => {
       console.log(document.getElementById('answer31').getAttribute("class"))
       if (document.getElementById('answer31').getAttribute("class") === "inactiveAnswer") {
@@ -968,7 +565,19 @@
 
       }
     })
-    disconnect = ()=>{
+    document.getElementById('showAnswer36').addEventListener('click', () => {
+      console.log(document.getElementById('answer36').getAttribute("class"))
+      if (document.getElementById('answer36').getAttribute("class") === "inactiveAnswer") {
+        document.getElementById('answer36').setAttribute("class", "activeAnswer");
+        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
+      }
+      else if (document.getElementById('answer36').getAttribute("class") === "activeAnswer") {
+        document.getElementById('answer36').setAttribute("class", "inactiveAnswer");
+        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
+
+      }
+    })
+    disconnect = () => {
       console.log("disconnect")
       KV.wallet.disconnect()
     }
