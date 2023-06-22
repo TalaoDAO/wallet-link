@@ -21,8 +21,8 @@ class currentMode() :
 			self.IP = extract_ip()
 			self.port = 5000
 		elif self.myenv == 'achille' :
-			self.server = 'http://' + extract_ip() + ':3000/'
-			self.IP = extract_ip()
+			self.server = "https://2d31-2001-861-5870-38c0-b232-d691-bb6-3e84.ngrok-free.app/"
+			self.IP="localhost"
 			self.port = 3000
 		else :
 			logging.error('environment variable problem')

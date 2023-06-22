@@ -32,7 +32,7 @@ characters = string.digits
 #init environnement variable
 myenv = os.getenv('MYENV')
 if not myenv :
-   myenv='thierry'
+   myenv='achille'
 mode = environment.currentMode(myenv)
 red= redis.Redis(host='127.0.0.1', port=6379, db=0)
 
@@ -267,7 +267,7 @@ async def wallet_link_endpoint(id, red):
             logging.warning("holder does not match subject")
             return jsonify('Unauthorized'), 401
         presentation_result = await didkit.verify_presentation(request.form['presentation'], '{}')
-        if not json.loads(presentation_result)['errors'] :
+        if json.loads(presentation_result)['errors'] :
             logging.warning("presentation failed  %s", presentation_result)
             return jsonify('Unauthorized'), 401
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
@@ -352,8 +352,8 @@ def serve_static(filename):
 
 if __name__ == '__main__':
     logging.info("app init")
+    init_app(app,red)
 
     
     app.run( host = mode.IP, port= mode.port, debug =True)
-init_app(app,red)
 
