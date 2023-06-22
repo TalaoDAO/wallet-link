@@ -270,6 +270,7 @@ async def wallet_link_endpoint(id, red):
         if json.loads(presentation_result)['errors'] :
             logging.warning("presentation failed  %s", presentation_result)
             return jsonify('Unauthorized'), 401
+        logging.info(presentation_result)
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
@@ -350,10 +351,13 @@ def serve_static(filename):
     return send_file('./static/'+filename, download_name=filename)
 
 
+init_app(app,red)
+
+
 if __name__ == '__main__':
     logging.info("app init")
-    init_app(app,red)
 
     
     app.run( host = mode.IP, port= mode.port, debug =True)
+
 
