@@ -527,7 +527,6 @@ frame8 {
 #bnb {
     /* Tezos */
 
-    width: 47px;
     height: 29px;
 
     font-family: 'Nunito';
@@ -1624,7 +1623,7 @@ nav a {
 
 .activeNav {
     color: #544A62;
-
+    text-decoration: none;
 }
 
 .inactiveNav {

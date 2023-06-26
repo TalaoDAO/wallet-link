@@ -1,0 +1,9 @@
+flask
+web3
+flask_mobility
+flask_qrcode
+gunicorn
+redis
+pytezos
+didkit
+asgiref

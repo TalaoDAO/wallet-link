@@ -1632,6 +1632,7 @@ nav a {
 
 .activeNav {
     color: #544A62;
+    text-decoration: none;
 
 }
 
