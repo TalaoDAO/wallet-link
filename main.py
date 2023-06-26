@@ -73,7 +73,7 @@ activeLinks=["""
                   """,
                   """
                     <a href="/altme-identity?blockchain=bnb">
-                      <p class="activeNav" id="bnb">BNB</p>
+                      <p class="activeNav" id="bnb">BNB Chain</p>
                     </a>
                   """]
 inactiveLinks=["""
@@ -93,7 +93,7 @@ inactiveLinks=["""
                     
                   """,
                   """
-                      <p class="inactiveNav" id="bnb">BNB</p>
+                      <p class="inactiveNav" id="bnb">BNB Chain</p>
                     
                   """]
 
