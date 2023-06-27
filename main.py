@@ -267,9 +267,9 @@ async def wallet_link_endpoint(id, red):
             logging.warning("holder does not match subject")
             return jsonify('Unauthorized'), 401
         presentation_result = await didkit.verify_presentation(request.form['presentation'], '{}')
-        if json.loads(presentation_result)['errors'] :
+        """if json.loads(presentation_result)['errors'] :
             logging.warning("presentation failed  %s", presentation_result)
-            return jsonify('Unauthorized'), 401
+            return jsonify('Unauthorized'), 401"""
         logging.info(presentation_result)
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
