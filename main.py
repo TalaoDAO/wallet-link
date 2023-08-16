@@ -321,7 +321,7 @@ def validate_sign():
     if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bnb" or session.get('blockchain')=="polygon"):
         try:
             message_hash = defunct_hash_message(text=session.get('nonce'))
-            address = w3.eth.account.recoverHash(message_hash, signature=request.headers.get('signature'))
+            address = w3.eth.account.recover_message(message_hash, signature=request.headers.get('signature'))
             session["addressVerified"]=address
             return({'status':'ok'}),200
         except ValueError:
@@ -349,6 +349,11 @@ def error():
 @app.route('/altme-identity/static/<filename>',methods=['GET'])
 def serve_static(filename):
     return send_file('./static/'+filename, download_name=filename)
+
+
+@app.route('/altme-identity/test',methods=['GET'])
+def test():
+    return render_template("testWC.html")
 
 
 init_app(app,red)
