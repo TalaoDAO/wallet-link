@@ -47,7 +47,7 @@ KV.init(["/altme-identity/static/KV.WalletUIHandler.latest.min.js"]).then(functi
       console.log("here")
       KV.wallet.web3().eth.personal.sign(hexMessage, account[0]).then(function (signature) {
         console.log("request sign")
-        let link = "https://talao.co/altme-identity/validate_sign";
+        let link = "http://localhost:3000/altme-identity/validate_sign";
 
 
 

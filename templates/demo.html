@@ -10,7 +10,9 @@
 
 </head>
 
-<body>
+<body>   
+   <script src="/altme-identity/static/out.js" type="module"></script>
+
   <div id="page">
     <div id="large">
       <div id="body">
@@ -104,7 +106,6 @@
                           <div class="rightDivButton">
                             <p class="walletText">Metamask Mobile</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn'></button>
                           </div>
                         </div>
                       </div>
@@ -116,9 +117,6 @@
                           <div class="rightDivButton">
                             <p class="walletText">Trust Wallet</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn2'></button>
-
                           </div>
 
                         </div>
@@ -133,7 +131,6 @@
                           <div class="rightDivButton">
                             <p class="walletText">Math Wallet</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn3'></button>
 
                           </div>
 
@@ -149,7 +146,6 @@
                             <p class="walletText">Ledger Live</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
 
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn4'></button>
 
                           </div>
                         </div>
@@ -163,7 +159,6 @@
                             <p class="walletText">Crypto.com Wallet</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
 
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn5'></button>
 
                           </div>
 
@@ -171,7 +166,7 @@
                       </div>
                     </div>
 
-                    <div class="box1" id="boxMetamask">
+                    <div class="box1" id="connectM">
                       <div class="underbox1">
                         <div class="frame2">
                           <div><img id="beaconlogo" src="/altme-identity/static/metamask.png"></div>
@@ -179,8 +174,6 @@
                             <p class="walletText">MetaMask Web Extension</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
 
-                            <button class='kvwalletbtn' id='kvwalletmodal_metamask_btn'>
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -193,9 +186,6 @@
                           <div class="rightDivButton">
                             <p class="walletText">Others wallets</p>
                             <div class="frame3"><img class="vector" src="/altme-identity/static/vector.png"></div>
-
-                            <button class='kvwalletbtn' id='kvwalletmodal_walletconnect_btn6'></button>
-
                           </div>
 
                         </div>
@@ -215,7 +205,7 @@
 
             </div>
             <div id="rightBox"> <img id="draw" src="/altme-identity/static/Illustration.png">
-              <button id="logout" onclick="disconnect()">Disconnect Wallet</button>
+              <button id="logout" >Disconnect Wallet</button>
 
             </div>
           </div>
@@ -261,44 +251,9 @@
 
 
 
-  <script src="/altme-identity/static/KV.latest.min.js"
-    onload='shield("/altme-identity/static/sample.js", null, "head", "script", 0);'></script>
-  <script src="/altme-identity/static/KV.latest.min.js"></script>
-  <script src="/altme-identity/static/KV.WalletUIHandler.latest.min.js"></script>
   <script>
     var nonce = "{{nonce}}"
 
-    /*async function signMessage() {
-      KV.wallet.web3().eth.getAccounts().then(function (account) {
-
-        console.log(account)
-        KV.wallet.web3().eth.sign(KV.wallet.web3().eth.accounts.hashMessage("{{nonce}}"), account[0]).then(function (signature) {
-          console.log('signature:', signature)
-          let link = "{{link}}"
-
-
-
-          if (account) {
-            fetch(link, { method: "GET", headers: { pubKey: account, signature: signature } }).then((res) => {
-              res.json().then((data) => {
-                console.log(data);
-                if (data.status === "ok") {
-                  fetch("/altme-identity", { method: "POST", headers: { wallet: 'WC', cryptoWalletSignature: signature } }).then((res) => {
-                    document.location.href = res.url
-                    console.log(res)
-                  })
-                }
-              });
-            });
-            console.log(account)
-          }
-
-        })
-
-
-      })
-
-    }*/
     document.getElementById('buttonGeneral').addEventListener('click', () => {
       document.getElementById('divButtonGeneral').setAttribute("class", "activeButtonFAQ");
       document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
@@ -397,42 +352,7 @@
 
       }
     })
-    /*document.getElementById('showAnswer17').addEventListener('click', () => {
-      console.log(document.getElementById('answer17').getAttribute("class"))
-      if (document.getElementById('answer17').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer17').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow17').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer17').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer17').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow17').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
 
-      }
-    })
-    document.getElementById('showAnswer18').addEventListener('click', () => {
-      console.log(document.getElementById('answer18').getAttribute("class"))
-      if (document.getElementById('answer18').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer18').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow18').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer18').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer18').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow18').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer19').addEventListener('click', () => {
-      console.log(document.getElementById('answer19').getAttribute("class"))
-      if (document.getElementById('answer19').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer19').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow19').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer19').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer19').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow19').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })*/
     document.getElementById('showAnswer21').addEventListener('click', () => {
       console.log(document.getElementById('answer21').getAttribute("class"))
       if (document.getElementById('answer21').getAttribute("class") === "inactiveAnswer") {
@@ -493,18 +413,6 @@
 
       }
     })
-    /*document.getElementById('showAnswer26').addEventListener('click', () => {
-      console.log(document.getElementById('answer26').getAttribute("class"))
-      if (document.getElementById('answer26').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer26').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow26').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer26').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer26').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow26').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })*/
     document.getElementById('showAnswer31').addEventListener('click', () => {
       console.log(document.getElementById('answer31').getAttribute("class"))
       if (document.getElementById('answer31').getAttribute("class") === "inactiveAnswer") {
@@ -577,47 +485,7 @@
 
       }
     })
-    disconnect = () => {
-      console.log("disconnect")
-      KV.wallet.disconnect()
-    }
-    /*
-    document.getElementById('showAnswer36').addEventListener('click', () => {
-      console.log(document.getElementById('answer36').getAttribute("class"))
-      if (document.getElementById('answer36').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer36').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer36').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer36').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
 
-      }
-    })
-    document.getElementById('showAnswer37').addEventListener('click', () => {
-      console.log(document.getElementById('answer37').getAttribute("class"))
-      if (document.getElementById('answer37').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer37').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow37').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer37').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer37').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow37').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer38').addEventListener('click', () => {
-      console.log(document.getElementById('answer38').getAttribute("class"))
-      if (document.getElementById('answer38').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer38').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow38').setAttribute("src", "/altme-identity/static/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer38').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer38').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow38').setAttribute("src", "/altme-identity/static/arrow-circle-down.png")
-
-      }
-    })*/
   </script>
 </body>
 

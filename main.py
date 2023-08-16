@@ -1,8 +1,6 @@
 
 from web3 import Web3
-from hexbytes import HexBytes
 from eth_account.messages import encode_defunct,defunct_hash_message
-import hashlib
 from flask import Flask,render_template, request, jsonify, redirect,session, Response,send_file
 from flask_mobility import Mobility
 import uuid 
@@ -299,7 +297,7 @@ async def wallet_link_endpoint(id, red):
             data = {"vc": "polygonassociatedaddress" , "count": "1"}
         if blockchain=="bnb":
             data = {"vc":"binanceassociatedaddress"  , "count": "1"}
-        requests.post('https://issuer.talao.co/counter/update', data=data)
+        #requests.post('https://issuer.talao.co/counter/update', data=data)
         return jsonify(signed_credential)
 
 
@@ -320,9 +318,13 @@ def wallet_link_stream(red):
 def validate_sign():
     if(session.get('blockchain')=="ethereum" or session.get('blockchain')=="fantom" or session.get('blockchain')=="bnb" or session.get('blockchain')=="polygon"):
         try:
-            message_hash = defunct_hash_message(text=session.get('nonce'))
+            print(session.get('nonce'))
+            message_hash = encode_defunct(text=session.get('nonce'))
+            print(message_hash)
+            print(request.headers.get('signature'))
             address = w3.eth.account.recover_message(message_hash, signature=request.headers.get('signature'))
             session["addressVerified"]=address
+            print("address verified "+address)
             return({'status':'ok'}),200
         except ValueError:
             pass
