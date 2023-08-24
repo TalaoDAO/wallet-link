@@ -1,6 +1,6 @@
 
 from web3 import Web3
-from eth_account.messages import encode_defunct,defunct_hash_message
+from eth_account.messages import encode_defunct
 from flask import Flask,render_template, request, jsonify, redirect,session, Response,send_file
 from flask_mobility import Mobility
 import uuid 
@@ -16,11 +16,12 @@ import didkit
 from pytezos.crypto import key
 import logging
 import requests
-logging.basicConfig(level=logging.INFO)
 
-issuer_key = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
-issuer_vm = "did:web:app.altme.io:issuer#key-1"
-issuer_did = "did:web:app.altme.io:issuer"
+
+logging.basicConfig(level=logging.INFO)
+ISSUER_KEY = json.dumps(json.load(open("keys.json", "r"))['talao_Ed25519_private_key'])
+ISSUER_VM = "did:web:app.altme.io:issuer#key-1"
+ISSUER_DID = "did:web:app.altme.io:issuer"
 w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/"+json.dumps(json.load(open("keys.json", "r"))["infuraApiKey"])))
 app = Flask(__name__,static_folder=os.path.abspath('/home/achille/altme-identity/static'))
 QRcode(app)
@@ -110,7 +111,6 @@ def navBarMaker(blockchain):
 def init_app(app,red) :
     app.add_url_rule('/altme-identity',  view_func=dapp_wallet, methods = ['GET', 'POST'], defaults={'red' : red})
     app.add_url_rule('/altme-identity/validate_sign' , view_func=validate_sign,methods=['GET'])
-
     # credential issuer routes
     app.add_url_rule('/altme-identity/qrcode',  view_func=wallet_link_qrcode, methods = ['GET', 'POST'], defaults={'mode' : mode})
     app.add_url_rule('/altme-identity/endpoint/<id>',  view_func=wallet_link_endpoint, methods = ['GET', 'POST'], defaults={'red' : red})
@@ -152,10 +152,10 @@ def dapp_wallet(red):
         if(blockchain=="bnb"):
             session['blockchain']="bnb"     
             session['cryptoWalletPayload'] = session['nonce']
-            if not request.MOBILE:
-                return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
-            else:
-                return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
+            #if not request.MOBILE:
+            return render_template('demo.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
+            #else:
+                #return render_template('demoMOBILE.html',nonce= session['nonce'],link=mode.server+"altme-identity/validate_sign",navbar=activeLinks[0]+inactiveLinks[4])
         if(blockchain=="tezos"):
             session['blockchain']="tezos"
             session['cryptoWalletPayload'] = create_payload(session['nonce'],'MICHELINE')
@@ -222,7 +222,7 @@ async def wallet_link_endpoint(id, red):
         credential = json.load(open('./credentials/PolygonAssociatedAddress.jsonld', 'r'))
     if blockchain=="bnb":
         credential = json.load(open('./credentials/BinanceAssociatedAddress.jsonld', 'r'))
-    credential["issuer"] = issuer_did 
+    credential["issuer"] = ISSUER_DID 
     credential['issuanceDate'] = datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
     credential['expirationDate'] =  (datetime.now() + timedelta(days= 365)).isoformat() + "Z"
     credential["credentialSubject"]["associatedAddress"]=address
@@ -240,7 +240,7 @@ async def wallet_link_endpoint(id, red):
             credential_manifest = json.load(open('./credentials_manifests/PolygonAssociatedAddress_credential_manifest.json', 'r')) 
         credential_manifest['id'] = str(uuid.uuid1())
         #credential_manifest['evidence']['id'] = str(uuid.uuid1())
-        credential_manifest['issuer']['id'] = issuer_did
+        credential_manifest['issuer']['id'] = ISSUER_DID
         credential_manifest['output_descriptors'][0]['id'] = str(uuid.uuid1())    
         credential['id'] = "urn:uuid:random" # for preview
         credential_offer = {
@@ -278,9 +278,9 @@ async def wallet_link_endpoint(id, red):
         # credential signature 
         didkit_options = {
             "proofPurpose": "assertionMethod",
-            "verificationMethod": issuer_vm
+            "verificationMethod": ISSUER_VM
             }
-        signed_credential =  await didkit.issue_credential(json.dumps(credential),didkit_options.__str__().replace("'", '"'),issuer_key)
+        signed_credential =  await didkit.issue_credential(json.dumps(credential),didkit_options.__str__().replace("'", '"'),ISSUER_KEY)
         # followup function call through js
         data = json.dumps({"id" : id,
                          'message' : 'Ok credential transfered'})
@@ -346,6 +346,11 @@ def validate_sign():
 def error():
     logging.info(error)
     return render_template("error.html")
+
+
+@app.route('/altme-identity/static/img/<filename>',methods=['GET'])
+def serve_img(filename):
+    return send_file('./static/img/'+filename, download_name=filename)
 
 
 @app.route('/altme-identity/static/<filename>',methods=['GET'])
