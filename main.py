@@ -256,19 +256,19 @@ async def wallet_link_endpoint(id, red):
         credential['credentialSubject']['id'] = request.form['subject_id'] # for preview
         credential['evidence'][0]['id'] = "https://github.com/TalaoDAO/context#evidence"
 
-        try :
+        """try :
             presentation = json.loads(request.form['presentation']) 
         except :
             logging.warning("presentation does not exist")
             return jsonify('Unauthorized'), 401
         if request.form['subject_id'] != presentation['holder'] :
             logging.warning("holder does not match subject")
-            return jsonify('Unauthorized'), 401
-        presentation_result = await didkit.verify_presentation(request.form['presentation'], '{}')
+            return jsonify('Unauthorized'), 401"""
+        #presentation_result = await didkit.verify_presentation(request.form['presentation'], '{}')
         """if json.loads(presentation_result)['errors'] :
             logging.warning("presentation failed  %s", presentation_result)
             return jsonify('Unauthorized'), 401"""
-        logging.info(presentation_result)
+        #logging.info(presentation_result)
         credential['evidence'][0]['cryptoWalletSignature'] = data['cryptoWalletSignature']
         credential['evidence'][0]['cryptoWalletPayload'] = data['cryptoWalletPayload']
         credential['credentialSubject']['associatedAddress'] = data['associatedAddress']
