@@ -1604,10 +1604,12 @@ nav a {
 p {
     margin: 0;
 }
-.linkP{
+
+.linkP {
     text-align: center;
     margin: 10px;
 }
+
 a {
     text-decoration: none;
 }
@@ -1981,13 +1983,23 @@ a {
         flex-direction: column;
         align-items: center;
     }
-    .flex{
-        display: flex !important; 
+
+    .flex {
+        display: flex !important;
     }
+
     .nav-02__list a {
         font-family: 'Nunito';
         font-size: 14px;
         font-weight: 700;
         color: #303030;
-      }
+    }
+
+    #buttonDeepLink {
+        background-color: #6600FF;
+        border: none;
+        color: white;
+        font-size: 20px;
+        padding: 8px;
+    }
 }
