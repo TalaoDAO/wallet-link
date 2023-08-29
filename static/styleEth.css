@@ -1696,7 +1696,9 @@ a {
     #boxWC8 {
         display: none;
     }
-
+    #connectM{
+        display: none;
+    }
     .imgButtonMenuInactive {
         width: 12px;
     }
@@ -1802,7 +1804,11 @@ a {
         flex-grow: 0;
 
     }
-
+    #qrcode{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
     .inactiveButtonFAQ p {
 
 
