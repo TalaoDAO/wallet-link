@@ -35,6 +35,19 @@
 
 }
 
+#menuDiv {
+    display: none;
+    height: calc(100vh - 90px);
+    width: 100vw;
+    position: fixed;
+    top: 90px;
+    left: 0px;
+    z-index: 100;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+}
+
 #titles {
 
     display: flex;
@@ -1142,7 +1155,7 @@ footer {
 
 .nav-02__list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 30px;
     margin-top: 20px;
 }
@@ -1696,9 +1709,11 @@ a {
     #boxWC8 {
         display: none;
     }
-    #connectM{
+
+    #connectM {
         display: none;
     }
+
     .imgButtonMenuInactive {
         width: 12px;
     }
@@ -1804,11 +1819,13 @@ a {
         flex-grow: 0;
 
     }
-    #qrcode{
+
+    #qrcode {
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
+
     .inactiveButtonFAQ p {
 
 
@@ -1977,18 +1994,7 @@ a {
         max-width: 90%;
     }
 
-    #menuDiv {
-        display: none;
-        height: calc(100vh - 90px);
-        width: 100vw;
-        position: absolute;
-        top: 90px;
-        left: 0px;
-        z-index: 100;
-        background-color: white;
-        flex-direction: column;
-        align-items: center;
-    }
+
 
     .flex {
         display: flex !important;
@@ -2007,5 +2013,9 @@ a {
         color: white;
         font-size: 20px;
         padding: 8px;
+    }
+
+    .nav-02__list {
+        flex-direction: column;
     }
 }
