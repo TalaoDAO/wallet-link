@@ -42,7 +42,7 @@ app.secret_key = json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 Mobility(app)
 characters = string.digits
 url = "https://talao.co/sandbox/ebsi/issuer/api/dghevjfkzk"
-client_secret =  json.dumps(json.load(open("keys.json", "r"))["client_secret"])
+client_secret =  json.load(open("keys.json", "r"))["client_secret"]
 # init environnement variable
 myenv = os.getenv('MYENV')
 if not myenv:
