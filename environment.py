@@ -9,11 +9,8 @@ class currentMode() :
 	def __init__(self, myenv):
 		self.test = True
 		self.myenv = myenv
-		
 		# En Prod chez AWS 
 		if self.myenv == 'aws':
-			#self.yoti_pem_file = '/home/admin/issuer/key.pem'
-			#self.sys_path = '/home/admin'
 			self.server = 'https://talao.co/'
 			self.IP = '18.190.21.227' 
 		elif self.myenv == 'thierry' :
@@ -21,7 +18,7 @@ class currentMode() :
 			self.IP = extract_ip()
 			self.port = 5000
 		elif self.myenv == 'achille' :
-			self.server = "https://talao.co/"
+			self.server = "https://2c5b-86-229-94-232.ngrok-free.app"
 			self.IP="localhost"
 			self.port = 3000
 		else :
