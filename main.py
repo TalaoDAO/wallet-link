@@ -42,7 +42,7 @@ app.secret_key = json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 Mobility(app)
 characters = string.digits
 url = "https://talao.co/sandbox/ebsi/issuer/api/dghevjfkzk"
-client_secret =  json.load(open("keys.json", "r"))["client_secret"]
+client_secret = json.load(open("keys.json", "r"))["client_secret"]
 # init environnement variable
 myenv = os.getenv('MYENV')
 if not myenv:
@@ -145,11 +145,11 @@ def init_app(app, red):
                      methods=['get'])
     return
 
+
 @app.errorhandler(500)
 def error_500(e):
-    message.message("Error 500 wallet-link",'support@talao.io', str(e))
+    message.message("Error 500 wallet-link", 'support@talao.io', str(e))
     return redirect(mode.server)
-
 
 
 def dapp_wallet(red):
@@ -502,17 +502,18 @@ def error():
 
 @app.route('/altme-identity/static/img/<filename>', methods=['GET'])
 def serve_img(filename):
-    return send_file('./static/img/'+filename, download_name=filename)
+    try:
+        return send_file('./static/img/'+filename, download_name=filename)
+    except FileNotFoundError:
+        logging.error(filename+" not found")
 
 
 @app.route('/altme-identity/static/<filename>', methods=['GET'])
 def serve_static(filename):
-    return send_file('./static/'+filename, download_name=filename)
-
-
-@app.route('/test', methods=['GET'])
-def test():
-    return render_template("issuer_qrcode.html",url="https://altme.io")
+    try:
+        return send_file('./static/'+filename, download_name=filename)
+    except FileNotFoundError:
+        logging.error(filename+" not found")
 
 
 init_app(app, red)
