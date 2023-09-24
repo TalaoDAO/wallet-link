@@ -1,7 +1,7 @@
 
 from web3 import Web3
 from eth_account.messages import encode_defunct
-from flask import Flask, render_template, request, jsonify, redirect, session, Response, send_file
+from flask import Flask, render_template, request, jsonify, redirect, session, Response, send_file, abort
 from flask_mobility import Mobility
 import uuid
 from flask_qrcode import QRcode
@@ -506,6 +506,7 @@ def serve_img(filename):
         return send_file('./static/img/'+filename, download_name=filename)
     except FileNotFoundError:
         logging.error(filename+" not found")
+        abort(404)
 
 
 @app.route('/altme-identity/static/<filename>', methods=['GET'])
@@ -514,6 +515,7 @@ def serve_static(filename):
         return send_file('./static/'+filename, download_name=filename)
     except FileNotFoundError:
         logging.error(filename+" not found")
+        abort(404)
 
 
 init_app(app, red)
