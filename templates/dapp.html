@@ -1,659 +1,461 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-  <script> window.beaconSdkDebugEnabled = true    </script>
-  <script src="/altme-identity/static/walletbeacon.min.js"></script>
-  <link rel="stylesheet" href="/altme-identity/static/style.css">
-  <link rel="icon" type="image/png" href="/altme-identity/static/img/icon.png" sizes="16x16">
-  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-  <title>Altme Identity - Add an identity to your favorite wallet !</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <title>Tezos Proof of Crypto Ownership</title>
+  <link rel="icon" type="image/png" href="/altme-identity/static/img/icon.png" sizes="16x16" />
+
+  <!-- Base styles (existing project) -->
+  <link rel="stylesheet" href="/altme-identity/static/style.css" />
+  <!-- Page-specific overrides (THIS file) -->
+  <link rel="stylesheet" href="/altme-identity/static/style_tezos_pro_clean.css" />
+
+  <!-- Scripts -->
+   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
+
+  <script defer src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 
 <body>
   <div id="page">
     <div id="large">
       <div id="body">
-        <nav class="nav-02">
+
+        <!-- Top navigation (kept from original) -->
+        <nav class="nav-02" aria-label="Primary">
           <div class="nav-02__box">
-            <div class="nav-02__logo"><a class="nav-02__link" href="https://altme.io/" target="_self">
-                <img loading="lazy" class="nav-02__logo_img"
-                  src="/altme-identity/static/img/altme-decentralized-identity-wallet-did-logo.webp" height="70"
-                  alt="Logo" />
-              </a></div>
-
-            <div class="nav-02__list_wrapper  ">
-              <div class="nav-02__list nav-02__list--desktop">
-                <!--<div class="nav-02__item">
-                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#slider-07-879531"
-                    target="_self">
-                    <p class="linkP"> Wallet features
-                    </p>
-                  </a>
-                </div>
-                <div class="nav-02__item" id="newsNav">
-                  <a class="button   button--black-outline  button--empty " href="https://altme.io/#posts-05-876621"
-                    target="_self">
-                    <p class="linkP">News</p>
-
-                  </a>
-                </div>
-                <div class="nav-02__item" id="roadmapNav">
-                  <a href="https://altme.io/#features-09-390941" target="_self">
-                    <p class="linkP">Roadmap</p>
-
-                  </a>
-                </div>-->
-                <div class="nav-02__item" id="faqNav">
-                  <a class="button   button--black-outline  button--empty " href="https://altme.io/" target="_self">
-                    <p class="linkP">Back to home</p>
-                  </a>
-                </div>
-                <div class="nav-02__item">
-
-                  <a data-stripe-product-id="" data-stripe-mode="payment" data-successful-payment-url=""
-                    data-cancel-payment-url="" class="button button--accent-bg "
-                    href="mailto:contact@altme.io?cc=hugo@altme.io&subject=Altme" target="_blank">
-                    <div class="contactSpan">
-                      <p class="contactP">Contact</p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-
-
+            <div class="nav-02__logo">
+              <a class="nav-02__link" href="https://altme.io/" target="_self" aria-label="Altme home">
+                <img loading="lazy"
+                     class="nav-02__logo_img"
+                     src="/altme-identity/static/img/altme-decentralized-identity-wallet-did-logo.webp"
+                     height="70"
+                     alt="Altme logo" />
+              </a>
             </div>
 
+           <div class="nav-02__item">
+          <div id="walletStatus" class="button button--black-outline">
+            Not connected
+          </div>
+        </div>
+
+        <div class="nav-02__item">
+          <button id="disconnectBtn"
+                  class="button button--black-outline"
+                  style="display:none;">
+            Disconnect
+          </button>
+        </div>
+
+        <div class="nav-02__item">
+          <button id="changeWalletBtn"
+                  class="button button--black-outline"
+                  style="display:none;">
+            Change wallet
+          </button>
+        </div>
+
+
+
+          <div class="nav-02__item">
+            <a class="button button--accent-bg"
+              href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io"
+              target="_blank"
+              rel="noreferrer">
+              <div class="contactSpan"><p class="contactP">Contact</p></div>
+            </a>
           </div>
 
+          </div>
         </nav>
 
-        <div id="bigBox">
-          <div id="titles">
-            <div id="title">
-              <p id="titleP">Add an identity to your favorite wallet
-              </p>
-            </div>
-            <div id="textTop">
-              <p id="textTopP">Start using secure and verifiable digital credentials with your favorite wallet by
-                verifying your blockchain address and obtaining a “Proof of ownership” in Altme wallet !</p>
-            </div>
+        <!-- Main content (NEW structure — avoids legacy #bigBox/#titles/#mainBox/#leftBox conflicts) -->
+        <main class="tezos-shell" aria-label="Tezos proof flow">
 
+          <header class="tezos-hero">
+            <h1 class="tezos-title">Add a Tezos Proof of Crypto Ownership to your EUDI Wallet</h1>
+            <p class="tezos-subtitle">
+              Connect a Tezos wallet and sign a message (no transaction). Then scan a QR code to receive
+              a verifiable credential in your EUDI Wallet.
+            </p>
+          </header>
 
+          <section class="tezos-stage">
+            <div class="tezos-card">
 
-          </div>
-          <div id="mainBox">
-            <div id="leftBox">
-              <div id="leftTop">
-                <div id="step1Div">
-                  <p id="step1">Step 1 : Choose your crypto wallet
-                  </p>
+              <!-- Progress -->
+              <div class="tezos-progress" aria-label="Progress">
+                <div class="tezos-progress-step isActive" id="step1Indicator">
+                  <div class="tezos-dot" aria-hidden="true">1</div>
+                  <div class="tezos-progress-labels">
+                    <div class="tezos-stepTitle">Connect & sign</div>
+                    <div class="tezos-stepDesc">Scan QR with crypto wallet</div>
+                  </div>
                 </div>
-                <div id="chooseDiv">
-                  <p id="choose">Choose your favorite wallet and get a proof of ownership !</p>
-                </div>
-              </div>
-              <div id="leftMid">
-                <div id="frame4">{{navbar|safe}}</div>
 
-                <div id="frame11">
-                  <div id="frame1">
-                    <button id="requestPermission5" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/altme-identity/static/img/kukai.png"></div>
-                            <div>
-                              <p class="walletText">Kukai Wallet</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission3" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/altme-identity/static/img/trustwallet.png"></div>
-                            <div>
-                              <p class="walletText">Trust Wallet
-                              </p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission6" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/altme-identity/static/img/temple-wallet.png">
+                <div class="tezos-progress-divider" aria-hidden="true"></div>
 
-                            <p class="walletText">Temple Mobile</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/altme-identity/static/img/umami.jpg"></div>
-                            <div>
-                              <p class="walletText">Umami</p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission2" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/altme-identity/static/img/temple-wallet.png">
-
-                            <p class="walletText">Temple Web Extension</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-
-
-
-
-                    <button id="requestPermission4" class="transparent">
-                      <div class="box2">
-                        <div class="underbox2">
-                          <div class="frame2">
-                            <img id="templelogo" src="/altme-identity/static/img/airgap.png">
-
-                            <p class="walletText">Air Gap Wallet</p>
-
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
-                    <button id="requestPermission7" class="transparent">
-                      <div class="box1">
-                        <div class="underbox1">
-                          <div class="frame2">
-                            <div><img id="beaconlogo" src="/altme-identity/static/img/digitalartautonomy.webp"></div>
-                            <div>
-                              <p class="walletText">Digital Art Autonomy
-                              </p>
-                            </div>
-                          </div>
-                          <div class="frame3"><img class="vector" src="/altme-identity/static/img/vector.png"></div>
-                        </div>
-                      </div>
-                    </button>
+                <div class="tezos-progress-step" id="step2Indicator">
+                  <div class="tezos-dot" aria-hidden="true">2</div>
+                  <div class="tezos-progress-labels">
+                    <div class="tezos-stepTitle">Receive an attestation</div>
+                    <div class="tezos-stepDesc">Scan QR with EUDI Wallet</div>
                   </div>
                 </div>
               </div>
-              <div id="frame6">
-                <p id="ssi">** Self-Sovereign Identity (SSI) gives individuals control over the personal information
-                  they
-                  use across the web.</p>
 
-
+              <!-- Instructions -->
+              <div class="tezos-instruction">
+                <p id="step1" class="tezos-h2">Step 1 — Connect your Tezos wallet</p>
+                <br><br>
+                <p id="choose" class="tezos-body">
+                  Click the button below. It will open and let you choose your Tezos wallet.
+                  You will sign a message to prove you control the address.
+                </p>
               </div>
 
+              <br><br><br>
+
+              <!-- Action area (IDs kept for JS) -->
+              <div id="leftMid" class="tezos-actionArea">
+                <div id="frame11" class="tezos-actionStack">
+
+                  <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect Tezos wallet">
+                    <span class="tezos-connectInner">
+                      <img class="tezos-logo" src="/altme-identity/static/img/tezos.jpeg" alt="Tezos" />
+                      <span class="tezos-connectText">
+                        <span class="tezos-connectTitle">Connect your Tezos wallet</span>
+                        <span class="tezos-connectSub">Choose your wallet</span>
+                      </span>
+                      <img class="tezos-chevron" src="/altme-identity/static/img/vector.png" alt="" aria-hidden="true" />
+                    </span>
+                  </button>
+
+                  <div class="tezos-info" role="note" aria-label="What you get">
+                    <div class="tezos-infoTitle">What you get</div>
+                    <div class="tezos-infoText">
+                      An attestation proving you control a Tezos address (Proof of Crypto Ownership),
+                      ready to be stored and presented from an EUDI Wallet.
+                    </div>
+                    <ul class="tezos-bullets">
+                      <li>No transaction. Only a signature.</li>
+                      <li>Works with any compatible Tezos wallet.</li>
+                      <li>Attestation delivered by scanning a QR code.</li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
 
             </div>
-            <div id="rightBox"> <img id="draw" src="/altme-identity/static/img/IllustrationTez.png">
-              <button id="logout">Disconnect Wallet</button>
+          </section>
+        </main>
 
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-
-      {% include 'faq.html' %}
-
-
-
-
-
   </div>
 
-  <div class="bg-white-color ">
+  <!-- Footer (kept) -->
+  <div class="bg-white-color">
     <footer class="footer-02" id="footer">
       <div class="container">
         <div class="footer-02__wrapper">
           <div class="footer-02__text content_box">
-            <p id="line1Footer">&copy; 2022&nbsp; TALAO - Altme All rights reserved, <a href="https://altme.io/cgu/"
-                target="_blank">CGU</a>, <a href="https://altme.io/privacy/" target="_blank">Privacy</a></p>
-            <p id="line2Footer" hidden><strong>Built with TzKT API, Spruce Didkit 0.4.0</strong>&nbsp;</p>
+            <p id="line1Footer">
+              &copy; 2026&nbsp; Web3 Digital Wallet - All rights reserved,
+              <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
+              <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>
+            </p>
           </div>
-          <div class="social-buttons  ">
-
-            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--twitter"
-                href="https://twitter.com/Altme_io" target="_blank"><img loading="lazy" class="social-buttons__icon"
-                  alt="twitter icon"
-                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" /></a></div>
-            <div class="social-buttons__item"><a class="social-buttons__link social-buttons__link--linkedin"
-                href="https://www.linkedin.com/company/altme-web3/" target="_blank"><img loading="lazy"
-                  class="social-buttons__icon" alt="linkedin icon"
-                  src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" /></a></div>
-
+          <div class="social-buttons">
+            <div class="social-buttons__item">
+              <a class="social-buttons__link social-buttons__link--twitter"
+                 href="https://twitter.com/Altme_io"
+                 target="_blank"
+                 rel="noreferrer">
+                <img loading="lazy"
+                     class="social-buttons__icon"
+                     alt="twitter icon"
+                     src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" />
+              </a>
+            </div>
+            <div class="social-buttons__item">
+              <a class="social-buttons__link social-buttons__link--linkedin"
+                 href="https://www.linkedin.com/company/altme-web3/"
+                 target="_blank"
+                 rel="noreferrer">
+                <img loading="lazy"
+                     class="social-buttons__icon"
+                     alt="linkedin icon"
+                     src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </footer>
   </div>
 
-
-  <script src="https://cdn.jsdelivr.net/npm/@taquito/utils"></script>
+  <!-- App logic -->
   <script>
-    var wallet = ""
+    let beaconClient = null;
+    
 
 
-    //document.getElementById('altme').style.visibility = 'hidden';
+    (function () {
+      const SIGN_PAYLOAD = {{ nonce | tojson }};
+
+      const VALIDATE_URL = {{ link | tojson }};
 
 
-    // Initiate DAppClient
-    const client = beacon.getDAppClientInstance({
-      name: 'Altme', // Name of the DApp,
-      disclaimerText: '',
-      errorMessages: {
+      const $ = (id) => document.getElementById(id);
+      const remove = (id) => { const el = $(id); if (el) el.remove(); };
+      const setText = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+      const addClass = (id, cls) => { const el = $(id); if (el) el.classList.add(cls); };
 
-      }
+      function setStep2Active() { addClass("step2Indicator", "isActive"); }
+      function setError(msg) { setText("choose", msg); }
+    async function ensureBeaconClient() {
+            if (beaconClient) return beaconClient;
 
-    })
+            if (!window.beacon || !window.beacon.DAppClient) {
+              throw new Error("Beacon SDK not loaded.");
+            }
 
-    // Display the active account in the UI
-    const updateActiveAccount = () => {
-      client.getActiveAccount().then((activeAccount) => {
-        if (activeAccount) {
-          console.log(activeAccount)
-          console.log(activeAccount.publicKey)
-          console.log("activeaccount")
-
-
-        } else {
-
-        }
-      })
-    }
-    updateActiveAccount()
-
-
-    signPayloadOwning = async () => {
-      const signature = await client.requestSignPayload({
-        signingType: beacon.SigningType.MICHELINE,
-        payload: '{{nonce}}'
-      })
-      console.log('signature:', signature)
-      let link = "{{link}}";
-
-
-      client.getActiveAccount().then((activeAccount) => {
-        if (activeAccount) {
-          document.getElementById('logout').setAttribute('class', '')
-
-          fetch(link, { method: "GET", headers: { pubKey: activeAccount.publicKey, signature: signature.signature, address: activeAccount.address } }).then((res) => {
-            res.json().then((data) => {
-              /*console.log("data");
-              console.log(data);
-              console.log("data");*/
-              if (data.status === "ok") {
-                fetch("/altme-identity", { method: "POST", headers: { wallet: wallet, cryptoWalletSignature: signature.signature } }).then((res) => {
-                  //document.location.href = res.url
-                  console.log("res")
-                  res.json().then(
-                    (urlJson) => {
-                      fetch(urlJson.url).then((qrcode) => {
-                        qrcode.json().then((qrcodeLink) => {
-                          console.log(qrcodeLink.url)
-                          let element = document.getElementById('frame11');
-                          element.remove();
-                          let element2 = document.getElementById('frame4');
-                          element2.remove();
-                          var qr = document.createElement("div");
-                          qr.setAttribute('id', 'qrcode')
-                          document.getElementById("leftMid").appendChild(qr);
-                          new QRCode(document.getElementById("qrcode"), qrcodeLink.url);
-                          document.getElementById('step1').innerHTML = "Step 2 : Scan this QR code with Altme"
-                          document.getElementById('choose').innerHTML = ""
-
-                          var source = new EventSource('/altme-identity/stream');
-                          source.onmessage = function (event) {
-                            const data = JSON.parse(event.data)
-                            // voir ce que l on fait apres
-                            if (data.id == qrcodeLink.id) {
-                              document.getElementById('qrcode').remove()
-                              let greenlogo = document.createElement("img")
-                              document.getElementById("leftMid").appendChild(greenlogo);
-                              greenlogo.setAttribute('id', 'qrcode')
-                              document.getElementById('qrcode').setAttribute('src', '/altme-identity/static/img/tick-circle.png')
-                              let success = document.createElement("p")
-                              document.getElementById("leftMid").appendChild(success);
-                              success.setAttribute('id', 'success')
-                              success.innerHTML = "Success !"
-                            }
-                          };
-                        }
-                        )
-                      })
-                    }
-                  )
-
-                })
-              }
+            beaconClient = new window.beacon.DAppClient({
+              name: "Altme",
+              enableMetrics: false
             });
-          });
-          console.log(activeAccount.publicKey)
-        }
-      })
 
-    }
+            // subscribe BEFORE init
+            beaconClient.subscribeToEvent(
+              window.beacon.BeaconEvent.ACTIVE_ACCOUNT_SET,
+              (account) => console.log("Active account:", account?.address)
+            );
 
-    // Initiate a permission request
-    const requestPermission = (callback) => {
-      client
-        .requestPermissions(/*{ network: { type: beacon.NetworkType.DELPHINET } }*/)
-        .then((permissions) => {
-          console.log('permissions', permissions)
-          wallet = ""
-          try {
-            wallet = permissions.appMetadata.name
-            console.log(wallet)
-          } catch (e) { console.log(e) }
-          if (callback) {
-            callback(permissions)
+            await beaconClient.init();
+            return beaconClient;
           }
-          updateActiveAccount()
-          signPayloadOwning()
-        })
-        .catch((error) => {
-          console.log('error during permission request', error)
-        })
+
+      function setConnected(address) {
+          const el = $("walletStatus");
+          if (!el) return;
+
+          const short =
+            address.slice(0, 6) + "..." + address.slice(-4);
+
+          el.textContent = "Connected: " + short;
+          el.style.backgroundColor = "#E9F8F0";
+          el.style.borderColor = "#16C784";
+          el.style.color = "#16C784";
+
+          $("disconnectBtn").style.display = "inline-block";
+          $("changeWalletBtn").style.display = "inline-block";
+
+        }
+
+      function renderQr(qrUrl) {
+        const host = $("leftMid");
+        if (!host) return;
+        const qr = document.createElement("div");
+        qr.id = "qrcode";
+        host.appendChild(qr);
+        // eslint-disable-next-line no-undef
+        new QRCode(qr, qrUrl);
+      }
+
+
+      function listenForIssuance(sessionId) {
+        const source = new EventSource("/altme-identity/stream");
+        source.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (String(data.id) !== String(sessionId)) return;
+
+            source.close();
+            remove("qrcode");
+
+            const host = $("leftMid");
+            if (!host) return;
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "tezos-successWrapper";
+
+            const tick = document.createElement("img");
+            tick.className = "tezos-successIcon";
+            tick.src = "/altme-identity/static/img/tick-circle.png";
+            tick.alt = "Success";
+
+            const success = document.createElement("p");
+            success.className = "tezos-successText";
+            success.textContent = "Credential successfully added to your wallet";
+
+            wrapper.appendChild(tick);
+            wrapper.appendChild(success);
+
+            host.appendChild(wrapper);
+
+          } catch (e) {
+            console.log("SSE parse error", e);
+          }
+        };
+      }
+
+      async function showQrAndListen(qrUrl, sessionId) {
+        remove("frame11");
+        setText("step1", "Step 2 — Scan the QR code with your EUDI Wallet");
+        setText("choose", "This will add your Proof of Crypto Ownership attestation to your wallet.");
+        setStep2Active();
+        renderQr(qrUrl);
+        listenForIssuance(sessionId);
+      }
+
+      async function disconnectWallet() {
+        try {
+          if (beaconClient) {
+            await beaconClient.clearActiveAccount();
+            await beaconClient.destroy();
+          }
+
+          console.log("Wallet disconnected");
+
+          // Reload page to fully reset state
+          window.location.reload();
+
+        } catch (err) {
+          console.error("Disconnect error:", err);
+
+          // Still reload to ensure clean state
+          window.location.reload();
+        }
+      }
+
+
+      async function changeWallet() {
+        try {
+          const client = await ensureBeaconClient();
+
+          await client.clearActiveAccount();
+          await client.requestPermissions();
+
+          const account = await client.getActiveAccount();
+          if (!account) throw new Error("No account returned");
+
+          setConnected(account.address);
+        } catch (err) {
+          console.error(err);
+          setError("Could not change wallet. Please try again.");
+        }
+      }
+
+      function michelineString(str) {
+          const encoder = new TextEncoder();
+          const bytes = encoder.encode(str);
+
+          const lengthHex = bytes.length
+            .toString(16)
+            .padStart(8, "0");
+
+          const bytesHex = Array.from(bytes)
+            .map(b => b.toString(16).padStart(2, "0"))
+            .join("");
+
+          return "05" + "01" + lengthHex + bytesHex;
+        }
+
+      function utf8ToHex(str) {
+        return Array.from(new TextEncoder().encode(str))
+          .map(b => b.toString(16).padStart(2, "0"))
+          .join("");
+      }
+
+
+      function micheline05HexFromString(str) {
+        const bytes = new TextEncoder().encode(str);
+
+        const lengthHex = bytes.length.toString(16).padStart(8, "0");
+        const bytesHex = Array.from(bytes).map(b => b.toString(16).padStart(2, "0")).join("");
+
+        // 05-prefixed packed string (Beacon docs)
+        return "05" + "01" + lengthHex + bytesHex;
+      }
+
+
+
+      async function connectAndSign() {
+      setText("choose", "Opening wallet...");
+
+      try {
+        const client = await ensureBeaconClient();
+
+        // Force wallet chooser popup on Connect:
+        await client.clearActiveAccount();
+        await client.requestPermissions();
+
+        const account = await client.getActiveAccount();
+        if (!account) throw new Error("No account returned");
+
+        const michelinePayload = micheline05HexFromString(SIGN_PAYLOAD);
+
+        const signature = await client.requestSignPayload({
+          signingType: window.beacon.SigningType.MICHELINE,
+          payload: michelinePayload
+        });
+
+        setConnected(account.address);
+
+        // Validate signature
+        const validateRes = await fetch(VALIDATE_URL, {
+          method: "GET",
+          headers: {
+            pubKey: account.publicKey,
+            signature: signature.signature,
+            address: account.address,
+            payload: michelinePayload
+          }
+        });
+
+        const validateJson = await validateRes.json();
+        console.log("signature is ",validateJson.status )
+        if (validateJson.status !== "valid") throw new Error("Signature validation failed.");
+
+        // Credential offer
+        const createRes = await fetch("/altme-identity/credential_offer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            walletAddress: account.address,
+            cryptoWalletSignature: signature.signature
+          })
+        });
+
+        const qrJson = await createRes.json();
+
+        // IMPORTANT: your backend usually returns qrcode_value, not url
+        await showQrAndListen(qrJson.url, qrJson.id);
+
+      } catch (err) {
+        console.error(err);
+        setError("Connection cancelled or failed. Please try again.");
+      }
     }
 
-    document.getElementById('logout').addEventListener('click', () => {
-      client.disconnect();
-      document.getElementById('logout').setAttribute('class', 'hidden')
-    })
 
+      
 
-    // Add event listener to the button
-    document.getElementById('requestPermission').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission2').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission3').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission4').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission5').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission6').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('requestPermission7').addEventListener('click', () => {
-      requestPermission()
-    })
-    document.getElementById('buttonGeneral').addEventListener('click', () => {
-      document.getElementById('divButtonGeneral').setAttribute("class", "activeButtonFAQ");
-      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('generalQuestions').setAttribute("class", "activeQuestions");
-      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
-      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
-    })
-    document.getElementById('buttonSecurity').addEventListener('click', () => {
-      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('divButtonSecurity').setAttribute("class", "activeButtonFAQ");
-      document.getElementById('divButtonSSI').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
-      document.getElementById('securityQuestions').setAttribute("class", "activeQuestions");
-      document.getElementById('SSIQuestions').setAttribute("class", "inactiveQuestions");
-    })
-    document.getElementById('buttonSSI').addEventListener('click', () => {
-      document.getElementById('divButtonGeneral').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('divButtonSecurity').setAttribute("class", "inactiveButtonFAQ");
-      document.getElementById('divButtonSSI').setAttribute("class", "activeButtonFAQ");
-      document.getElementById('generalQuestions').setAttribute("class", "inactiveQuestions");
-      document.getElementById('securityQuestions').setAttribute("class", "inactiveQuestions");
-      document.getElementById('SSIQuestions').setAttribute("class", "activeQuestions");
-    })
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn = $("connectBtn");
+        if (btn) btn.addEventListener("click", connectAndSign);
+        const disconnectBtn = $("disconnectBtn");
+        if (disconnectBtn) disconnectBtn.addEventListener("click", disconnectWallet);
+        const changeBtn = $("changeWalletBtn");
+        if (changeBtn) changeBtn.addEventListener("click", changeWallet);   
 
-
-    document.getElementById('showAnswer11').addEventListener('click', () => {
-      console.log(document.getElementById('answer11').getAttribute("class"))
-      if (document.getElementById('answer11').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer11').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow11').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer11').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer11').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow11').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer12').addEventListener('click', () => {
-      console.log(document.getElementById('answer12').getAttribute("class"))
-      if (document.getElementById('answer12').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer12').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow12').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer12').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer12').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow12').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer13').addEventListener('click', () => {
-      console.log(document.getElementById('answer13').getAttribute("class"))
-      if (document.getElementById('answer13').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer13').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow13').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer13').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer13').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow13').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer14').addEventListener('click', () => {
-      console.log(document.getElementById('answer14').getAttribute("class"))
-      if (document.getElementById('answer14').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer14').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow14').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer14').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer14').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow14').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer15').addEventListener('click', () => {
-      console.log(document.getElementById('answer15').getAttribute("class"))
-      if (document.getElementById('answer15').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer15').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow15').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer15').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer15').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow15').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer16').addEventListener('click', () => {
-      console.log(document.getElementById('answer16').getAttribute("class"))
-      if (document.getElementById('answer16').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer16').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow16').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer16').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer16').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow16').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer21').addEventListener('click', () => {
-      console.log(document.getElementById('answer21').getAttribute("class"))
-      if (document.getElementById('answer21').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer21').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow21').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer21').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer21').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow21').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer22').addEventListener('click', () => {
-      console.log(document.getElementById('answer22').getAttribute("class"))
-      if (document.getElementById('answer22').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer22').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow22').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer22').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer22').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow22').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer23').addEventListener('click', () => {
-      console.log(document.getElementById('answer23').getAttribute("class"))
-      if (document.getElementById('answer23').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer23').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow23').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer23').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer23').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow23').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer24').addEventListener('click', () => {
-      console.log(document.getElementById('answer24').getAttribute("class"))
-      if (document.getElementById('answer24').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer24').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow24').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer24').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer24').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow24').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer25').addEventListener('click', () => {
-      console.log(document.getElementById('answer25').getAttribute("class"))
-      if (document.getElementById('answer25').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer25').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow25').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer25').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer25').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow25').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    /*document.getElementById('showAnswer26').addEventListener('click', () => {
-      console.log(document.getElementById('answer26').getAttribute("class"))
-      if (document.getElementById('answer26').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer26').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow26').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer26').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer26').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow26').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })*/
-    document.getElementById('showAnswer31').addEventListener('click', () => {
-      console.log(document.getElementById('answer31').getAttribute("class"))
-      if (document.getElementById('answer31').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer31').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow31').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer31').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer31').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow31').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer32').addEventListener('click', () => {
-      console.log(document.getElementById('answer32').getAttribute("class"))
-      if (document.getElementById('answer32').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer32').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow32').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer32').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer32').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow32').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer33').addEventListener('click', () => {
-      console.log(document.getElementById('answer33').getAttribute("class"))
-      if (document.getElementById('answer33').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer33').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow33').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer33').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer33').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow33').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer34').addEventListener('click', () => {
-      console.log(document.getElementById('answer34').getAttribute("class"))
-      if (document.getElementById('answer34').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer34').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow34').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer34').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer34').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow34').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer35').addEventListener('click', () => {
-      console.log(document.getElementById('answer35').getAttribute("class"))
-      if (document.getElementById('answer35').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer35').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow35').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer35').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer35').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow35').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
-    document.getElementById('showAnswer36').addEventListener('click', () => {
-      console.log(document.getElementById('answer36').getAttribute("class"))
-      if (document.getElementById('answer36').getAttribute("class") === "inactiveAnswer") {
-        document.getElementById('answer36').setAttribute("class", "activeAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/img/arrow-circle-up.png")
-      }
-      else if (document.getElementById('answer36').getAttribute("class") === "activeAnswer") {
-        document.getElementById('answer36').setAttribute("class", "inactiveAnswer");
-        document.getElementById('arrow36').setAttribute("src", "/altme-identity/static/img/arrow-circle-down.png")
-
-      }
-    })
+      });
+    })();
   </script>
-
-
-
 </body>
-
 </html>

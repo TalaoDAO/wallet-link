@@ -5,5 +5,5 @@ flask_qrcode
 gunicorn
 redis
 pytezos
-didkit
 asgiref
+jwcrypto
