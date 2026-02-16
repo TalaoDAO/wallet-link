@@ -104,12 +104,12 @@ def error_500(e: Exception):
 # Static serving and error page
 # ------------------------------------------------------------------------------
 
-@app.route("/altme-identity/error", methods=["GET"])
+@app.route("/tezos4eudiw/error", methods=["GET"])
 def error():
     return render_template("error.html")
 
 
-@app.route("/altme-identity/static/img/<filename>", methods=["GET"])
+@app.route("/tezos4eudiw/static/img/<filename>", methods=["GET"])
 def serve_img(filename: str):
     try:
         return send_file(f"./static/img/{filename}", download_name=filename)
@@ -118,7 +118,7 @@ def serve_img(filename: str):
         abort(404)
 
 
-@app.route("/altme-identity/static/<filename>", methods=["GET"])
+@app.route("/tezos4eudiw/static/<filename>", methods=["GET"])
 def serve_static(filename: str):
     try:
         return send_file(f"./static/{filename}", download_name=filename)

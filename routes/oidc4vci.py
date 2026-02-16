@@ -24,17 +24,18 @@ def init_app(app):
     
     
     # Credential issuer
-    app.add_url_rule('/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
-    app.add_url_rule('/.well-known/openid-credential-issuer/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/tezos4eudiw/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/.well-known/openid-credential-issuer/tezos4eudiw/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
     
-    app.add_url_rule('/issuer/credential', view_func=issuer_credential, methods=['POST'])
-    app.add_url_rule('/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
-    app.add_url_rule('/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
+    app.add_url_rule('/tezos4eudiw/issuer/credential', view_func=issuer_credential, methods=['POST'])
+    app.add_url_rule('/tezos4eudiw/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
+    app.add_url_rule('/tezos4eudiw/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
     
     # AS endpoint when issuer = AS
-    app.add_url_rule('/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/.well-known/oauth-authorization-server/issuer', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/issuer/token', view_func=issuer_token, methods=['POST'])
+    app.add_url_rule('/tezos4eudiw/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/.well-known/oauth-authorization-server/tezos4eudiw/issuer', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/tezos4eudiw/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/tezos4eudiw/issuer/token', view_func=issuer_token, methods=['POST'])
 
     return
 
@@ -89,14 +90,6 @@ def credential_issuer_openid_configuration_endpoint():
     mode = current_app.config["MODE"]
     logging.info('Call credential issuer configuration endpoint /issuer metadata : %s', request.url)
     metadata = credential_issuer_openid_configuration(mode)
-    parsed = urlparse(request.url)
-    path = parsed.path
-    if not request.url.endswith(path):
-        logging.warning("wrong issuer metadatat url")
-        headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
-        return Response(response=json.dumps({"error": "not found"}), headers=headers, status=404)
-    else:
-        logging.info("issuer metadata url is correct for this draft")
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
     return Response(response=json.dumps(metadata), headers=headers)
 
@@ -108,9 +101,14 @@ def credential_issuer_openid_configuration(mode):
     """
     # general section
     configuration = {
-        'credential_issuer': mode.server + 'issuer',
-        'credential_endpoint': mode.server + 'issuer/credential',
-        'nonce_endpoint': mode.server + 'issuer/nonce'
+        'credential_issuer': mode.server + 'tezos4eudiw/issuer',
+        'credential_endpoint': mode.server + 'tezos4eudiw/issuer/credential',
+        'nonce_endpoint': mode.server + 'tezos4eudiw/issuer/nonce',
+        'display': [
+            {
+                "name": "Web3 Digital Wallet"
+            }
+        ]
     }
 
     # Credential configurations supported section
@@ -147,9 +145,9 @@ def as_openid_configuration(mode):
         logging.exception("Invalid credential configurations JSON: %s", credential_configurations_filename)
         authorization_server_config = {}
     config = {
-        'issuer': mode.server + 'issuer',
-        'token_endpoint': mode.server + 'issuer/token',
-        'jwks_uri':  mode.server + 'issuer/jwks',
+        'issuer': mode.server + 'tezos4eudiw/issuer',
+        'token_endpoint': mode.server + 'tezos4eudiw/issuer/token',
+        'jwks_uri':  mode.server + 'tezos4eudiw/issuer/jwks',
         'pre-authorized_grant_anonymous_access_supported': True
     }
     config.update(authorization_server_config)
@@ -167,7 +165,7 @@ def thumbprint(key):
 def build_credential_offer(pre_authorized_code, mode):
     is_test = True
     offer = {
-        'credential_issuer': f'{mode.server}issuer',
+        'credential_issuer': f'{mode.server}tezos4eudiw/issuer',
         'credential_configuration_ids': ["SCA"],
         'grants': {
             'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
@@ -213,7 +211,7 @@ def get_credential_offer(data, red, mode):
     id = str(uuid.uuid1())
     offer_data["data"]["stream_id"] = id
     
-    credential_offer_uri = f'{mode.server}issuer/credential_offer_uri/{id}'
+    credential_offer_uri = f'{mode.server}tezos4eudiw/issuer/credential_offer_uri/{id}'
     red.setex(id, GRANT_LIFE, json.dumps(offer_data))
     red.setex(pre_authorized_code, GRANT_LIFE, json.dumps(offer_data))
     encoded_uri = quote(credential_offer_uri, safe='')
@@ -266,6 +264,8 @@ def issuer_token():
     
     if not code and grant_type != 'client_credentials':
         return Response(**manage_error('invalid_request', 'Request format is incorrect, code is missing'))
+    
+    logging.info("cient_id = %s", request.form.get("client_id"))
 
     # display client_authentication method
     if request.headers.get('Oauth-Client-Attestation'):
@@ -279,10 +279,6 @@ def issuer_token():
     else:
         client_authentication_method = 'none'
     logging.info('client authentication method = %s', client_authentication_method)
-
-    # HAIP Profile check
-    #if not request.form.get('client_assertion_type') and not request.headers.get('Oauth-Client-Attestation'):
-    #   logging.warning('HAIP requests client assertion authentication')
     
     # Check content of client assertion and proof of possession (PoP)
     if client_authentication_method == 'client_attestation':
@@ -293,9 +289,11 @@ def issuer_token():
             logging.info('OAuth-Client-Attestation = %s', client_assertion)
             logging.info('OAuth-Client-Attestation-PoP = %s', PoP)
             if request.form.get('client_id') != oidc4vc.get_payload_from_token(client_assertion).get('sub'):
-                return Response(**manage_error('invalid_request', 'client_id does not match client assertion subject'))
+                #return Response(**manage_error('invalid_request', 'client_id does not match client assertion subject'))
+                logging.warning('client_id does not match client assertion subject')
             if oidc4vc.get_payload_from_token(client_assertion).get('sub') != oidc4vc.get_payload_from_token(PoP).get('iss'):
-                return Response(**manage_error('invalid_request', 'sub of client assertion does not match proof of possession iss'))
+                #return Response(**manage_error('invalid_request', 'sub of client assertion does not match proof of possession iss'))
+                logging.warning('sub of client assertion does not match proof of possession iss')
         except Exception:
             return Response(**manage_error('invalid_request', 'Header is not correct for client attestation'))
 
@@ -326,13 +324,13 @@ def issuer_token():
 
     access_token_data = {
         'expires_at': datetime.timestamp(datetime.now()) + ACCESS_TOKEN_LIFE,
-        'credential_type': data.get('credential_type'),
+        #'credential_type': data.get('credential_type'),
         'vc': data.get('vc'),
         'webhook': data.get('webhook'),
         'stream_id': data.get('stream_id'),
         'issuer_state': data.get('issuer_state'),
         'client_id': request.form.get('client_id'),
-        'scope': request.form.get('scope')
+        #'scope': request.form.get('scope') # not used
     }
     logging.info('token endpoint response = %s', json.dumps(endpoint_response, indent=4))
     red.setex(access_token, ACCESS_TOKEN_LIFE, json.dumps(access_token_data))
@@ -376,7 +374,7 @@ def issuer_credential():
     #credential_configuration_id = result.get('credential_configuration_id')
     
     def nonce_exist(nonce):
-        print("nonce exists : ", bool(red.get(nonce)))
+        logging.info("nonce exists ?  %s", bool(red.get(nonce)))
         return bool(red.get(nonce))  
     
     wallet_jwk = []
@@ -455,7 +453,7 @@ def issuer_credential():
     stream_id = access_token_data.get("stream_id")
     if stream_id:
         red.publish(
-            "altme-identity",
+            "tezos4eudiw",
             json.dumps({"id": stream_id, "event": "CREDENTIAL_ISSUED"})
         )
 

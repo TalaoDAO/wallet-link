@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Tezos Proof of Crypto Ownership</title>
-  <link rel="icon" type="image/png" href="/altme-identity/static/img/icon.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/tezos4eudiw/static/img/icon.png" sizes="16x16" />
 
   <!-- Base styles (existing project) -->
-  <link rel="stylesheet" href="/altme-identity/static/style.css" />
+  <link rel="stylesheet" href="/tezos4eudiw/static/style.css" />
   <!-- Page-specific overrides (THIS file) -->
-  <link rel="stylesheet" href="/altme-identity/static/style_tezos_pro_clean.css" />
+  <link rel="stylesheet" href="/tezos4eudiw/static/style_tezos_pro_clean.css" />
 
   <!-- Scripts -->
    <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
@@ -30,7 +30,7 @@
               <a class="nav-02__link" href="https://altme.io/" target="_self" aria-label="Altme home">
                 <img loading="lazy"
                      class="nav-02__logo_img"
-                     src="/altme-identity/static/img/altme-decentralized-identity-wallet-did-logo.webp"
+                     src="/tezos4eudiw/static/img/altme-decentralized-identity-wallet-did-logo.webp"
                      height="70"
                      alt="Altme logo" />
               </a>
@@ -76,10 +76,8 @@
         <main class="tezos-shell" aria-label="Tezos proof flow">
 
           <header class="tezos-hero">
-            <h1 class="tezos-title">Add a Tezos Proof of Crypto Ownership to your EUDI Wallet</h1>
-            <p class="tezos-subtitle">
-              Connect a Tezos wallet and sign a message (no transaction). Then scan a QR code to receive
-              a verifiable credential in your EUDI Wallet.
+            <h1 class="tezos-title">Prove ownership of your Tezos wallet in your EUDI wallet</h1>
+            <p class="tezos-subtitle">Connect your wallet and sign a message to add a verifiable attestation to your EUDI Wallet.
             </p>
           </header>
 
@@ -125,12 +123,12 @@
 
                   <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect Tezos wallet">
                     <span class="tezos-connectInner">
-                      <img class="tezos-logo" src="/altme-identity/static/img/tezos.jpeg" alt="Tezos" />
+                      <img class="tezos-logo" src="/tezos4eudiw/static/img/tezos.jpeg" alt="Tezos" />
                       <span class="tezos-connectText">
                         <span class="tezos-connectTitle">Connect your Tezos wallet</span>
                         <span class="tezos-connectSub">Choose your wallet</span>
                       </span>
-                      <img class="tezos-chevron" src="/altme-identity/static/img/vector.png" alt="" aria-hidden="true" />
+                      <img class="tezos-chevron" src="/tezos4eudiw/static/img/vector.png" alt="" aria-hidden="true" />
                     </span>
                   </button>
 
@@ -269,7 +267,7 @@
 
 
       function listenForIssuance(sessionId) {
-        const source = new EventSource("/altme-identity/stream");
+        const source = new EventSource("/tezos4eudiw/stream");
         source.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data);
@@ -286,12 +284,12 @@
 
             const tick = document.createElement("img");
             tick.className = "tezos-successIcon";
-            tick.src = "/altme-identity/static/img/tick-circle.png";
+            tick.src = "/tezos4eudiw/static/img/tick-circle.png";
             tick.alt = "Success";
 
             const success = document.createElement("p");
             success.className = "tezos-successText";
-            success.textContent = "Credential successfully added to your wallet";
+            success.textContent = "Attestation successfully added to your EUDI wallet";
 
             wrapper.appendChild(tick);
             wrapper.appendChild(success);
@@ -351,28 +349,6 @@
         }
       }
 
-      function michelineString(str) {
-          const encoder = new TextEncoder();
-          const bytes = encoder.encode(str);
-
-          const lengthHex = bytes.length
-            .toString(16)
-            .padStart(8, "0");
-
-          const bytesHex = Array.from(bytes)
-            .map(b => b.toString(16).padStart(2, "0"))
-            .join("");
-
-          return "05" + "01" + lengthHex + bytesHex;
-        }
-
-      function utf8ToHex(str) {
-        return Array.from(new TextEncoder().encode(str))
-          .map(b => b.toString(16).padStart(2, "0"))
-          .join("");
-      }
-
-
       function micheline05HexFromString(str) {
         const bytes = new TextEncoder().encode(str);
 
@@ -382,8 +358,6 @@
         // 05-prefixed packed string (Beacon docs)
         return "05" + "01" + lengthHex + bytesHex;
       }
-
-
 
       async function connectAndSign() {
       setText("choose", "Opening wallet...");
@@ -423,7 +397,7 @@
         if (validateJson.status !== "valid") throw new Error("Signature validation failed.");
 
         // Credential offer
-        const createRes = await fetch("/altme-identity/credential_offer", {
+        const createRes = await fetch("/tezos4eudiw/credential_offer", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
