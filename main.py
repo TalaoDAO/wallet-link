@@ -42,7 +42,6 @@ from utils import message
 # ------------------------------------------------------------------------------
 
 logging.getLogger().setLevel(logging.INFO)
-
 app_logger = logging.getLogger("issuer")
 file_handler = logging.FileHandler("issuer.log")
 app_logger.addHandler(file_handler)
