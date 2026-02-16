@@ -1,20 +1,3 @@
-"""
-Altme Identity Issuer / Wallet Link (Tezos-only) - Flask
-
-What this service does (high level):
-- Serves a dApp page where users sign a nonce with a Tezos wallet.
-- Verifies Tezos signatures (pytezos).
-- Stores a short-lived session payload in Redis (used for wallet linking).
-- Exposes an endpoint that returns a credential offer and issues a signed VC (via didkit).
-- Provides an SSE stream so the browser can receive issuer status updates.
-
-Assumes presence of:
-- keys.json
-- ./credentials/TezosAssociatedAddress.jsonld
-- ./credentials_manifests/TezosAssociatedAddress_credential_manifest.json
-- environment.py, message.py
-- local Redis
-"""
 
 from __future__ import annotations
 import json

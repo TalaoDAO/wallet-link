@@ -1,1659 +1,663 @@
+/* =========================
+   GLOBAL / RESET
+   ========================= */
+
 @font-face {
-    font-family: Nunito;
-    src: url(Nunito-VariableFont_wght.ttf);
+  font-family: Nunito;
+  src: url(Nunito-VariableFont_wght.ttf);
 }
 
-#logo {
-    width: 127.11px;
-    height: 33.15px;
+:root{
+  --purple: #330080;
+  --purple-dark: #2e0072;
+  --text: #2E2440;
+  --muted: #544A62;
+  --border: #EDECF2;
+  --bg: #F8F8FB;
+  --white: #FFFFFF;
+  --success: #16C784;
 }
 
-#draw {
-    width: 447.49px;
-    height: 449.19px;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    z-index: 0;
+*{ box-sizing: border-box; }
 
+html, body{
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-#bigBox {
-    display: flex;
+body{
+  margin: 0;
+  font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Keep your existing wrapper IDs used by the website */
+#page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#large{
+  /* IMPORTANT: center children instead of flex-start (this was breaking title centering) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, #F8F8FB 0%, #FFFFFF 50%);
+}
+
+#body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+}
+
+a{ text-decoration: none; color: inherit; }
+p{ margin: 0; }
+
+/* =========================
+   BUTTONS (needed by dapp.html)
+   ========================= */
+
+.button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-family: 'Nunito';
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background-color .15s ease, color .15s ease;
+}
+
+.button--black-outline{
+  border-color: rgba(46, 36, 64, 0.25);
+  color: #2E2440;
+  background: rgba(255,255,255,0.8);
+}
+
+.button--black-outline:hover{
+  transform: translateY(-1px);
+  border-color: rgba(51,0,128,0.25);
+  box-shadow: 0px 10px 24px rgba(51,0,128,0.10);
+}
+
+.button--accent-bg{
+  background: var(--purple-dark);
+  border-color: var(--purple-dark);
+  color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
+}
+
+.button--accent-bg:hover{
+  transform: translateY(-1px);
+}
+
+/* Contact button inner spans used by navbar */
+.contactSpan{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 44px;
+  border-radius: 4px;
+  background-color: var(--purple-dark);
+}
+.contactP{ color: white; }
+
+
+/* =========================
+   FOOTER (kept, responsive)
+   ========================= */
+
+.bg-white-color{
+  width: 100%;
+  background-color: white;
+  position: relative;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-02{
+  display: flex;
+  flex-direction: column;
+}
+
+.container{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  opacity: 0.7;
+}
+
+.footer-02__wrapper{
+  display: flex;
+  flex-direction: row;
+  width: min(1050px, calc(100% - 24px));
+  height: auto;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer-02__text{
+  font-size: 15px;
+  font-family: 'Nunito';
+  color: #3d3d3d;
+  font-weight: normal;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.footer-02__text a{ color: #3d3d3d; }
+
+.social-buttons{
+  display: flex;
+  flex-direction: row;
+  width: 60px;
+  justify-content: space-around;
+  opacity: 0.7;
+}
+
+.social-buttons__icon{
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================
+   TEZOS PAGE (merged from style_tezos_pro_clean.css)
+   ========================= */
+
+.tezos-successWrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.tezos-successIcon{
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+
+.tezos-successText{
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--success);
+  text-align: center;
+}
+
+/* Shell */
+.tezos-shell{
+  width: 100%;
+  padding: 110px 16px 64px; /* 70px fixed navbar + breathing room */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero (guaranteed centered) */
+.tezos-hero{
+  width: 100%;
+  max-width: 980px;
+  text-align: center;
+  margin: 0 auto 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tezos-title{
+  margin: 0 auto 12px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 52px;
+  line-height: 1.12;
+  color: var(--purple);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.tezos-subtitle{
+  margin: 0 auto;
+  max-width: 760px;
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Stage + card */
+.tezos-stage{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tezos-card{
+  width: 100%;
+  max-width: 760px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0px 14px 36px rgba(51, 0, 128, 0.08);
+}
+
+/* Progress */
+.tezos-progress{
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* cleaner on desktop */
+  gap: 18px;
+  padding: 10px 10px 14px;
+  border-bottom: 1px solid #F1F0F5;
+  flex-wrap: nowrap;
+}
+
+.tezos-progress-step{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.72;
+  min-width: 240px;
+}
+
+.tezos-progress-step.isActive{ opacity: 1; }
+
+.tezos-dot{
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--purple);
+  background: rgba(51, 0, 128, 0.08);
+  border: 1px solid rgba(51, 0, 128, 0.18);
+}
+
+.tezos-progress-divider{
+  flex: 0 1 140px;
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.tezos-stepTitle{
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.tezos-stepDesc{
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+  color: var(--muted);
+}
+
+/* Instruction */
+.tezos-instruction{
+  text-align: center;
+  padding: 14px 6px 0;
+}
+
+.tezos-h2{
+  margin: 14px 0 10px;
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 1.25;
+  color: var(--purple);
+}
+
+.tezos-body{
+  margin: 0 auto 6px;
+  max-width: 640px;
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Action area */
+.tezos-actionArea{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.tezos-actionStack{
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: stretch;
+}
+
+/* Connect button */
+.tezos-connectBtn{
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 20px;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.tezos-connectBtn:hover{
+  transform: translateY(-2px);
+  border-color: rgba(51, 0, 128, 0.18);
+  box-shadow: 0px 16px 34px rgba(51, 0, 128, 0.10);
+}
+
+.tezos-connectInner{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+}
+
+.tezos-logo{
+  width: 100px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid #EFEAFB;
+  background: var(--white);
+}
+
+.tezos-connectText{
+  flex: 1;
+  text-align: left;
+}
+
+.tezos-connectTitle{
+  display: block;
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.tezos-connectSub{
+  display: block;
+  margin-top: 6px;
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.tezos-chevron{
+  width: 10px;
+  height: 16px;
+}
+
+/* Info card */
+.tezos-info{
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 18px 20px;
+  background: var(--white);
+}
+
+.tezos-infoTitle{
+  font-family: 'Nunito';
+  font-weight: 900;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--purple);
+  margin-bottom: 6px;
+}
+
+.tezos-infoText{
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.tezos-bullets{
+  margin: 0;
+  padding-left: 18px;
+  font-family: 'Nunito';
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.tezos-bullets li{ margin: 6px 0; }
+
+/* QR */
+#qrcode{
+  width: auto !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+#qrcode img,
+#qrcode canvas{
+  width: min(320px, 78vw) !important;
+  height: auto !important;
+}
+
+/* Deeplink button */
+.tezos-deeplinkWrap{
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tezos-deeplinkBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: var(--purple-dark);
+  color: #fff;
+  font-family: 'Nunito';
+  font-weight: 800;
+  font-size: 16px;
+  text-decoration: none;
+  width: min(420px, 100%);
+  box-shadow: 0px 14px 26px rgba(46, 0, 114, 0.18);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.tezos-deeplinkBtn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0px 18px 34px rgba(46, 0, 114, 0.22);
+}
+.tezos-deeplinkBtn:active{ transform: translateY(1px); }
+
+/* Responsive */
+@media (max-width: 720px){
+  .tezos-title{ font-size: 40px; }
+  .tezos-subtitle{ font-size: 18px; }
+  .tezos-h2{ font-size: 24px; }
+  .tezos-connectInner{ padding: 16px; flex-wrap: wrap; }
+  .tezos-logo{ width: 64px; height: 64px; border-radius: 14px; }
+
+  .tezos-progress{
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 150px;
-    gap: 40px;
-
-    width: 1170px;
-    height: 850px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 1;
-
-}
-
-#titles {
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 4px;
-
-    width: 1124px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#mainBox {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 25px;
-
-    width: 1170px;
-    height: 400px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 1;
-    justify-content: space-between;
-}
-
-#leftBox {
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 25px;
-
-    width: 549px;
-    height: 500px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#rightBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-    gap: 40px;
-
-    width: 551px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-#body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-
-    width: 100%;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 1;
-
-}
-
-body {
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-header {
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px 0px 0px;
-    gap: 10px;
-
-    width: 100%;
-
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#wrapperTop {
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 10px;
-
-    width: 1128px;
-    height: 77px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#title {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 1124px;
-    height: 76px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#titleP {
-    margin: 0;
-    width: 1124px;
-    height: 76px;
-
-    /* Heading/h1 */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 58px;
-    line-height: 131.7%;
-
-    /* or 76px */
-
-    /* Purple */
-    color: #330080;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    /*position: relative;
-    bottom: 50px;*/
-}
-
-#textTop {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 1170px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#textTopP {
-    width: 1170px;
-
-    /* Paragraph/18/regular */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Secondary */
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#large {
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 10px;
-
-    position: relative;
-    width: 100%;
-
-    /* Gradient_light */
-    background: linear-gradient(180deg, #F8F8FB 0%, #FFFFFF 50%);
-}
-
-#leftTop {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 549px;
-    height: 75px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-
-}
-
-#step1Div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 8px;
-
-    width: 549px;
-    height: 42px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#chooseDiv {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 549px;
-    height: 29px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#step1 {
-    width: 659px;
-    height: 42px;
-
-    /* Heading/h2 */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 131.7%;
-
-    /* or 42px */
-
-    color: #330080;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#choose {
-    width: 549px;
-    height: 29px;
-
-    /* Paragraph/18/regular */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Secondary */
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#leftMid {
-    /* Middle */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
-    gap: 22px;
-    width: 549px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-
-}
-
-#frame4 {
-    /* Frame 4 */
-
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 32px;
-
-    width: 549px;
-    height: 29px;
-
-    border-bottom: 1px solid rgba(84, 74, 98, 0.19);
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-
-}
-
-frame7 {
-    /* Frame 7 */
-
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 47px;
-    height: 29px;
-
-    border-bottom: 2px solid #330080;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-frame8 {
-    /* Frame 8 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 81px;
-    height: 29px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-#tezos {
-    /* Tezos */
-
-    width: 47px;
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Purple */
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#ethereum {
-    /* Secondary */
-
-
-    width: 47px;
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#fantom {
-    /* Tezos */
-
-    width: 47px;
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Purple */
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#bnb {
-    /* Tezos */
-
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Purple */
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#polygon {
-    /* Tezos */
-
-    width: 47px;
-    height: 29px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Purple */
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-
-}
-
-#frame11 {
-    /* Frame 11 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-
-    width: 549px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-#frame10 {
-    /* Frame 10 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 51px;
-    height: 23px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#popular {
-    /* Popular */
-
-    width: 51px;
-    height: 23px;
-
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 161.7%;
-
-    /* identical to box height, or 23px */
-
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#connect_box {
-
-    position: absolute;
-    top: 200px;
-    left: 0px;
-    width: 549px;
-    height: 148.89px;
-
-
-}
-
-#frame1 {
-    /* Frame 1 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-
-    width: 560px;
-    height: 333px;
-    overflow: scroll;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-
-}
-
-.box1 {
-    /* item */
-
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 16px 24px;
-
-    width: 549px;
-    height: 65.89px;
-
-    background: #FFFFFF;
-    border: 1px solid #EDECF2;
-    border-radius: 16px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-.box1:hover {
-    background: #EDECF2;
-}
-
-.box2 {
-    /* item */
-
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 16px 24px;
-
-    width: 549px;
-    height: 67px;
-
-    background: #FFFFFF;
-    border: 1px solid #EDECF2;
-    border-radius: 16px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-.box2:hover {
-    background: #EDECF2;
-}
-
-.underbox1 {
-    /* inside item */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 16px;
-
-    width: 501px;
-    height: 33.89px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 1;
-}
-
-.underbox2 {
-    /* inside item */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 16px;
-
-    width: 501px;
-    height: 35px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 1;
-}
-
-.frame2 {
-    /* Frame 2 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 16px;
-
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.frame3 {
-    /* Frame 3 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    /* Frame 3 */
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0px;
-
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 1;
-}
-
-.vector {
-    /* Vector */
-
-    width: 9px;
-    height: 16px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#beaconlogo {
-    /* beacon logo */
-
-    width: 36.5px;
-    height: 36.5px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.kvwalletbtn {
-    background-color: transparent;
-    border: transparent;
-    width: 549px;
-    height: 67px;
-    border-radius: 16px;
-    z-index: 100;
-    position: absolute;
-    left: 166px;
-
-}
-
-#kvwalletmodal_walletconnect_btn {
-
-    position: absolute;
-    top: 395px;
-
-}
-
-#kvwalletmodal_walletconnect_btn2 {
-
-    position: absolute;
-    top: 559px;
-
-}
-
-#kvwalletmodal_walletconnect_btn3 {
-
-    position: absolute;
-    top: 641px;
-
-}
-
-#kvwalletmodal_walletconnect_btn4 {
-
-    position: absolute;
-    top: 807px;
-
-}
-
-#kvwalletmodal_walletconnect_btn5 {
-
-    position: absolute;
-    top: 724px;
-
-}
-
-#kvwalletmodal_metamask_btn {
-
-    position: absolute;
-    top: 478px;
-    left: 166px;
-}
-
-#frame6 {
-
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-
-    width: 549px;
-    height: 78px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 2;
-    align-self: stretch;
-    flex-grow: 0;
-    position: relative;
-    top: 30px;
-}
-
-#ssi {
-    /* Connect wallet */
-
-    width: 549px;
-    height: 78px;
-
-    /* Paragraph/16/medium */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 161.7%;
-
-    /* or 26px */
-
-    /* Purple_light */
-    color: #B0A7BC;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 1;
-}
-
-#templelogo {
-    /* temple-wallet 1 */
-
-    width: 36px;
-    height: 35px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.walletText {
-    /* Beacon Wallet */
-    text-align: left;
-    padding-left: 25px;
-    width: 280px;
-    height: 29px;
-
-    /* Paragraph/18/bold */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    color: #000000;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-}
-
-#qrcode {
-    width: 279px;
-}
-
-#success {
-    /* Connect wallet */
-    margin: 0;
-    width: 549px;
-    height: 29px;
-
-    /* Paragraph/18/bold */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-    text-align: center;
-
-    /* Secondary */
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-.transparent {
-    background-color: transparent;
-    border: transparent;
-}
-
-#connectDesktop {
-
-    position: absolute;
-    top: 60px;
-    left: 153px;
-    font-family: Nunito;
-    font-size: 20px;
-    color: #330080;
-}
-
-#superFaq {
-    gap: 90px;
-    padding-top: 90px;
-    background: #F6F5F9;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    top: 50px;
-}
-
-#faq {
-    width: 1128px;
-
-}
-
-.question {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 1090px;
-    align-items: center;
-}
-
-.activeAnswer {
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 161.7%;
-
-    /* or 26px */
-
-    /* Secondary */
-    color: #544A62;
-    margin: 2px;
-    max-width: 970px;
-    text-align: left;
-
-}
-
-.inactiveAnswer {
-    visibility: collapse;
-    width: 1128px;
-    font-size: 0;
-}
-
-
-.questionP {
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 650;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Secondary */
-    color: #000000;
-    height: fit-content;
-}
-
-.answerP {
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 161.7%;
-
-    /* or 29px */
-
-    /* Secondary */
-    color: #544A62;
-}
-
-#faqP {
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 131.7%;
-
-    /* or 42px */
-
-    color: #330080;
-}
-
-#templeRight {
-    width: 50px;
-    height: 50px;
-}
-
-#kukaiRight {
-    width: 50px;
-    height: 50px;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-.footer-clean {
-    padding: 50px 0;
-    background-color: #fff;
-    color: #4b4c4d;
-}
-
-
-
-.container {
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    font-weight: bolder;
-    opacity: 0.7;
+  }
+  .tezos-progress-divider{ display: none; }
+  .tezos-progress-step{ min-width: 0; }
 }
 
-footer {
-    display: block;
-}
+@media (max-width: 520px){
+  .tezos-title{ font-size: 34px; }
+  .tezos-subtitle{ font-size: 16px; }
+  .tezos-card{ padding: 16px; border-radius: 18px; }
 
-.row {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
+  .nav-02__box{
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    justify-content: center;
+  }
 }
 
-.justify-content-center {
-    -ms-flex-pack: center !important;
-    justify-content: center !important;
+
+/* =========================
+   NAVBAR (clean + responsive)
+   ========================= */
+
+.nav-02{
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.07);
+
+  /* allow it to grow on mobile */
+  height: auto;
+  padding: 10px 0;
 }
 
-.container,
-.container-lg,
-.container-md,
-.container-sm,
-.container-xl {
-    max-width: 1140px;
+.nav-02__box{
+  width: min(1170px, calc(100% - 24px));
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
 }
 
-.col {
-    -ms-flex-preferred-size: 0;
-    flex-basis: 0;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    max-width: 100%;
+/* keep logo nice on desktop */
+.nav-02__logo_img{
+  height: 52px;   /* was 70px */
+  width: auto;
+  display: block;
 }
 
-.footer-clean h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    font-weight: bold;
-    font-size: 16px;
+/* buttons row */
+.nav-02__item{
+  display: flex;
+  align-items: center;
 }
 
-.footer-clean ul {
-    padding: 0;
-    list-style: none;
-    line-height: 1.6;
-    font-size: 14px;
-    margin-bottom: 0;
+/* make your top-right group behave as a compact cluster */
+.nav-02__box > .nav-02__item{
+  margin-left: 0;
 }
 
-.footer-clean ul a {
-    color: inherit;
-    text-decoration: none;
-    opacity: 0.8;
+/* slightly smaller buttons in navbar only */
+.nav-02 .button{
+  height: 38px;
+  padding: 0 12px;
+  font-size: 13px;
+  border-radius: 10px;
 }
 
-.nav-02 {
-    position: fixed;
-    z-index: 100;
-    left: 0px;
-    top: 0px;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.07);
+/* wallet status should truncate nicely */
+#walletStatus{
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -------- Mobile layout -------- */
+@media (max-width: 720px){
+  .nav-02{
+    padding: 8px 0;
+  }
+
+  .nav-02__box{
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
+  }
+
+  /* logo on its own line */
+  .nav-02__logo{
     width: 100%;
-    height: 70px;
-
-    padding-top: 10px;
-    padding-right: 0px;
-    padding-bottom: 10px;
-    padding-left: 0px;
     display: flex;
-    flex-direction: row;
     justify-content: center;
-}
+  }
 
-.nav-02__box {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 1170px;
-    justify-content: space-between;
-}
-
-.nav-02__list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-02__list_wrapper {
-    align-items: center;
-    display: flex;
-}
-
-.contactSpan {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #2e0072;
-    width: 120px;
+  .nav-02__logo_img{
     height: 44px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2), 0 5px 15px 0 rgba(37, 44, 97, 0.15);
-}
-
-.contactP {
-    color: white;
-}
-
-nav {
-    font-family: 'Nunito';
-    font-size: 14px;
-    font-weight: 700;
-
-}
-
-nav a {
-    text-decoration: none;
-    color: #303030;
-}
-
-.nav-02__item:hover {
-    transform: translateY(-2px);
-    transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-    color: #6600FF;
-}
-
-#faqNav {
-
-}
-
-.linkP:hover {
-    color: #6600FF;
-}
-
-#roadmapNav {
-    position: relative;
-    left: 7px;
-}
-
-#newsNav {
-    position: relative;
-    right: 1px;
-}
-
-#page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.bg-white-color {
-    width: 100%;
-    height: 129.6px;
-    background-color: white;
-    position: relative;
-    top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer-02 {
-    display: flex;
-    flex-direction: column;
-}
-
-.social-buttons {
-    display: flex;
-    flex-direction: row;
-    width: 60px;
-    justify-content: space-around;
-    opacity: 0.7;
-    position: relative;
-    top: 2px;
-}
-
-.footer-02__wrapper {
-    display: flex;
-    flex-direction: row;
-    width: 1050px;
-    height: 50px;
-    justify-content: space-between;
-
-}
-
-.footer-02__text {
-    font-size: 15px;
-    font-family: 'Nunito';
-    color: #3d3d3d;
-    font-weight: normal;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-}
-
-#line1Footer {
-    margin: 0;
-}
-
-#line2Footer {
-    margin: 0;
-}
-
-.social-buttons__icon {
-    width: 18px;
-    height: 18px;
-}
-
-.footer-02__text a {
-    color: #3d3d3d;
-}
-
-#frame19 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-
-    width: 448px;
-    height: 77px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-#underFrame19 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    gap: 40px;
-
-    height: 77px;
-
-    /* Purple_light */
-    background: #F1EDF7;
-    border-radius: 76px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.activeButtonFAQ {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*padding: 16px 32px;*/
-    gap: 10px;
-
-    width: 170px;
-    height: 61px;
-
-    background: #FFFFFF;
-    box-shadow: 0px 2px 13px rgba(97, 86, 109, 0.2);
-    border-radius: 50px;
-
-    /* Inside auto layout */
-    flex: none;
-    flex-grow: 0;
-    position: relative;
-    bottom: 2.5px;
-    right: 4px;
-}
-
-.activeButtonFAQ p {
-
-    /* Paragraph/18/bold */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-    text-align: center;
-
-    /* Purple */
-    color: #330080;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.inactiveButtonFAQ {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*padding: 16px 32px;*/
-    gap: 10px;
-
-    width: 170px;
-    height: 61px;
-
-    border-radius: 50px;
-
-    /* Inside auto layout */
-    flex: none;
-    flex-grow: 0;
-    position: relative;
-    bottom: 3px;
-    right: 6px;
-}
-
-.inactiveButtonFAQ p {
-
-
-    /* Paragraph/18/regular */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 161.7%;
-
-    /* or 29px */
-    text-align: center;
-
-    /* Secondary */
-    color: #544A62;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.buttonFAQ {
-    height: 61px;
-
-    border-radius: 50px;
-    background-color: transparent;
-    border: transparent;
-    /*border: solid;
-    border-width: 1px;
-    border-color: #000000;*/
-
-}
-
-.activeQuestions {
-    visibility: visible;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    gap: 16px;
-
-    width: 1092px;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.inactiveQuestions {
-    visibility: collapse;
-    height: 0px;
-    font-size: 0;
-}
-
-.inactiveQuestions * {
-    visibility: collapse;
-    height: 0px;
-    font-size: 0;
-}
-
-#youHaveQuestions {
-    width: 561px;
-    height: 152px;
-
-    /* Heading/h1 */
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 58px;
-    line-height: 131.7%;
-
-    /* or 76px */
-    text-align: center;
-
-    /* Purple */
-    color: #330080;
-
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 0;
-}
-
-#SSIQuestions {
-    position: relative;
-    bottom: 180px;
-
-}
-
-#securityQuestions {
-    position: relative;
-    bottom: 90px;
-
-}
-
-.superQuestions:hover {
-    background-color: #F1EDF7;
-}
-
-.superQuestions {
-    box-sizing: border-box;
-
-    /* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-left: 30px;
-    width: 1128px;
-
-    background: #FFFFFF;
-    border: 2px solid #DDD8E3;
-    border-radius: 16px;
-
-    /* Inside auto layout */
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-.arrows {
-    width: 32px;
-    height: 32px;
-    position: relative;
-    bottom: 4px;
-    right: 6px;
-    margin: 18px;
-
-}
-
-.showAnswerButton {
-
-    border-radius: 50px;
-    background-color: transparent;
-    border: transparent;
-}
-
-#frame7 a {
-    text-decoration: none;
-}
-
-.activeNav {
-    color: #544A62;
-    text-decoration: none;
-}
-
-.inactiveNav {
-    color: #330080;
-    margin: 0;
-}
-
-.nav-02__logo_img {
-    height: 70px;
-}
-
-#logout {
-    font-size: 14px;
-
-    height: 44px;
-    border: none;
-    border-radius: 4px;
-    right: 0.5%;
-}
-
-.hidden {
-    visibility: collapse;
-}
-
-nav {
-    align-items: center;
-}
-p{margin: 0;}
-
-
-a {
-    text-decoration: none;
+  }
+
+  /* items become a centered row that wraps */
+  .nav-02__item{
+    flex: 0 0 auto;
+  }
+
+  /* smaller buttons to avoid crowding */
+  .nav-02 .button{
+    height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  #walletStatus{
+    max-width: 70vw;
+  }
 }

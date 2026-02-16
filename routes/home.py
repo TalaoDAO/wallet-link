@@ -5,7 +5,6 @@ import logging
 import random
 import string
 from datetime import datetime
-from typing import Any, Dict
 
 from flask import (
     Flask,
@@ -16,8 +15,6 @@ from flask import (
     session,
     current_app
 )
-#from flask_mobility import Mobility
-#from flask_qrcode import QRcode
 from pytezos.crypto import key
 from routes import oidc4vci
 
@@ -88,7 +85,6 @@ def dapp():
     """
     mode = current_app.config["MODE"]
     session["is_connected"] = True
-    #secret_code = make_secret_code()
 
     # Text that the wallet signs (human-readable)
     message = (
@@ -98,16 +94,8 @@ def dapp():
         "This signature is safe and will not trigger any blockchain transaction or cost any fees. "
         "After signing, open your EUDI Wallet and scan the QR code to receive your attestation."
     )
-
-    #session["secret_code"] = secret_code
-    #session["cryptoWalletMessage"] = message
-    #session["cryptoWalletPayloadHex"] = message.encode("utf-8").hex()
-        
-    is_mobile = getattr(request, "MOBILE", False)
-    template = "dappMOBILE.html" if is_mobile else "dapp.html"
-
     return render_template(
-        template,
+        "dapp.html",
         nonce=message,   # send readable message to frontend
         link=mode.server + "tezos4eudiw/validate_sign",
     )

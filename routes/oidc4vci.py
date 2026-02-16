@@ -5,7 +5,7 @@ import logging
 import uuid
 from datetime import datetime
 from random import randint
-from urllib.parse import urlparse, quote
+from urllib.parse import quote
 from utils import oidc4vc_crypto as oidc4vc
 import requests
 from flask import (Response, jsonify, request, current_app)

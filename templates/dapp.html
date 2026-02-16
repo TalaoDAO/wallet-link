@@ -9,8 +9,6 @@
 
   <!-- Base styles (existing project) -->
   <link rel="stylesheet" href="/tezos4eudiw/static/style.css" />
-  <!-- Page-specific overrides (THIS file) -->
-  <link rel="stylesheet" href="/tezos4eudiw/static/style_tezos_pro_clean.css" />
 
   <!-- Scripts -->
   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
@@ -60,14 +58,6 @@
 
 
 
-          <div class="nav-02__item">
-            <a class="button button--accent-bg"
-              href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io"
-              target="_blank"
-              rel="noreferrer">
-              <div class="contactSpan"><p class="contactP">Contact</p></div>
-            </a>
-          </div>
 
           </div>
         </nav>
@@ -165,7 +155,8 @@
             <p id="line1Footer">
               &copy; 2026&nbsp; Web3 Digital Wallet - All rights reserved,
               <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
-              <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>
+              <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>,
+              <a href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io" target="_blank" rel="noreferrer">Contact</a>
             </p>
           </div>
           <div class="social-buttons">
@@ -214,7 +205,7 @@
 
       function setStep2Active() { addClass("step2Indicator", "isActive"); }
       function setError(msg) { setText("choose", msg); }
-    async function ensureBeaconClient() {
+      async function ensureBeaconClient() {
             if (beaconClient) return beaconClient;
 
             if (!window.beacon || !window.beacon.DAppClient) {
@@ -267,6 +258,28 @@
       }
 
 
+      function isMobile() {
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      }
+
+      function renderDeepLinkButton(deepLink) {
+        const host = $("leftMid");
+        if (!host) return;
+
+        const wrap = document.createElement("div");
+        wrap.className = "tezos-deeplinkWrap";
+        wrap.id = "deeplinkWrap";
+
+        const a = document.createElement("a");
+        a.className = "tezos-deeplinkBtn";
+        a.href = deepLink;
+        a.textContent = "Open in EUDI Wallet";
+
+        wrap.appendChild(a);
+        host.appendChild(wrap);
+      }
+
+
       function listenForIssuance(sessionId) {
         const source = new EventSource("/tezos4eudiw/stream");
         source.onmessage = (event) => {
@@ -303,14 +316,31 @@
         };
       }
 
+
       async function showQrAndListen(qrUrl, sessionId) {
         remove("frame11");
-        setText("step1", "Step 2 — Scan the QR code with your EUDI Wallet");
-        setText("choose", "This will add your Proof of Crypto Ownership attestation to your wallet.");
+        remove("deeplinkWrap");
+        remove("qrcode");
+
+        setText("step1", "Step 2 — Receive an attestation");
+        setText("choose", isMobile()
+          ? "Tap the button to open your EUDI Wallet."
+          : "Scan the QR code with your EUDI Wallet."
+        );
+
         setStep2Active();
-        renderQr(qrUrl);
+
+        if (isMobile()) {
+          // Mobile: button only
+          renderDeepLinkButton(qrUrl);
+        } else {
+          // Desktop: QR only
+          renderQr(qrUrl);
+        }
+
         listenForIssuance(sessionId);
       }
+
 
       async function disconnectWallet() {
         try {
@@ -424,8 +454,6 @@
       }
     }
 
-
-      
 
       document.addEventListener("DOMContentLoaded", () => {
         const btn = $("connectBtn");

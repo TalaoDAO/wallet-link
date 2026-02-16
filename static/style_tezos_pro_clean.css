@@ -34,12 +34,14 @@
 }
 
 /* Hero */
+
 .tezos-hero {
   width: 100%;
   max-width: 980px;
   text-align: center;
   margin: 0 auto 22px;
 }
+
 
 .tezos-title {
   margin: 0 auto 12px;
@@ -334,4 +336,187 @@
 .tezos-actionStack {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+
+
+
+#qrcode {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+#qrcode img,
+#qrcode canvas {
+  width: min(320px, 80vw) !important;
+  height: auto !important;
+}
+
+/* Deep link button wrapper */
+.tezos-deeplinkWrap {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Deep link button */
+.tezos-deeplinkBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 14px;
+  background: #6200ee;
+  color: white;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tezos-deeplinkBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 10px 20px rgba(98, 0, 238, 0.25);
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal overflow from legacy styles */
+.tezos-shell,
+.tezos-card,
+.tezos-stage {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+  .tezos-progress {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tezos-progress-divider {
+    display: none;
+  }
+}
+
+/* --- NAV: fix legacy fixed width on mobile --- */
+.nav-02__box{
+  width: min(1170px, calc(100% - 24px)) !important;
+  padding: 0 12px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Make "Not connected" / buttons not overflow */
+.nav-02__item { max-width: 100%; }
+#walletStatus{
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- PROGRESS: avoid steps being pushed to far left/right --- */
+.tezos-progress{
+  justify-content: center;   /* instead of space-between */
+  gap: 18px;
+}
+.tezos-progress-divider{
+  flex: 0 1 140px;           /* a reasonable line length */
+  max-width: none;
+}
+
+/* --- Text overflow safety (keep, but don’t change sizes) --- */
+.tezos-title,
+.tezos-subtitle,
+.tezos-body,
+.tezos-stepTitle,
+.tezos-stepDesc,
+.tezos-successText,
+.tezos-connectTitle,
+.tezos-connectSub{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* --- QR scales on mobile --- */
+#qrcode img,
+#qrcode canvas{
+  width: min(320px, 78vw) !important;
+  height: auto !important;
+}
+
+/* --- Mobile layout tweaks --- */
+@media (max-width: 720px){
+  .tezos-progress{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tezos-progress-divider{ display: none; }
+
+  .tezos-connectInner{
+    flex-wrap: wrap;
+  }
+}
+
+/* Prevent horizontal scroll caused by legacy fixed widths */
+html, body { overflow-x: hidden; }
+
+.tezos-deeplinkWrap{
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.tezos-deeplinkBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #2e0072;   /* matches your theme */
+  color: #fff;
+  font-family: 'Nunito';
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  width: min(420px, 100%);
+}
+
+.tezos-deeplinkBtn:active{ transform: translateY(1px); }
+
+
+.tezos-title {
+  text-align: center;
+  width: 100%;
+}
+
+/* Force hero section to center properly */
+.tezos-shell {
+  align-items: center !important;
+}
+
+.tezos-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center !important;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tezos-title {
+  display: block;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100%;
 }
