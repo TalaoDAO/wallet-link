@@ -7,3 +7,5 @@ redis
 pytezos
 asgiref
 jwcrypto
+gunicorn
+gevent

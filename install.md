@@ -3,24 +3,17 @@
 ## Requirements
 
 Python 3.9+
-didkit 0.3.0
 
 ## Install
 
-mkdir wallet-link
-cd issuer
+mkdir tezos3euudiw
+cd tezos4eudiw
 python3.9 -m venv venv  
 . venv/bin/activate  
 
-pip install redis
-# pip install Flask-Session
-pip install Flask[async]
-pip install didkit==0.3.0
-pip install  Flask-QRcode
-# pip install  gunicorn
-pip install requests
-pip install pytezos
+pip install -r requirements.txt
 
+set or download keys.json
 
 ## Run
 
