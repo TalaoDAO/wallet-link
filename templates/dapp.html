@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/tezos4eudiw/static/style_tezos_pro_clean.css" />
 
   <!-- Scripts -->
-   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
+  <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
 
   <script defer src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
@@ -199,13 +199,11 @@
 
   <!-- App logic -->
   <script>
-    let beaconClient = null;
-    
 
 
     (function () {
+      let beaconClient = null;
       const SIGN_PAYLOAD = {{ nonce | tojson }};
-
       const VALIDATE_URL = {{ link | tojson }};
 
 
@@ -235,6 +233,9 @@
             );
 
             await beaconClient.init();
+            const active = await beaconClient.getActiveAccount();
+            console.log("Init active account:", active);
+
             return beaconClient;
           }
 
@@ -359,6 +360,8 @@
         return "05" + "01" + lengthHex + bytesHex;
       }
 
+
+
       async function connectAndSign() {
       setText("choose", "Opening wallet...");
 
@@ -366,10 +369,14 @@
         const client = await ensureBeaconClient();
 
         // Force wallet chooser popup on Connect:
-        await client.clearActiveAccount();
-        await client.requestPermissions();
+        //await client.clearActiveAccount();
+        //await client.requestPermissions();
 
-        const account = await client.getActiveAccount();
+        let account = await client.getActiveAccount();
+        if (!account) {
+          await client.requestPermissions();
+          account = await client.getActiveAccount();
+        }
         if (!account) throw new Error("No account returned");
 
         const michelinePayload = micheline05HexFromString(SIGN_PAYLOAD);
