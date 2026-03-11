@@ -36,6 +36,7 @@ def init_app(app):
     app.add_url_rule('/.well-known/oauth-authorization-server/tezos4eudiw/issuer', view_func=oauth_authorization_server, methods=['GET'])
     app.add_url_rule('/tezos4eudiw/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
     app.add_url_rule('/tezos4eudiw/issuer/token', view_func=issuer_token, methods=['POST'])
+    app.add_url_rule("/tezos4eudiw/issuer/jwks", view_func=issuer_jwks, methods=["GET"])
 
     return
 
@@ -64,8 +65,10 @@ def manage_error(error, error_description, status=400, webhook=None):
     return {'response': json.dumps(payload), 'status': status, 'headers': headers}
 
 
-def build_signed_metadata(key, sub, metadata) -> str:
-    key = json.loads(key) if isinstance(key, str) else key
+def build_signed_metadata(metadata, mode) -> str:
+    with open('keys.json', 'r') as f:
+        keys = json.load(f)
+    key = keys['issuer_key']
     signer_key = jwk.JWK(**key) 
     alg = oidc4vc.alg(key)
     header = {
@@ -75,9 +78,10 @@ def build_signed_metadata(key, sub, metadata) -> str:
     header['x5c'] = x509_attestation.build_x509_san_dns()
     
     payload = {
-        'iss': 'https://talao.co',
-        'sub': sub,
-        'iat': datetime.timestamp(datetime.now())
+        'sub':  mode.server + 'tezos4eudiw/issuer',
+        'iss': mode.server + "tezos4eudiw/issuer",
+        'iat': int(datetime.now().timestamp()),
+        'exp': int(datetime.now().timestamp()) + 86400,
     }
     payload |= metadata
     token = jwt.JWT(header=header, claims=payload, algs=[alg])
@@ -90,8 +94,29 @@ def credential_issuer_openid_configuration_endpoint():
     mode = current_app.config["MODE"]
     logging.info('Call credential issuer configuration endpoint /issuer metadata : %s', request.url)
     metadata = credential_issuer_openid_configuration(mode)
+    accept = request.headers.get("Accept","").lower()
+    wants_jwt = "application/jwt" in accept
+    if wants_jwt:
+        headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/jwt'}
+        signed_metadata = build_signed_metadata(metadata, mode)
+        return Response(response=signed_metadata, headers=headers)
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
     return Response(response=json.dumps(metadata), headers=headers)
+
+
+# jwk_uri endpoint
+def issuer_jwks():
+    with open('keys.json', 'r') as f:
+        keys = json.load(f)
+    jwk_pub = dict(keys["issuer_key"])
+    for k in ("d","p","q","dp","dq","qi","oth"):
+        jwk_pub.pop(k, None)
+    jwks = {"keys": [jwk_pub]}
+    headers = {
+            "Content-Type": "application/json",
+            "Cache-Control": "public, max-age=3600"
+    }
+    return Response(response=json.dumps(jwks), status=200, headers=headers)
 
 
 # Credential issuer metadata
@@ -104,9 +129,22 @@ def credential_issuer_openid_configuration(mode):
         'credential_issuer': mode.server + 'tezos4eudiw/issuer',
         'credential_endpoint': mode.server + 'tezos4eudiw/issuer/credential',
         'nonce_endpoint': mode.server + 'tezos4eudiw/issuer/nonce',
-        'display': [
+        "display": [
             {
-                "name": "Web3 Digital Wallet"
+                "name": "Talao issuer",
+                "locale": "en-US",
+                "logo": {
+                    "uri": "https://talao.co/static/img/talao.png",
+                    "alt_text": "Talao logo"
+                }
+            },
+            {
+                "name": "Talao issuer",
+                "locale": "fr-FR",
+                "logo": {
+                    "uri": "https://talao.co/static/img/talao.png",
+                    "alt_text": "Talao logo"
+                }
             }
         ]
     }
@@ -133,16 +171,16 @@ def oauth_authorization_server():
     mode = current_app.config["MODE"]
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
     logging.info('Call to oauth-authorization-server endpoint')
-    return Response(response=json.dumps(as_openid_configuration(mode)), headers=headers)    
+    return Response(response=json.dumps(build_authorization_server_configuration(mode)), headers=headers, status=200)    
 
 
 # authorization server configuration 
-def as_openid_configuration(mode):
+def build_authorization_server_configuration(mode):
     try:
         with open('authorization_server_config.json', "r", encoding="utf-8") as f:
             authorization_server_config = json.load(f)
     except Exception:
-        logging.exception("Invalid credential configurations JSON: %s", credential_configurations_filename)
+        logging.exception("Invalid credential configurations JSON")
         authorization_server_config = {}
     config = {
         'issuer': mode.server + 'tezos4eudiw/issuer',
@@ -154,16 +192,8 @@ def as_openid_configuration(mode):
     return config
 
 
-def thumbprint(key):
-    if isinstance(key, str):
-        key = json.loads(key)
-    signer_key = jwk.JWK(**key)
-    return signer_key.thumbprint()
-
-
 # build credential offer
-def build_credential_offer(pre_authorized_code, mode):
-    is_test = True
+def build_credential_offer(data, pre_authorized_code, mode):
     offer = {
         'credential_issuer': f'{mode.server}tezos4eudiw/issuer',
         'credential_configuration_ids': ["SCA"],
@@ -173,7 +203,7 @@ def build_credential_offer(pre_authorized_code, mode):
             }
         }
     }
-    if not is_test:
+    if data.get("user_pin_required"):
         offer['grants'][
             'urn:ietf:params:oauth:grant-type:pre-authorized_code'
         ].update({
@@ -203,20 +233,18 @@ def issuer_credential_offer_uri(id):
 # Main API to provide the credential offer
 def get_credential_offer(data, red, mode):
     pre_authorized_code = str(uuid.uuid1())
-    offer = build_credential_offer(pre_authorized_code, mode)
+    offer = build_credential_offer(data, pre_authorized_code, mode)
     offer_data = {
         "offer": offer,
         "data": data
     }
-    id = str(uuid.uuid1())
-    offer_data["data"]["stream_id"] = id
-    
+    id = str(uuid.uuid1()) 
     credential_offer_uri = f'{mode.server}tezos4eudiw/issuer/credential_offer_uri/{id}'
     red.setex(id, GRANT_LIFE, json.dumps(offer_data))
     red.setex(pre_authorized_code, GRANT_LIFE, json.dumps(offer_data))
     encoded_uri = quote(credential_offer_uri, safe='')
     url_to_display = f"openid-credential-offer://?credential_offer_uri={encoded_uri}"
-    return jsonify({'qrcode_value': url_to_display, "id": id})
+    return jsonify({'qrcode_value': url_to_display})
 
 
 # AS nonce endpoint
@@ -324,7 +352,6 @@ def issuer_token():
 
     access_token_data = {
         'expires_at': datetime.timestamp(datetime.now()) + ACCESS_TOKEN_LIFE,
-        #'credential_type': data.get('credential_type'),
         'vc': data.get('vc'),
         'webhook': data.get('webhook'),
         'stream_id': data.get('stream_id'),
@@ -376,7 +403,7 @@ def issuer_credential():
     def nonce_exist(nonce):
         logging.info("nonce exists ?  %s", bool(red.get(nonce)))
         return bool(red.get(nonce))  
-    
+    # OIDC4VCI Final 1.0 only
     wallet_jwk = []
     if result.get('proofs'):
         if jwt_proof := result["proofs"].get("jwt"):
@@ -390,8 +417,15 @@ def issuer_credential():
                 proof_payload = oidc4vc.get_payload_from_token(proof)
                 logging.info('Proof header = %s', json.dumps(proof_header, indent=2))
                 logging.info('Proof payload = %s', json.dumps(proof_payload, indent=2))
-                if not proof_payload.get('nonce') and nonce_exist(proof_payload.get('nonce')):
+                
+                # nonce check
+                nonce = proof_payload.get("nonce")
+                if not nonce:
                     return Response(**manage_error('invalid_proof', 'c_nonce is missing', status=403))
+                if not nonce_exist(nonce):
+                    return Response(**manage_error('invalid_proof', 'c_nonce is expired or unknown', status=403))
+                
+                # Proof validation
                 try:
                     oidc4vc.verif_token(proof)
                     logging.info('proof %s is validated', str(i))
@@ -445,17 +479,11 @@ def issuer_credential():
     # send event to webhook if it exists    
     if webhook := access_token_data.get('webhook'):
         data = {
-                'event': 'CREDENTIAL_SENT',
+            "stream_id": access_token_data.get("stream_id"),
+            "event": "CREDENTIAL_SENT",
         }
         requests.post(webhook, json=data, timeout=10)
         
-    # Notify front-end (SSE via Redis pubsub)
-    stream_id = access_token_data.get("stream_id")
-    if stream_id:
-        red.publish(
-            "tezos4eudiw",
-            json.dumps({"id": stream_id, "event": "CREDENTIAL_ISSUED"})
-        )
 
     # send VC to wallet
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}

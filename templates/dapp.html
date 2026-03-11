@@ -12,7 +12,6 @@
 
   <!-- Scripts -->
   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
-
   <script defer src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 
@@ -54,6 +53,10 @@
                   style="display:none;">
             Change wallet
           </button>
+        </div>
+        <div class="nav-02__item">
+          <a href="https://doc.wallet-provider.io/tezos4eudiw">Documentation</a>
+           
         </div>
           </div>
         </nav>
@@ -119,13 +122,13 @@
                   </button>
 
                   <div class="tezos-info" role="note" aria-label="What you get">
-                    <div class="tezos-infoTitle">What you get</div>
+                    <div class="tezos-infoTitle">What you will get in your EUDI wallet:</div>
                     <div class="tezos-infoText">
                       An attestation proving you control a Tezos address (Proof of Crypto Ownership),
-                      ready to be stored and presented from an EUDI Wallet.
+                      ready to be stored and presented from an EUDI Wallet to act as a legal document.
                     </div>
                     <ul class="tezos-bullets">
-                      <li>No transaction. Only a signature.</li>
+                      <li>No transaction fees. Only a signature.</li>
                       <li>Works with any compatible Tezos wallet.</li>
                       <li>Attestation delivered by scanning a QR code.</li>
                     </ul>
@@ -149,7 +152,7 @@
         <div class="footer-02__wrapper">
           <div class="footer-02__text content_box">
             <p id="line1Footer">
-              &copy; 2026&nbsp; Web3 Digital Wallet - All rights reserved,
+              &copy; 2026&nbsp; Web3 Digital Wallet - All rights reserved, Version 0.1.0
               <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
               <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>,
               <a href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io" target="_blank" rel="noreferrer">Contact</a>
@@ -190,6 +193,7 @@
 
     (function () {
       let beaconClient = null;
+      const SESSION_ID = {{ session_id | tojson }};
       const SIGN_PAYLOAD = {{ nonce | tojson }};
       const VALIDATE_URL = {{ link | tojson }};
 
@@ -276,12 +280,14 @@
       }
 
 
-      function listenForIssuance(sessionId) {
+      function listenForIssuance() {
         const source = new EventSource("/tezos4eudiw/stream");
         source.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data);
-            if (String(data.id) !== String(sessionId)) return;
+            if (String(data.stream_id) !== String(SESSION_ID)) return;
+
+            if (String(data.event) !== "CREDENTIAL_SENT") return;
 
             source.close();
             remove("qrcode");
@@ -313,7 +319,7 @@
       }
 
 
-      async function showQrAndListen(qrUrl, sessionId) {
+      async function showQrAndListen(qrUrl) {
         remove("frame11");
         remove("deeplinkWrap");
         remove("qrcode");
@@ -334,7 +340,7 @@
           renderQr(qrUrl);
         }
 
-        listenForIssuance(sessionId);
+        listenForIssuance();
       }
 
 
@@ -418,7 +424,8 @@
         const validateRes = await fetch(VALIDATE_URL, {
           method: "GET",
           headers: {
-            pubKey: account.publicKey,
+            pubkey: account.publicKey,
+            sessionid: SESSION_ID,
             signature: signature.signature,
             address: account.address,
             payload: michelinePayload
@@ -434,8 +441,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            walletAddress: account.address,
-            cryptoWalletSignature: signature.signature
+            session_id: SESSION_ID,
           })
         });
 

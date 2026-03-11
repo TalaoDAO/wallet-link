@@ -1,7 +1,7 @@
-# TEZOS4EUDIW : 
+# TEZOS4EUDIW 0.1.0
 
 TEZOS4EUDIW is a web application that allows users to prove ownership
-of a crypto wallet and receive a verifiable credential representing that
+of a crypto wallet and receive a verifiable attestation (EAA) representing that
 ownership in their EUDI wallet.
 
 The application enables the issuance of a Proof of Crypto Ownership
@@ -20,17 +20,16 @@ TEZOS4EUDIW provides the following functionality:
 - Delivers the credential to the user's EUDI wallet via QR code
 - Notifies the web application when credential issuance is complete
 
-The issued credential can then be used as a trusted proof that the user
-controls a specific crypto address.
+The issued attestation can then be used as a trusted proof that the user
+controls a specific Tezos crypto address.
 
 ## Key capabilities
 
 - Proof of crypto wallet ownership without transactions
-- Issuance of SD-JWT Verifiable Credentials
+- Issuance of EAA in SD-JWT VC forrmat
 - OIDC4VCI compliant credential issuer
 - Integration with Tezos wallets via Beacon
-- Delivery of credentials to EUDI wallets
-- Real-time issuance status via server-sent events (SSE)
+- Delivery of attestations to EUDI wallets
 
 ## Supported wallets
 
@@ -43,15 +42,16 @@ Any Tezos wallet compatible with Beacon, including:
 - Altme Wallet
 - Ledger (via supported wallets)
 
-### EUDI Walet
+### EUDI Wallet compliant with OIDC4VC Final 1.0
 
-- [Talao](https://www.talao.io/talao-wallet/)
-- [Altme](https://www.altme.io/)
-- [Igrant.io](https://www.igrant.io/)
+- 🇫🇷 [Talao Wallet](https://www.talao.io/talao-wallet/)
+- 🇫🇷 [Altme Wallet](https://www.altme.io/)
+- 🇸🇪 [Igrant.io Wallet](https://www.igrant.io/)
+- 🇪🇸 [VID Wallet](https://www.validatedid.com/en/identity/vidwallet)
 
 ## Supported credentials
 
-The issuer can deliver credentials such as:
+The issuer can deliver credentials such as SD-JWT VC:
 
 - Crypto Account Proof (Tezos wallet ownership)
 
@@ -66,3 +66,5 @@ The issuer can deliver credentials such as:
 TEZOS4EUDIW enables trusted linking between a decentralized identity
 wallet and a crypto wallet address, allowing verifiable credentials to
 be issued and used in identity-based workflows.
+
+contact@talao.io
