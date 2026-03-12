@@ -422,14 +422,15 @@
 
         // Validate signature
         const validateRes = await fetch(VALIDATE_URL, {
-          method: "GET",
-          headers: {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             pubkey: account.publicKey,
             sessionid: SESSION_ID,
             signature: signature.signature,
             address: account.address,
             payload: michelinePayload
-          }
+          })
         });
 
         const validateJson = await validateRes.json();

@@ -171,7 +171,9 @@ def oauth_authorization_server():
     mode = current_app.config["MODE"]
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
     logging.info('Call to oauth-authorization-server endpoint')
-    return Response(response=json.dumps(build_authorization_server_configuration(mode)), headers=headers, status=200)    
+    authorization_server_metadata = build_authorization_server_configuration(mode)
+    print(json.dumps(authorization_server_metadata, indent=4))
+    return Response(response=json.dumps(authorization_server_metadata), headers=headers, status=200)    
 
 
 # authorization server configuration 

@@ -69,7 +69,7 @@ def verify_tezos_signature(pub_key: str, signature: str, payload: str, expected_
 
 def init_app(app_: Flask) -> None:
     app_.add_url_rule("/tezos4eudiw", view_func=dapp, methods=["GET"])
-    app_.add_url_rule("/tezos4eudiw/validate_sign", view_func=validate_sign, methods=["GET"])
+    app_.add_url_rule("/tezos4eudiw/validate_sign", view_func=validate_sign, methods=["POST"])
     app_.add_url_rule("/tezos4eudiw/credential_offer", view_func=credential_offer, methods=["GET", "POST"])
     app_.add_url_rule("/tezos4eudiw/stream", view_func=wallet_link_stream, methods=["GET", "POST"])
     app_.add_url_rule("/tezos4eudiw/webhook", view_func=webhook, methods=["GET", "POST"])
@@ -122,11 +122,12 @@ def validate_sign():
     On success sets session['addressVerified'].
     """
     red = current_app.config["REDIS"]
-    print(request.headers)
-    pub_key = request.headers.get("pubkey") or ""
-    signature = request.headers.get("signature") or ""
-    payload_hex = request.headers.get("payload", "")
-    session_id = request.headers.get("sessionid", "")
+    body = request.get_json(silent=True) or {}
+    pub_key = body.get("pubkey")
+    signature = body.get("signature") or ""
+    payload_hex = body.get("payload") or  ""
+    session_id = body.get("sessionid")
+    address = body.get("address")
     
     if not payload_hex:
         return {"status": "error", "message": "Missing session payload"}, 400
@@ -145,8 +146,7 @@ def validate_sign():
     
     try:   
         payload_bytes = bytes.fromhex(payload_hex)
-        expected_address = request.headers.get("address")
-        pkh = verify_tezos_signature(pub_key, signature, payload_bytes, expected_address)
+        pkh = verify_tezos_signature(pub_key, signature, payload_bytes, address)
         logging.info("Signature is validated")
         
         # update proof_session
