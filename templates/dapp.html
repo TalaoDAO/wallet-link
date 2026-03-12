@@ -285,7 +285,7 @@
         source.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data);
-            if (String(data.stream_id) !== String(SESSION_ID)) return;
+            if (String(data.session_id) !== String(SESSION_ID)) return;
 
             if (String(data.event) !== "CREDENTIAL_SENT") return;
 

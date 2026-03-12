@@ -170,6 +170,8 @@ def credential_offer():
     mode = current_app.config["MODE"]
     payload = request.get_json(silent=True) or {}
     session_id = payload.get("session_id")
+    
+    # get data for this session
     proof_session = json.loads(red.get(session_id).decode())
     if not proof_session:
         app_logger.exception("proof session expired or missing")
@@ -177,10 +179,11 @@ def credential_offer():
     code = proof_session.get('code', "None")
     wallet_address = proof_session.get("wallet_address")
 
+    # call OIDC4VCI issuer
     data = {
         "user_pin_required": True,
         "webhook": mode.server + "/tezos4eudiw/webhook",
-        "stream_id": session_id,
+        "session_id": session_id,
         "user_pin": code,
         "vc": {
             "SCA": {
@@ -192,11 +195,12 @@ def credential_offer():
                 "disclosure": ["all"]
             }
         }
-    }
-    # Call the existing API helper (returns Flask Response from jsonify)
+    }    
     resp = oidc4vci.get_credential_offer(data, red, mode)
     payload = resp.get_json() or {}
     logging.info("QRcode value = %s", payload["qrcode_value"])
+    
+    # return QR code data to front
     return jsonify({"url": payload["qrcode_value"]})
 
 

@@ -356,7 +356,7 @@ def issuer_token():
         'expires_at': datetime.timestamp(datetime.now()) + ACCESS_TOKEN_LIFE,
         'vc': data.get('vc'),
         'webhook': data.get('webhook'),
-        'stream_id': data.get('stream_id'),
+        'session_id': data.get('session_id'),
         'issuer_state': data.get('issuer_state'),
         'client_id': request.form.get('client_id'),
         #'scope': request.form.get('scope') # not used
@@ -481,7 +481,7 @@ def issuer_credential():
     # send event to webhook if it exists    
     if webhook := access_token_data.get('webhook'):
         data = {
-            "stream_id": access_token_data.get("stream_id"),
+            "session_id": access_token_data.get("session_id"),
             "event": "CREDENTIAL_SENT",
         }
         requests.post(webhook, json=data, timeout=10)
