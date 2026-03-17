@@ -72,13 +72,7 @@
                   <div class="tezos-dot" aria-hidden="true">1</div>
                   <div class="tezos-progress-labels">
                     <div class="tezos-stepTitle">Connect & sign</div>
-                    <div class="tezos-stepDesc">
-                      {% if wallet_type == "evm" %}
-                      Connect with injected wallet or WalletConnect
-                      {% else %}
-                      Scan QR with crypto wallet
-                      {% endif %}
-                    </div>
+                    <div class="tezos-stepDesc">Scan QR with crypto wallet</div>
                   </div>
                 </div>
 
@@ -100,7 +94,7 @@
 
                 <p id="choose" class="tezos-body">
                   {% if wallet_type == "evm" %}
-                  Click the button below. It will try an injected wallet first. If none is available, it will open WalletConnect.
+                  Click the button below. It will open WalletConnect.
                   {% else %}
                   Click the button below. It will open and let you choose your Tezos wallet.
                   You will sign a message to prove you control the address.
@@ -117,15 +111,11 @@
                            alt="{{ 'Ethereum' if wallet_type == 'evm' else 'Tezos' }}" />
                       <span class="tezos-connectText">
                         <span class="tezos-connectTitle">
-                          {% if wallet_type == "evm" %}
                           Connect your wallet
-                          {% else %}
-                          Connect your wallet
-                          {% endif %}
                         </span>
                         <span class="tezos-connectSub">
                           {% if wallet_type == "evm" %}
-                          Injected wallet or WalletConnect
+                          Use WalletConnect
                           {% else %}
                           Choose your wallet
                           {% endif %}
@@ -145,7 +135,7 @@
                       <li>No transaction fees. Only a signature.</li>
                       <li>
                         {% if wallet_type == "evm" %}
-                        Works with injected wallets and WalletConnect-compatible wallets.
+                        Works with WalletConnect-compatible wallets.
                         {% else %}
                         Works with any compatible Tezos wallet.
                         {% endif %}
@@ -168,7 +158,7 @@
         <div class="footer-02__wrapper">
           <div class="footer-02__text content_box">
             <p id="line1Footer">
-              &copy; 2026 Web3 Digital Wallet - All rights reserved, Version 0.4.0
+              &copy; 2026 Web3 Digital Wallet - All rights reserved, Version 0.4.1
               <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
               <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>,
               <a href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io" target="_blank" rel="noreferrer">Contact</a>
@@ -197,7 +187,17 @@
       const STREAM_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/stream" : "/crypto4eudiw/tezos/stream";
       const VALIDATE_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/validate_sign" : "/crypto4eudiw/tezos/validate_sign";
       const CREDENTIAL_OFFER_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/credential_offer" : "/crypto4eudiw/tezos/credential_offer" ;
-
+      const CHAIN_NAMES = {
+        1: "Ethereum Mainnet",
+        5: "Goerli",
+        11155111: "Sepolia",
+        137: "Polygon",
+        10: "Optimism",
+        42161: "Arbitrum",
+        42793: "Etherlink Mainnet",
+        128123: "Etherlink Testnet"
+      };
+    
       const $ = (id) => document.getElementById(id);
       const remove = (id) => { const el = $(id); if (el) el.remove(); };
       const setText = (id, text) => { const el = $(id); if (el) el.textContent = text; };
@@ -389,58 +389,6 @@
         return evmProvider;
       }
 
-      async function signWithInjectedWallet() {
-        if (!window.ethereum) return null;
-
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-
-        const browserProvider = new BrowserProvider(window.ethereum);
-        let network = await browserProvider.getNetwork();
-        let chainId = Number(network.chainId);
-
-        if (EVM_CHAIN_ID && chainId !== Number(EVM_CHAIN_ID)) {
-          try {
-            await window.ethereum.request({
-              method: "wallet_switchEthereumChain",
-              params: [{ chainId: "0x" + Number(EVM_CHAIN_ID).toString(16) }]
-            });
-          } catch (err) {
-            if (err.code === 4902 && Number(EVM_CHAIN_ID) === 42793) {
-              await window.ethereum.request({
-                method: "wallet_addEthereumChain",
-                params: [{
-                  chainId: "0xa729",
-                  chainName: "Etherlink",
-                  rpcUrls: ["https://node.mainnet.etherlink.com"],
-                  nativeCurrency: {
-                    name: "Tez",
-                    symbol: "XTZ",
-                    decimals: 18
-                  },
-                  blockExplorerUrls: ["https://explorer.etherlink.com"]
-                }]
-              });
-            } else {
-              throw err;
-            }
-          }
-
-          network = await browserProvider.getNetwork();
-          chainId = Number(network.chainId);
-        }
-
-        if (chainId !== Number(EVM_CHAIN_ID)) {
-          throw new Error(`Please switch to chain ${EVM_CHAIN_ID}.`);
-        }
-
-        const signer = await browserProvider.getSigner();
-        const address = await signer.getAddress();
-        const signature = await signer.signMessage(EVM_CHALLENGE);
-
-        return { address, signature, chainId, providerType: "injected" };
-      }
-
-
 
       async function signWithWalletConnect() {
           const wc = await ensureWalletConnectProvider();
@@ -463,9 +411,13 @@
           const signer = await browserProvider.getSigner();
           const network = await browserProvider.getNetwork();
           const chainId = Number(network.chainId);
+          const expectedName = CHAIN_NAMES[EVM_CHAIN_ID] || `chain ${EVM_CHAIN_ID}`;
+          const currentName = CHAIN_NAMES[chainId] || `chain ${chainId}`;
 
           if (EVM_CHAIN_ID && chainId !== Number(EVM_CHAIN_ID)) {
-            throw new Error(`Please switch to chain ${EVM_CHAIN_ID}.`);
+            throw new Error(
+              `Wrong network: you are on ${currentName}. Please switch to ${expectedName}.`
+            );
           }
 
           // This is the important part: plain text message signing
@@ -478,7 +430,6 @@
             providerType: "walletconnect"
           };
         }
-     
 
       async function createCredentialOffer() {
         const createRes = await fetch(CREDENTIAL_OFFER_URL, {
@@ -533,26 +484,21 @@
           await createCredentialOffer();
         } catch (err) {
           console.error(err);
-          setError("Connection cancelled or failed. Please try again.");
+          setError(err?.message || String(err));
+          // setError("Connection cancelled or failed. Please try again.");
         }
       }
+
 
       async function connectAndSignEvm() {
         setText("choose", "Opening wallet...");
 
         try {
-          let signed = null;
-          if (window.ethereum) {
-            signed = await signWithInjectedWallet();
-          } else {
-            signed = await signWithWalletConnect();
-          }
+
+          let signed = await signWithWalletConnect();
 
           evmConnectedAddress = signed.address;
           setConnected(signed.address);
-
-          console.log("Expected EVM_CHAIN_ID =", EVM_CHAIN_ID);
-          console.log("Wallet chainId =", signed.chainId);
 
           const validateRes = await fetch(VALIDATE_URL, {
             method: "POST",
@@ -572,11 +518,15 @@
           }
 
           await createCredentialOffer();
+
         } catch (err) {
           console.error(err);
-          setError(err.message || "Connection cancelled or failed. Please try again.");
+          setError(err?.message || String(err));
+          //setError("Connection failed. Please try again.");
         }
       }
+
+
 
       async function disconnectWallet() {
         try {

@@ -445,6 +445,8 @@ def evm_validate_sign():
 
     expected_challenge = proof_session.get("challenge")
     expected_chain_id = int(proof_session.get("chain_id", 1))
+    
+    app_logger.info("expected_chain_id=%s submitted_chain_id=%s", expected_chain_id, chain_id)
 
     if challenge != expected_challenge:
         red.delete(session_id)
