@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Tezos Proof of Crypto Ownership</title>
-  <link rel="icon" type="image/png" href="/tezos4eudiw/static/img/icon.png" sizes="16x16" />
+  <title>{{wallet_name}} Proof of Crypto Ownership</title>
+  <link rel="icon" type="image/png" href="/crypto4eudiw/static/img/icon.png" sizes="16x16" />
 
-  <!-- Base styles (existing project) -->
-  <link rel="stylesheet" href="/tezos4eudiw/static/style.css" />
+  <link rel="stylesheet" href="/crypto4eudiw/static/style.css" />
 
-  <!-- Scripts -->
+  {% if wallet_type == "tezos" %}
   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
+  {% endif %}
   <script defer src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 
@@ -19,67 +19,66 @@
   <div id="page">
     <div id="large">
       <div id="body">
-
-        <!-- Top navigation (kept from original) -->
         <nav class="nav-02" aria-label="Primary">
           <div class="nav-02__box">
             <div class="nav-02__logo">
-              <a class="nav-02__link" href="https://altme.io/" target="_self" aria-label="Altme home">
+              <a class="nav-02__link" href="/crypto4eudiw" target="_self" aria-label="Altme home">
                 <img loading="lazy"
                      class="nav-02__logo_img"
-                     src="/tezos4eudiw/static/img/altme-decentralized-identity-wallet-did-logo.webp"
+                     src="/crypto4eudiw/static/img/altme-decentralized-identity-wallet-did-logo.webp"
                      height="70"
                      alt="Altme logo" />
               </a>
             </div>
 
-           <div class="nav-02__item">
-          <div id="walletStatus" class="button button--black-outline">
-            Not connected
-          </div>
-        </div>
+            <div class="nav-02__item">
+              <div id="walletStatus" class="button button--black-outline">
+                Not connected
+              </div>
+            </div>
 
-        <div class="nav-02__item">
-          <button id="disconnectBtn"
-                  class="button button--black-outline"
-                  style="display:none;">
-            Disconnect
-          </button>
-        </div>
+            <div class="nav-02__item">
+              <button id="disconnectBtn" class="button button--black-outline" style="display:none;">
+                Disconnect
+              </button>
+            </div>
 
-        <div class="nav-02__item">
-          <button id="changeWalletBtn"
-                  class="button button--black-outline"
-                  style="display:none;">
-            Change wallet
-          </button>
-        </div>
-        <div class="nav-02__item">
-          <a href="https://doc.wallet-provider.io/tezos4eudiw">Documentation</a>
-           
-        </div>
+            <div class="nav-02__item">
+              <button id="changeWalletBtn" class="button button--black-outline" style="display:none;">
+                Change wallet
+              </button>
+            </div>
+
+            <div class="nav-02__item">
+              <a href="https://doc.wallet-provider.io/tezos4eudiw">Documentation</a>
+            </div>
           </div>
         </nav>
 
-        <!-- Main content (NEW structure — avoids legacy #bigBox/#titles/#mainBox/#leftBox conflicts) -->
-        <main class="tezos-shell" aria-label="Tezos proof flow">
-
+        <main class="tezos-shell" aria-label="Wallet proof flow">
           <header class="tezos-hero">
-            <h1 class="tezos-title">Prove ownership of your Tezos wallet in your EUDI wallet</h1>
-            <p class="tezos-subtitle">Connect your wallet and sign a message to add a verifiable attestation to your EUDI Wallet.
+            <h1 class="tezos-title">
+              Prove ownership of your {{ blockchain_network }} wallet in your EUDI wallet
+            </h1>
+            <p class="tezos-subtitle">
+              Connect your wallet and sign a message to add a verifiable attestation to your EUDI Wallet.
             </p>
           </header>
 
           <section class="tezos-stage">
             <div class="tezos-card">
-
-              <!-- Progress -->
               <div class="tezos-progress" aria-label="Progress">
                 <div class="tezos-progress-step isActive" id="step1Indicator">
                   <div class="tezos-dot" aria-hidden="true">1</div>
                   <div class="tezos-progress-labels">
                     <div class="tezos-stepTitle">Connect & sign</div>
-                    <div class="tezos-stepDesc">Scan QR with crypto wallet</div>
+                    <div class="tezos-stepDesc">
+                      {% if wallet_type == "evm" %}
+                      Connect with injected wallet or WalletConnect
+                      {% else %}
+                      Scan QR with crypto wallet
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
 
@@ -94,158 +93,137 @@
                 </div>
               </div>
 
-              <!-- Instructions -->
               <div class="tezos-instruction">
-                <p id="step1" class="tezos-h2">Step 1 — Connect your Tezos wallet</p>
-                
+                <p id="step1" class="tezos-h2">
+                  Step 1 — Connect your {{ blockchain_network}} wallet
+                </p>
+
                 <p id="choose" class="tezos-body">
+                  {% if wallet_type == "evm" %}
+                  Click the button below. It will try an injected wallet first. If none is available, it will open WalletConnect.
+                  {% else %}
                   Click the button below. It will open and let you choose your Tezos wallet.
                   You will sign a message to prove you control the address.
+                  {% endif %}
                 </p>
               </div>
 
-              
-
-              <!-- Action area (IDs kept for JS) -->
               <div id="leftMid" class="tezos-actionArea">
                 <div id="frame11" class="tezos-actionStack">
-
-                  <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect Tezos wallet">
+                  <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect wallet">
                     <span class="tezos-connectInner">
-                      <img class="tezos-logo" src="/tezos4eudiw/static/img/tezos.jpeg" alt="Tezos" />
+                      <img class="tezos-logo"
+                           src="{% if chain_id == '1' %}/crypto4eudiw/static/img/ethereum.jpeg{% elif chain_id == '42793' %}/crypto4eudiw/static/img/etherlink.jpeg{% else %}/crypto4eudiw/static/img/tezos.jpeg{% endif %}"
+                           alt="{{ 'Ethereum' if wallet_type == 'evm' else 'Tezos' }}" />
                       <span class="tezos-connectText">
-                        <span class="tezos-connectTitle">Connect your Tezos wallet</span>
-                        <span class="tezos-connectSub">Choose your wallet</span>
+                        <span class="tezos-connectTitle">
+                          {% if wallet_type == "evm" %}
+                          Connect your wallet
+                          {% else %}
+                          Connect your wallet
+                          {% endif %}
+                        </span>
+                        <span class="tezos-connectSub">
+                          {% if wallet_type == "evm" %}
+                          Injected wallet or WalletConnect
+                          {% else %}
+                          Choose your wallet
+                          {% endif %}
+                        </span>
                       </span>
-                      <img class="tezos-chevron" src="/tezos4eudiw/static/img/vector.png" alt="" aria-hidden="true" />
+                      <img class="tezos-chevron" src="/crypto4eudiw/static/img/vector.png" alt="" aria-hidden="true" />
                     </span>
                   </button>
 
                   <div class="tezos-info" role="note" aria-label="What you get">
                     <div class="tezos-infoTitle">What you will get in your EUDI wallet:</div>
                     <div class="tezos-infoText">
-                      An attestation proving you control a Tezos address (Proof of Crypto Ownership),
-                      ready to be stored and presented from an EUDI Wallet to act as a legal document.
+                      An attestation proving you control a {{ "EVM" if wallet_type == "evm" else "Tezos" }} address
+                      (Proof of Crypto Ownership), ready to be stored and presented from an EUDI Wallet.
                     </div>
                     <ul class="tezos-bullets">
                       <li>No transaction fees. Only a signature.</li>
-                      <li>Works with any compatible Tezos wallet.</li>
+                      <li>
+                        {% if wallet_type == "evm" %}
+                        Works with injected wallets and WalletConnect-compatible wallets.
+                        {% else %}
+                        Works with any compatible Tezos wallet.
+                        {% endif %}
+                      </li>
                       <li>Attestation delivered by scanning a QR code.</li>
                     </ul>
                   </div>
-
                 </div>
               </div>
-
             </div>
           </section>
         </main>
-
       </div>
     </div>
   </div>
 
-  <!-- Footer (kept) -->
   <div class="bg-white-color">
     <footer class="footer-02" id="footer">
       <div class="container">
         <div class="footer-02__wrapper">
           <div class="footer-02__text content_box">
             <p id="line1Footer">
-              &copy; 2026&nbsp; Web3 Digital Wallet - All rights reserved, Version 0.1.0
+              &copy; 2026 Web3 Digital Wallet - All rights reserved, Version 0.4.0
               <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
               <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>,
               <a href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io" target="_blank" rel="noreferrer">Contact</a>
             </p>
-          </div>
-          <div class="social-buttons">
-            <div class="social-buttons__item">
-              <a class="social-buttons__link social-buttons__link--twitter"
-                 href="https://twitter.com/Altme_io"
-                 target="_blank"
-                 rel="noreferrer">
-                <img loading="lazy"
-                     class="social-buttons__icon"
-                     alt="twitter icon"
-                     src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/twitter.svg" />
-              </a>
-            </div>
-            <div class="social-buttons__item">
-              <a class="social-buttons__link social-buttons__link--linkedin"
-                 href="https://www.linkedin.com/company/altme-web3/"
-                 target="_blank"
-                 rel="noreferrer">
-                <img loading="lazy"
-                     class="social-buttons__icon"
-                     alt="linkedin icon"
-                     src="https://dvzvtsvyecfyp.cloudfront.net/static/img/icons/social/black/linkedin.svg" />
-              </a>
-            </div>
           </div>
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- App logic -->
-  <script>
-
+  <script type="module">
+    import { BrowserProvider } from "https://esm.sh/ethers@6.16.0";
+    import EthereumProvider from "https://esm.sh/@walletconnect/ethereum-provider@2.23.8";
 
     (function () {
       let beaconClient = null;
-      const SESSION_ID = {{ session_id | tojson }};
-      const SIGN_PAYLOAD = {{ nonce | tojson }};
-      const VALIDATE_URL = {{ link | tojson }};
+      let evmProvider = null;
+      let evmConnectedAddress = null;
 
+      const SESSION_ID = {{ session_id | tojson }};
+      const WALLET_TYPE = {{ wallet_type | tojson }};
+      const MICHELINE_PAYLOAD = {{ micheline_payload | tojson }};
+      const EVM_CHALLENGE = {{ evm_challenge | tojson }};
+      const EVM_CHAIN_ID = {{ evm_chain_id | tojson }};
+      const WALLETCONNECT_PROJECT_ID = {{ walletconnect_project_id | tojson }};
+      const STREAM_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/stream" : "/crypto4eudiw/tezos/stream";
+      const VALIDATE_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/validate_sign" : "/crypto4eudiw/tezos/validate_sign";
+      const CREDENTIAL_OFFER_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/credential_offer" : "/crypto4eudiw/tezos/credential_offer" ;
 
       const $ = (id) => document.getElementById(id);
       const remove = (id) => { const el = $(id); if (el) el.remove(); };
       const setText = (id, text) => { const el = $(id); if (el) el.textContent = text; };
       const addClass = (id, cls) => { const el = $(id); if (el) el.classList.add(cls); };
 
-      function setStep2Active() { addClass("step2Indicator", "isActive"); }
-      function setError(msg) { setText("choose", msg); }
-      async function ensureBeaconClient() {
-            if (beaconClient) return beaconClient;
+      function setStep2Active() {
+        addClass("step2Indicator", "isActive");
+      }
 
-            if (!window.beacon || !window.beacon.DAppClient) {
-              throw new Error("Beacon SDK not loaded.");
-            }
-
-            beaconClient = new window.beacon.DAppClient({
-              name: "Altme",
-              enableMetrics: false
-            });
-
-            // subscribe BEFORE init
-            beaconClient.subscribeToEvent(
-              window.beacon.BeaconEvent.ACTIVE_ACCOUNT_SET,
-              (account) => console.log("Active account:", account?.address)
-            );
-
-            await beaconClient.init();
-            const active = await beaconClient.getActiveAccount();
-            console.log("Init active account:", active);
-
-            return beaconClient;
-          }
+      function setError(msg) {
+        setText("choose", msg);
+      }
 
       function setConnected(address) {
-          const el = $("walletStatus");
-          if (!el) return;
+        const el = $("walletStatus");
+        if (!el) return;
 
-          const short =
-            address.slice(0, 6) + "..." + address.slice(-4);
+        const short = address.slice(0, 6) + "..." + address.slice(-4);
+        el.textContent = "Connected: " + short;
+        el.style.backgroundColor = "#E9F8F0";
+        el.style.borderColor = "#16C784";
+        el.style.color = "#16C784";
 
-          el.textContent = "Connected: " + short;
-          el.style.backgroundColor = "#E9F8F0";
-          el.style.borderColor = "#16C784";
-          el.style.color = "#16C784";
-
-          $("disconnectBtn").style.display = "inline-block";
-          $("changeWalletBtn").style.display = "inline-block";
-
-        }
+        $("disconnectBtn").style.display = "inline-block";
+        $("changeWalletBtn").style.display = "inline-block";
+      }
 
       function renderQr(qrUrl) {
         const host = $("leftMid");
@@ -253,10 +231,8 @@
         const qr = document.createElement("div");
         qr.id = "qrcode";
         host.appendChild(qr);
-        // eslint-disable-next-line no-undef
         new QRCode(qr, qrUrl);
       }
-
 
       function isMobile() {
         return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -279,45 +255,69 @@
         host.appendChild(wrap);
       }
 
-
       function listenForIssuance() {
-        const source = new EventSource("/tezos4eudiw/stream");
+        const source = new EventSource(STREAM_URL);
         source.onmessage = (event) => {
           try {
             const data = JSON.parse(event.data);
             if (String(data.session_id) !== String(SESSION_ID)) return;
 
-            if (String(data.event) !== "CREDENTIAL_SENT") return;
+            const eventType = String(data.event);
+            if (eventType === "CREDENTIAL_SENT") {
+              source.close();
+              remove("qrcode");
 
-            source.close();
-            remove("qrcode");
+              const host = $("leftMid");
+              if (!host) return;
 
-            const host = $("leftMid");
-            if (!host) return;
+              const wrapper = document.createElement("div");
+              wrapper.className = "tezos-successWrapper";
 
-            const wrapper = document.createElement("div");
-            wrapper.className = "tezos-successWrapper";
+              const tick = document.createElement("img");
+              tick.className = "tezos-successIcon";
+              tick.src = "/crypto4eudiw/static/img/tick-circle.png";
+              tick.alt = "Success";
 
-            const tick = document.createElement("img");
-            tick.className = "tezos-successIcon";
-            tick.src = "/tezos4eudiw/static/img/tick-circle.png";
-            tick.alt = "Success";
+              const success = document.createElement("p");
+              success.className = "tezos-successText";
+              success.textContent = "Attestation successfully added to your EUDI wallet";
 
-            const success = document.createElement("p");
-            success.className = "tezos-successText";
-            success.textContent = "Attestation successfully added to your EUDI wallet";
+              wrapper.appendChild(tick);
+              wrapper.appendChild(success);
+              host.appendChild(wrapper);
 
-            wrapper.appendChild(tick);
-            wrapper.appendChild(success);
+            } else if (
+              eventType === "ERROR" ||
+              eventType === "ISSUANCE_ERROR" ||
+              eventType === "CREDENTIAL_OFFER_FAILURE"
+            ) {
+              source.close();
+              remove("qrcode");
 
-            host.appendChild(wrapper);
+              const host = $("leftMid");
+              if (!host) return;
 
+              const wrapper = document.createElement("div");
+              wrapper.className = "tezos-errorWrapper";
+
+              const cross = document.createElement("img");
+              cross.className = "tezos-errorIcon";
+              cross.src = "/crypto4eudiw/static/img/error.png";
+              cross.alt = "Error";
+
+              const error = document.createElement("p");
+              error.className = "tezos-errorText";
+              error.textContent = "Credential issuance failed. Please try again.";
+
+              wrapper.appendChild(cross);
+              wrapper.appendChild(error);
+              host.appendChild(wrapper);
+            }
           } catch (e) {
             console.log("SSE parse error", e);
           }
         };
       }
-
 
       async function showQrAndListen(qrUrl) {
         remove("frame11");
@@ -333,139 +333,309 @@
         setStep2Active();
 
         if (isMobile()) {
-          // Mobile: button only
           renderDeepLinkButton(qrUrl);
         } else {
-          // Desktop: QR only
           renderQr(qrUrl);
         }
 
         listenForIssuance();
       }
 
+      async function ensureBeaconClient() {
+        if (beaconClient) return beaconClient;
+        if (!window.beacon || !window.beacon.DAppClient) {
+          throw new Error("Beacon SDK not loaded.");
+        }
+
+        beaconClient = new window.beacon.DAppClient({
+          name: "Altme",
+          enableMetrics: false
+        });
+
+        beaconClient.subscribeToEvent(
+          window.beacon.BeaconEvent.ACTIVE_ACCOUNT_SET,
+          (account) => console.log("Active account:", account?.address)
+        );
+
+        await beaconClient.init();
+        return beaconClient;
+      }
+
+      async function ensureWalletConnectProvider() {
+        if (evmProvider) return evmProvider;
+        if (!WALLETCONNECT_PROJECT_ID) {
+          throw new Error("Missing WALLETCONNECT_PROJECT_ID in Flask config.");
+        }
+
+        evmProvider = await EthereumProvider.init({
+          projectId: WALLETCONNECT_PROJECT_ID,
+          chains: [Number(EVM_CHAIN_ID || 1)],
+          showQrModal: true,
+          methods: ["personal_sign", "eth_sign", "eth_requestAccounts"],
+          optionalMethods: ["eth_chainId", "eth_accounts"],
+          optionalEvents: ["accountsChanged", "chainChanged"],
+          metadata: {
+            name: "Altme",
+            description: "Proof of Crypto Ownership",
+            url: window.location.origin,
+            icons: ["https://altme.io/favicon.ico"]
+          }
+        });
+
+        evmProvider.on("disconnect", () => {
+          evmConnectedAddress = null;
+        });
+
+        return evmProvider;
+      }
+
+      async function signWithInjectedWallet() {
+        if (!window.ethereum) return null;
+
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+
+        const browserProvider = new BrowserProvider(window.ethereum);
+        let network = await browserProvider.getNetwork();
+        let chainId = Number(network.chainId);
+
+        if (EVM_CHAIN_ID && chainId !== Number(EVM_CHAIN_ID)) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: "0x" + Number(EVM_CHAIN_ID).toString(16) }]
+            });
+          } catch (err) {
+            if (err.code === 4902 && Number(EVM_CHAIN_ID) === 42793) {
+              await window.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [{
+                  chainId: "0xa729",
+                  chainName: "Etherlink",
+                  rpcUrls: ["https://node.mainnet.etherlink.com"],
+                  nativeCurrency: {
+                    name: "Tez",
+                    symbol: "XTZ",
+                    decimals: 18
+                  },
+                  blockExplorerUrls: ["https://explorer.etherlink.com"]
+                }]
+              });
+            } else {
+              throw err;
+            }
+          }
+
+          network = await browserProvider.getNetwork();
+          chainId = Number(network.chainId);
+        }
+
+        if (chainId !== Number(EVM_CHAIN_ID)) {
+          throw new Error(`Please switch to chain ${EVM_CHAIN_ID}.`);
+        }
+
+        const signer = await browserProvider.getSigner();
+        const address = await signer.getAddress();
+        const signature = await signer.signMessage(EVM_CHALLENGE);
+
+        return { address, signature, chainId, providerType: "injected" };
+      }
+
+
+
+      async function signWithWalletConnect() {
+          const wc = await ensureWalletConnectProvider();
+
+          // Establish session / show QR modal
+          await wc.connect();
+
+          // Some wallets require an explicit account request after connect
+          const accounts = await wc.request({
+            method: "eth_requestAccounts"
+          });
+
+          const address = Array.isArray(accounts) ? accounts[0] : null;
+          if (!address) {
+            throw new Error("WalletConnect did not return an account.");
+          }
+
+          // Use ethers on top of the WalletConnect provider
+          const browserProvider = new BrowserProvider(wc);
+          const signer = await browserProvider.getSigner();
+          const network = await browserProvider.getNetwork();
+          const chainId = Number(network.chainId);
+
+          if (EVM_CHAIN_ID && chainId !== Number(EVM_CHAIN_ID)) {
+            throw new Error(`Please switch to chain ${EVM_CHAIN_ID}.`);
+          }
+
+          // This is the important part: plain text message signing
+          const signature = await signer.signMessage(EVM_CHALLENGE);
+
+          return {
+            address,
+            signature,
+            chainId,
+            providerType: "walletconnect"
+          };
+        }
+     
+
+      async function createCredentialOffer() {
+        const createRes = await fetch(CREDENTIAL_OFFER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: SESSION_ID })
+        });
+
+        const qrJson = await createRes.json();
+        if (!createRes.ok || !qrJson.url) {
+          throw new Error(qrJson.message || qrJson.error || "Credential offer failed.");
+        }
+        await showQrAndListen(qrJson.url);
+      }
+
+      async function connectAndSignTezos() {
+        setText("choose", "Opening wallet...");
+
+        try {
+          const client = await ensureBeaconClient();
+          let account = await client.getActiveAccount();
+          if (!account) {
+            await client.requestPermissions();
+            account = await client.getActiveAccount();
+          }
+          if (!account) throw new Error("No account returned");
+
+          const signature = await client.requestSignPayload({
+            signingType: window.beacon.SigningType.MICHELINE,
+            payload: MICHELINE_PAYLOAD
+          });
+
+          setConnected(account.address);
+
+          const validateRes = await fetch(VALIDATE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              pubkey: account.publicKey,
+              session_id: SESSION_ID,
+              signature: signature.signature,
+              address: account.address,
+              payload: MICHELINE_PAYLOAD
+            })
+          });
+
+          const validateJson = await validateRes.json();
+          if (validateJson.status !== "valid") {
+            throw new Error(validateJson.message || "Signature validation failed.");
+          }
+
+          await createCredentialOffer();
+        } catch (err) {
+          console.error(err);
+          setError("Connection cancelled or failed. Please try again.");
+        }
+      }
+
+      async function connectAndSignEvm() {
+        setText("choose", "Opening wallet...");
+
+        try {
+          let signed = null;
+          if (window.ethereum) {
+            signed = await signWithInjectedWallet();
+          } else {
+            signed = await signWithWalletConnect();
+          }
+
+          evmConnectedAddress = signed.address;
+          setConnected(signed.address);
+
+          console.log("Expected EVM_CHAIN_ID =", EVM_CHAIN_ID);
+          console.log("Wallet chainId =", signed.chainId);
+
+          const validateRes = await fetch(VALIDATE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              session_id: SESSION_ID,
+              address: signed.address,
+              signature: signed.signature,
+              message: EVM_CHALLENGE,
+              chain_id: signed.chainId
+            })
+          });
+
+          const validateJson = await validateRes.json();
+          if (validateJson.status !== "valid") {
+            throw new Error(validateJson.message || "Signature validation failed.");
+          }
+
+          await createCredentialOffer();
+        } catch (err) {
+          console.error(err);
+          setError(err.message || "Connection cancelled or failed. Please try again.");
+        }
+      }
 
       async function disconnectWallet() {
         try {
-          if (beaconClient) {
-            await beaconClient.clearActiveAccount();
-            await beaconClient.destroy();
+          if (WALLET_TYPE === "tezos") {
+            if (beaconClient) {
+              await beaconClient.clearActiveAccount();
+              await beaconClient.destroy();
+            }
+          } else {
+            if (evmProvider) {
+              await evmProvider.disconnect();
+            }
           }
-
-          console.log("Wallet disconnected");
-
-          // Reload page to fully reset state
-          window.location.reload();
-
         } catch (err) {
           console.error("Disconnect error:", err);
-
-          // Still reload to ensure clean state
+        } finally {
           window.location.reload();
         }
       }
 
-
       async function changeWallet() {
         try {
-          const client = await ensureBeaconClient();
-
-          await client.clearActiveAccount();
-          await client.requestPermissions();
-
-          const account = await client.getActiveAccount();
-          if (!account) throw new Error("No account returned");
-
-          setConnected(account.address);
+          if (WALLET_TYPE === "tezos") {
+            const client = await ensureBeaconClient();
+            await client.clearActiveAccount();
+            await client.requestPermissions();
+            const account = await client.getActiveAccount();
+            if (!account) throw new Error("No account returned");
+            setConnected(account.address);
+          } else {
+            if (evmProvider) {
+              await evmProvider.disconnect();
+              evmProvider = null;
+            }
+            await connectAndSignEvm();
+          }
         } catch (err) {
           console.error(err);
           setError("Could not change wallet. Please try again.");
         }
       }
 
-      function micheline05HexFromString(str) {
-        const bytes = new TextEncoder().encode(str);
-
-        const lengthHex = bytes.length.toString(16).padStart(8, "0");
-        const bytesHex = Array.from(bytes).map(b => b.toString(16).padStart(2, "0")).join("");
-
-        // 05-prefixed packed string (Beacon docs)
-        return "05" + "01" + lengthHex + bytesHex;
-      }
-
-
-
       async function connectAndSign() {
-      setText("choose", "Opening wallet...");
-
-      try {
-        const client = await ensureBeaconClient();
-
-        // Force wallet chooser popup on Connect:
-        //await client.clearActiveAccount();
-        //await client.requestPermissions();
-
-        let account = await client.getActiveAccount();
-        if (!account) {
-          await client.requestPermissions();
-          account = await client.getActiveAccount();
+        if (WALLET_TYPE === "evm") {
+          await connectAndSignEvm();
+        } else {
+          await connectAndSignTezos();
         }
-        if (!account) throw new Error("No account returned");
-
-        const michelinePayload = micheline05HexFromString(SIGN_PAYLOAD);
-
-        const signature = await client.requestSignPayload({
-          signingType: window.beacon.SigningType.MICHELINE,
-          payload: michelinePayload
-        });
-
-        setConnected(account.address);
-
-        // Validate signature
-        const validateRes = await fetch(VALIDATE_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            pubkey: account.publicKey,
-            sessionid: SESSION_ID,
-            signature: signature.signature,
-            address: account.address,
-            payload: michelinePayload
-          })
-        });
-
-        const validateJson = await validateRes.json();
-        console.log("signature is ",validateJson.status )
-        if (validateJson.status !== "valid") throw new Error("Signature validation failed.");
-
-        // Credential offer
-        const createRes = await fetch("/tezos4eudiw/credential_offer", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            session_id: SESSION_ID,
-          })
-        });
-
-        const qrJson = await createRes.json();
-
-        // IMPORTANT: your backend usually returns qrcode_value, not url
-        await showQrAndListen(qrJson.url, qrJson.id);
-
-      } catch (err) {
-        console.error(err);
-        setError("Connection cancelled or failed. Please try again.");
       }
-    }
-
 
       document.addEventListener("DOMContentLoaded", () => {
         const btn = $("connectBtn");
         if (btn) btn.addEventListener("click", connectAndSign);
+
         const disconnectBtn = $("disconnectBtn");
         if (disconnectBtn) disconnectBtn.addEventListener("click", disconnectWallet);
-        const changeBtn = $("changeWalletBtn");
-        if (changeBtn) changeBtn.addEventListener("click", changeWallet);   
 
+        const changeBtn = $("changeWalletBtn");
+        if (changeBtn) changeBtn.addEventListener("click", changeWallet);
       });
     })();
   </script>

@@ -68,6 +68,8 @@ app.config["MODE"] = mode
 app.config["SESSION_TYPE"] = "redis"
 app.config["SESSION_REDIS"] = red
 app.config["REDIS"] = red
+app.config["WALLETCONNECT_PROJECT_ID"] = "510345d7283143d63459e40d85fe794a"
+app.config["EVM_CHAIN_ID"] = 1
 app.secret_key = json.dumps(APP_SECRET_KEY)
 
 QRcode(app)
@@ -86,12 +88,16 @@ def error_500(e: Exception):
 # Static serving and error page
 # ------------------------------------------------------------------------------
 
-@app.route("/tezos4eudiw/error", methods=["GET"])
+@app.route("/crypto4eudiw")
+def index():
+    return render_template("choose_wallet.html")
+
+@app.route("/crypto4eudiw/error", methods=["GET"])
 def error():
     return render_template("error.html")
 
 
-@app.route("/tezos4eudiw/static/img/<filename>", methods=["GET"])
+@app.route("/crypto4eudiw/static/img/<filename>", methods=["GET"])
 def serve_img(filename: str):
     try:
         return send_file(f"./static/img/{filename}", download_name=filename)
@@ -100,7 +106,7 @@ def serve_img(filename: str):
         abort(404)
 
 
-@app.route("/tezos4eudiw/static/<filename>", methods=["GET"])
+@app.route("/crypto4eudiw/static/<filename>", methods=["GET"])
 def serve_static(filename: str):
     try:
         return send_file(f"./static/{filename}", download_name=filename)

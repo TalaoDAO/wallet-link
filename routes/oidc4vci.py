@@ -13,10 +13,11 @@ from utils import x509_attestation
 
 logging.basicConfig(level=logging.INFO)
 
-API_LIFE = 5000
-ACCESS_TOKEN_LIFE = 10000
-GRANT_LIFE = 5000
-C_NONCE_LIFE = 5000
+API_LIFE = 300
+URI_LIFE = 100
+ACCESS_TOKEN_LIFE = 300
+GRANT_LIFE = 300
+C_NONCE_LIFE = 300
 ACCEPTANCE_TOKEN_LIFE = 28 * 24 * 60 * 60
 STATUSLIST_ISSUER_KEY = json.dumps(json.load(open('keys.json', 'r'))['talao_Ed25519_private_key'])
 
@@ -24,20 +25,24 @@ def init_app(app):
     
     
     # Credential issuer
-    app.add_url_rule('/tezos4eudiw/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
-    app.add_url_rule('/.well-known/openid-credential-issuer/tezos4eudiw/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/crypto4eudiw/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/.well-known/openid-credential-issuer/crypto4eudiw/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
     
-    app.add_url_rule('/tezos4eudiw/issuer/credential', view_func=issuer_credential, methods=['POST'])
-    app.add_url_rule('/tezos4eudiw/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
-    app.add_url_rule('/tezos4eudiw/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
+    app.add_url_rule('/crypto4eudiw/issuer/credential', view_func=issuer_credential, methods=['POST'])
+    app.add_url_rule('/crypto4eudiw/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
+    app.add_url_rule('/crypto4eudiw/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
     
     # AS endpoint when issuer = AS
-    app.add_url_rule('/tezos4eudiw/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/.well-known/oauth-authorization-server/tezos4eudiw/issuer', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/tezos4eudiw/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/tezos4eudiw/issuer/token', view_func=issuer_token, methods=['POST'])
-    app.add_url_rule("/tezos4eudiw/issuer/jwks", view_func=issuer_jwks, methods=["GET"])
+    app.add_url_rule('/crypto4eudiw/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/.well-known/oauth-authorization-server/crypto4eudiw/issuer', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/crypto4eudiw/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/crypto4eudiw/issuer/token', view_func=issuer_token, methods=['POST'])
+    app.add_url_rule("/crypto4eudiw/issuer/jwks", view_func=issuer_jwks, methods=["GET"])
 
+    # external API
+    app.add_url_rule('/crypto4eudiw/get_credential_offer', view_func=get_credential_offer, methods=['POST'])
+
+    
     return
 
 
@@ -78,8 +83,8 @@ def build_signed_metadata(metadata, mode) -> str:
     header['x5c'] = x509_attestation.build_x509_san_dns()
     
     payload = {
-        'sub':  mode.server + 'tezos4eudiw/issuer',
-        'iss': mode.server + "tezos4eudiw/issuer",
+        'sub':  mode.server + 'crypto4eudiw/issuer',
+        'iss': mode.server + "crypto4eudiw/issuer",
         'iat': int(datetime.now().timestamp()),
         'exp': int(datetime.now().timestamp()) + 86400,
     }
@@ -126,9 +131,9 @@ def credential_issuer_openid_configuration(mode):
     """
     # general section
     configuration = {
-        'credential_issuer': mode.server + 'tezos4eudiw/issuer',
-        'credential_endpoint': mode.server + 'tezos4eudiw/issuer/credential',
-        'nonce_endpoint': mode.server + 'tezos4eudiw/issuer/nonce',
+        'credential_issuer': mode.server + 'crypto4eudiw/issuer',
+        'credential_endpoint': mode.server + 'crypto4eudiw/issuer/credential',
+        'nonce_endpoint': mode.server + 'crypto4eudiw/issuer/nonce',
         "display": [
             {
                 "name": "Talao issuer",
@@ -185,9 +190,9 @@ def build_authorization_server_configuration(mode):
         logging.exception("Invalid credential configurations JSON")
         authorization_server_config = {}
     config = {
-        'issuer': mode.server + 'tezos4eudiw/issuer',
-        'token_endpoint': mode.server + 'tezos4eudiw/issuer/token',
-        'jwks_uri':  mode.server + 'tezos4eudiw/issuer/jwks',
+        'issuer': mode.server + 'crypto4eudiw/issuer',
+        'token_endpoint': mode.server + 'crypto4eudiw/issuer/token',
+        'jwks_uri':  mode.server + 'crypto4eudiw/issuer/jwks',
         'pre-authorized_grant_anonymous_access_supported': True
     }
     config.update(authorization_server_config)
@@ -197,22 +202,23 @@ def build_authorization_server_configuration(mode):
 # build credential offer
 def build_credential_offer(data, pre_authorized_code, mode):
     offer = {
-        'credential_issuer': f'{mode.server}tezos4eudiw/issuer',
-        'credential_configuration_ids': ["SCA"],
+        'credential_issuer': f'{mode.server}crypto4eudiw/issuer',
+        'credential_configuration_ids': [data.get("credential_id")],
         'grants': {
             'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
                 'pre-authorized_code': pre_authorized_code
             }
         }
     }
-    if data.get("user_pin_required"):
+    tx_code = data.get("tx_code") or {}
+    if tx_code.get("is_required"):
         offer['grants'][
             'urn:ietf:params:oauth:grant-type:pre-authorized_code'
         ].update({
             'tx_code': {
-                'length': 6,
-                'input_mode': "numeric",
-                'description': "Enter your secret code"
+                'length': tx_code.get("length", 5),
+                'input_mode': tx_code.get("input_mode", "numeric"),
+                'description': tx_code.get("description", "Enter secret code")
             }
         })   
     return offer
@@ -225,28 +231,71 @@ def issuer_credential_offer_uri(id):
     """
     red = current_app.config["REDIS"]
     try:
-        offer = json.loads(red.get(id).decode()).get("offer")
+        offer = json.loads(red.get(id).decode())
     except Exception:
         logging.warning('session expired')
         return jsonify('Session expired'), 404
     return jsonify(offer), 201
 
 
-# Main API to provide the credential offer
-def get_credential_offer(data, red, mode):
-    pre_authorized_code = str(uuid.uuid1())
+# Main API endpoint to provide the credential offer
+def get_credential_offer():
+    mode = current_app.config["MODE"]
+    red = current_app.config["REDIS"]
+    data = request.get_json(silent=True) or {}
+    webhook = data.get("webhook_url")
+    exp = data.get("exp")
+    
+    if not isinstance(data, dict):
+        return jsonify({
+            "error": "invalid_request",
+            "error_description": "Missing or invalid 'data' object"
+        }), 400
+        
+    logging.info("API data received = %s", data)
+    pre_authorized_code = str(uuid.uuid1())    
     offer = build_credential_offer(data, pre_authorized_code, mode)
-    offer_data = {
+    code_data = {
+        "exp": int(datetime.now().timestamp()) + API_LIFE,
         "offer": offer,
         "data": data
     }
-    id = str(uuid.uuid1()) 
-    credential_offer_uri = f'{mode.server}tezos4eudiw/issuer/credential_offer_uri/{id}'
-    red.setex(id, GRANT_LIFE, json.dumps(offer_data))
-    red.setex(pre_authorized_code, GRANT_LIFE, json.dumps(offer_data))
+    # for request uri endpoint
+    uri_id = str(uuid.uuid1()) 
+    credential_offer_uri = f'{mode.server}crypto4eudiw/issuer/credential_offer_uri/{uri_id}'
+    red.setex(uri_id, URI_LIFE, json.dumps(offer))
+    
+    # for token endpoint
+    red.setex(pre_authorized_code, GRANT_LIFE, json.dumps(code_data))
+    
+    # push to webhook
+    if webhook:
+        headers = {
+            "Content-Type": "application/json",
+            "X-API-KEY": data.get("webhook_X-API-KEY"),
+        }
+        try:
+            requests.post(
+                webhook,
+                json={
+                    "session_id": data.get("session_id"),
+                    "event": "CREDENTIAL_OFFER_SENT",
+                },
+                headers=headers,
+                timeout=10,
+            )
+        except requests.RequestException:
+            logging.exception("Webhook notification failed for session_id=%s", data.get("session_id"))
+
+    
+    # endpoint response
     encoded_uri = quote(credential_offer_uri, safe='')
     url_to_display = f"openid-credential-offer://?credential_offer_uri={encoded_uri}"
-    return jsonify({'qrcode_value': url_to_display})
+    return jsonify({
+        "url": url_to_display,
+        "credential_offer_uri": credential_offer_uri,
+        "pre_authorized_code_expires_in": GRANT_LIFE,
+    }), 200
 
 
 # AS nonce endpoint
@@ -335,10 +384,11 @@ def issuer_token():
         return Response(**manage_error('access_denied', 'Grant code expired', status=404))
 
     # check tx_code
-    if data.get('user_pin_required') and not user_pin:
+    tx_code = data.get("tx_code") 
+    if tx_code.get("is_required") and not user_pin:
         return Response(**manage_error('invalid_request', 'User code is missing'))
-    logging.info('user_pin = %s', data.get('user_pin'))
-    if data.get('user_pin_required') and data.get('user_pin') not in [user_pin, str(user_pin)]:
+    logging.info('user_pin required = %s', tx_code.get("value"))
+    if tx_code.get("is_required") and tx_code.get("value") not in [user_pin, str(user_pin)]:
         return Response(**manage_error('invalid_grant', 'User code is incorrect', status=404))
 
     # token endpoint response
@@ -355,7 +405,8 @@ def issuer_token():
     access_token_data = {
         'expires_at': datetime.timestamp(datetime.now()) + ACCESS_TOKEN_LIFE,
         'vc': data.get('vc'),
-        'webhook': data.get('webhook'),
+        'webhook': data.get('webhook_url'),
+        'webhook_X-API-KEY': data.get('webhook_X-API-KEY'),
         'session_id': data.get('session_id'),
         'issuer_state': data.get('issuer_state'),
         'client_id': request.form.get('client_id'),
@@ -363,6 +414,16 @@ def issuer_token():
     }
     logging.info('token endpoint response = %s', json.dumps(endpoint_response, indent=4))
     red.setex(access_token, ACCESS_TOKEN_LIFE, json.dumps(access_token_data))
+    if webhook := data.get('webhook_url'):
+        headers = {
+            "Content-Type": "application/json",
+            "X-API-KEY": access_token_data.get("webhook_X-API-KEY"),
+        }
+        data = {
+            "session_id": data.get("session_id"),
+            "event": "TOKEN_SENT",
+        }
+        requests.post(webhook, json=data, headers=headers, timeout=10)
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
     return Response(response=json.dumps(endpoint_response), headers=headers)
 
@@ -444,7 +505,18 @@ def issuer_credential():
                         logging.error('iss %s of proof of key is different from client_id %s', proof_payload.get("iss") ,access_token_data['client_id'] )
                         return Response(**manage_error('invalid_proof', 'iss of proof of key is different from client_id'))
         else:
-            return Response(**manage_error('invalid_proof', 'Proof type not supported'))
+            # send event to webhook if it exists    
+            if webhook := access_token_data.get('webhook'):
+                headers = {
+                    "Content-Type": "application/json",
+                    "X-API-KEY": access_token_data.get("webhook_X-API-KEY")
+                }
+                data = {
+                    "session_id": access_token_data.get("session_id"),
+                    "event": "ISSUANCE_ERROR",
+                }
+                requests.post(webhook, json=data, headers=headers, timeout=10)
+                return Response(**manage_error('invalid_proof', 'Proof type not supported'))
     else:
         nb_proof = 1
         logging.warning('No proof available -> Bearer credential')
@@ -455,6 +527,17 @@ def issuer_credential():
     credential_configuration_id = result.get("credential_configuration_id")
     credential = access_token_data['vc'].get(credential_configuration_id)
     if not credential:
+        # send event to webhook if it exists    
+        if webhook := access_token_data.get('webhook'):
+            headers = {
+                "Content-Type": "application/json",
+                "X-API-KEY": access_token_data.get("webhook_X-API-KEY")
+            }
+            data = {
+                "session_id": access_token_data.get("session_id"),
+                "event": "ISSUANCE_ERROR",
+            }
+            requests.post(webhook, json=data, headers=headers, timeout=10)
         return Response(**manage_error('unsupported_credential_type', 'Credential is not found for this credential identifier'))
 
     # sign_credential(credential, wallet_did, c_nonce, format, issuer, mode, duration=365, wallet_jwk=None, wallet_identifier=None):
@@ -478,14 +561,17 @@ def issuer_credential():
     access_token_data['c_nonce'] = c_nonce
     red.setex(access_token, ACCESS_TOKEN_LIFE, json.dumps(access_token_data))
 
-    # send event to webhook if it exists    
+    # send event to webhook if exists
     if webhook := access_token_data.get('webhook'):
+        headers = {
+            "Content-Type": "application/json",
+            "X-API-KEY": access_token_data.get("webhook_X-API-KEY"),
+        }
         data = {
             "session_id": access_token_data.get("session_id"),
             "event": "CREDENTIAL_SENT",
         }
-        requests.post(webhook, json=data, timeout=10)
-        
+        requests.post(webhook, json=data, headers=headers, timeout=10)
 
     # send VC to wallet
     headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/json'}
