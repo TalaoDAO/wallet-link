@@ -14,7 +14,7 @@ from utils import x509_attestation
 logging.basicConfig(level=logging.INFO)
 
 API_LIFE = 300
-URI_LIFE = 100
+URI_LIFE = 300
 ACCESS_TOKEN_LIFE = 300
 GRANT_LIFE = 300
 C_NONCE_LIFE = 300
@@ -42,7 +42,6 @@ def init_app(app):
     # external API
     app.add_url_rule('/crypto4eudiw/get_credential_offer', view_func=get_credential_offer, methods=['POST'])
 
-    
     return
 
 
@@ -142,14 +141,6 @@ def credential_issuer_openid_configuration(mode):
                     "uri": "https://talao.co/static/img/talao.png",
                     "alt_text": "Talao logo"
                 }
-            },
-            {
-                "name": "Talao issuer",
-                "locale": "fr-FR",
-                "logo": {
-                    "uri": "https://talao.co/static/img/talao.png",
-                    "alt_text": "Talao logo"
-                }
             }
         ]
     }
@@ -191,6 +182,7 @@ def build_authorization_server_configuration(mode):
         authorization_server_config = {}
     config = {
         'issuer': mode.server + 'crypto4eudiw/issuer',
+        'authorization_endpoint': mode.server + 'crypto4eudiw/authorize',
         'token_endpoint': mode.server + 'crypto4eudiw/issuer/token',
         'jwks_uri':  mode.server + 'crypto4eudiw/issuer/jwks',
         'pre-authorized_grant_anonymous_access_supported': True
@@ -231,11 +223,11 @@ def issuer_credential_offer_uri(id):
     """
     red = current_app.config["REDIS"]
     try:
-        offer = json.loads(red.get(id).decode())
+        code_data = json.loads(red.get(id).decode())
+        offer = code_data.get("offer")
     except Exception:
-        logging.warning('session expired')
         return jsonify('Session expired'), 404
-    return jsonify(offer), 201
+    return jsonify(offer), 200
 
 
 # Main API endpoint to provide the credential offer
@@ -263,34 +255,34 @@ def get_credential_offer():
     # for request uri endpoint
     uri_id = str(uuid.uuid1()) 
     credential_offer_uri = f'{mode.server}crypto4eudiw/issuer/credential_offer_uri/{uri_id}'
-    red.setex(uri_id, URI_LIFE, json.dumps(offer))
+    red.setex(uri_id, URI_LIFE, json.dumps(code_data))
     
     # for token endpoint
     red.setex(pre_authorized_code, GRANT_LIFE, json.dumps(code_data))
     
     # push to webhook
-    if webhook:
-        headers = {
-            "Content-Type": "application/json",
-            "X-API-KEY": data.get("webhook_X-API-KEY"),
-        }
-        try:
-            requests.post(
-                webhook,
-                json={
-                    "session_id": data.get("session_id"),
-                    "event": "CREDENTIAL_OFFER_SENT",
-                },
-                headers=headers,
-                timeout=10,
-            )
-        except requests.RequestException:
-            logging.exception("Webhook notification failed for session_id=%s", data.get("session_id"))
+    headers = {
+        "Content-Type": "application/json",
+        "X-API-KEY": data.get("webhook_X-API-KEY"),
+    }
+    try:
+        requests.post(
+            webhook,
+            json={
+                "session_id": data.get("session_id"),
+                "event": "CREDENTIAL_OFFER_SENT",
+            },
+            headers=headers,
+            timeout=10,
+        )
+    except requests.RequestException:
+        logging.exception("Webhook notification failed for session_id=%s", data.get("session_id"))
 
     
     # endpoint response
     encoded_uri = quote(credential_offer_uri, safe='')
     url_to_display = f"openid-credential-offer://?credential_offer_uri={encoded_uri}"
+    print("offer to display :", url_to_display)
     return jsonify({
         "url": url_to_display,
         "credential_offer_uri": credential_offer_uri,
@@ -517,6 +509,20 @@ def issuer_credential():
                 }
                 requests.post(webhook, json=data, headers=headers, timeout=10)
                 return Response(**manage_error('invalid_proof', 'Proof type not supported'))
+    # for deprecated wallet
+    elif result.get("proof"):
+        proof = result["proof"].get("jwt")
+        try:
+            oidc4vc.verif_token(proof)
+            logging.info('proof %s is validated')
+        except ValueError as e:
+            logging.error("Proof verification failed: %s", str(e))
+            return Response(**manage_error('invalid_proof', 'Proof of key ownership, signature verification error: ' + str(e), status=403))
+        proof_header = oidc4vc.get_header_from_token(proof)
+        proof_payload = oidc4vc.get_payload_from_token(proof)
+        wallet_jwk.append(proof_header.get('jwk'))
+        nb_proof = 1
+        
     else:
         nb_proof = 1
         logging.warning('No proof available -> Bearer credential')

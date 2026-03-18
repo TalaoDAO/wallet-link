@@ -89,26 +89,29 @@ controls a specific crypto address.
 
 Any Tezos mobile wallet compatible with Beacon, including:
 
-- [Temple Wallet](https://www.templewallet.com/#download)
 - [Altme Wallet](https://www.altme.io/)
-- [Umami](https://www.umamiwallet.com/)
 - [Kukai Wallet](https://wallet.kukai.app/)
+- [Temple Wallet](https://www.templewallet.com/#download)
+- [Umami](https://www.umamiwallet.com/)
+
 
 ### EVM Mobile Crypto Wallet
 
 Any EVM mobile wallet compatible with WalletConnect, including:
 
-- [Metamask](https://metamask.io/download)
 - [Altme Wallet](https://www.altme.io/)
-- [Trust Wallet](https://trustwallet.com/)
 - [Coinbase Wallet](https://www.coinbase.com/)
+- [Metamask](https://metamask.io/download)
+- [Trust Wallet](https://trustwallet.com/)
 
-### EUDI Wallet compliant with OIDC4VCI Final 1.0
+### EUDI Wallet compliant wallet with OIDC4VCI draft 15 to Final 1.0
 
-- 🇫🇷 [Talao Wallet](https://www.talao.io/talao-wallet/)
 - 🇫🇷 [Altme Wallet](https://www.altme.io/)
 - 🇸🇪 [Igrant.io Wallet](https://www.igrant.io/)
+- 🇩🇪 [Lissi Wallet](https://www.lissi.id/)
+- 🇫🇷 [Talao Wallet](https://www.talao.io/talao-wallet/)
 - 🇪🇸 [VID Wallet](https://www.validatedid.com/en/identity/vidwallet)
+
 
 ## Supported credentials
 

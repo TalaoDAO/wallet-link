@@ -4,8 +4,8 @@
         "openid"
     ],
     "response_types_supported": [
-        "vp_token",
-        "id_token"
+        "id_token",
+        "code"
     ],
     "response_modes_supported": [
         "query"
@@ -22,10 +22,7 @@
         "ES256"
     ],
     "request_object_signing_alg_values_supported": [
-        "ES256",
-        "ES256K",
-        "EdDSA",
-        "RS256"
+        "ES256"
     ],
     "request_parameter_supported": true,
     "request_uri_parameter_supported": true,
