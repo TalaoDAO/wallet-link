@@ -50,7 +50,7 @@
             </div>
 
             <div class="nav-02__item">
-              <a href="https://doc.wallet-provider.io/tezos4eudiw">Documentation</a>
+              <a href="documentation/crypto4eudiw">Documentation</a>
             </div>
           </div>
         </nav>
@@ -107,7 +107,7 @@
                   <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect wallet">
                     <span class="tezos-connectInner">
                       <img class="tezos-logo"
-                           src="{% if chain_id == '1' %}/crypto4eudiw/static/img/ethereum.jpeg{% elif chain_id == '42793' %}/crypto4eudiw/static/img/etherlink.jpeg{% else %}/crypto4eudiw/static/img/tezos.jpeg{% endif %}"
+                           src="/crypto4eudiw/static/img/{{blockchain_logo}}"
                            alt="{{ 'Ethereum' if wallet_type == 'evm' else 'Tezos' }}" />
                       <span class="tezos-connectText">
                         <span class="tezos-connectTitle">
@@ -208,8 +208,21 @@
       }
 
       function setError(msg) {
-        setText("choose", msg);
+        const el = $("choose");
+        if (!el) return;
+
+        el.innerHTML = `
+          <span style="color:#d32f2f; display:flex; align-items:center; gap:8px;">
+            <img src="/crypto4eudiw/static/img/error.png" 
+                style="width:20px; height:20px;">
+            <span>${msg}</span>
+          </span>
+        `;
       }
+      /*
+      function setError(msg) {
+        setText("choose", msg);
+      } */
 
       function setConnected(address) {
         const el = $("walletStatus");
@@ -403,7 +416,8 @@
 
           const address = Array.isArray(accounts) ? accounts[0] : null;
           if (!address) {
-            throw new Error("WalletConnect did not return an account.");
+            //setError("Wallet did not return an account.");
+            throw new Error("Wallet did not return an account.");
           }
 
           // Use ethers on top of the WalletConnect provider
@@ -415,12 +429,11 @@
           const currentName = CHAIN_NAMES[chainId] || `chain ${chainId}`;
 
           if (EVM_CHAIN_ID && chainId !== Number(EVM_CHAIN_ID)) {
-            throw new Error(
-              `Wrong network: you are on ${currentName}. Please switch to ${expectedName}.`
-            );
+              //setError(`Wrong network: you are on ${currentName}. Please switch to ${expectedName}.`);
+              throw new Error(`Wrong network: you are on ${currentName}. Please switch to ${expectedName}.`);
           }
 
-          // This is the important part: plain text message signing
+          // plain text message signing
           const signature = await signer.signMessage(EVM_CHALLENGE);
 
           return {
@@ -522,10 +535,8 @@
         } catch (err) {
           console.error(err);
           setError(err?.message || String(err));
-          //setError("Connection failed. Please try again.");
         }
       }
-
 
 
       async function disconnectWallet() {

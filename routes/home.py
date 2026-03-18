@@ -43,7 +43,7 @@ logging.basicConfig(level=logging.INFO)
 
 def utc_now_z() -> str:
     """Return UTC timestamp like '2026-02-14T12:34:56Z' (no microseconds)."""
-    return datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    return datetime.now().replace(microsecond=0).isoformat() + "Z"
 
 
 def make_secret_code() -> str:
@@ -146,10 +146,16 @@ def build_template_context(
     
     if chain_id == "1":
         blockchain_network = "Ethereum"
+        blockchain_logo = "ethereum.jpeg"
     elif chain_id == "42793":
         blockchain_network = "Etherlink"
+        blockchain_logo = "etherlink.jpeg"
+    elif chain_id == "137":
+        blockchain_network = "Polygon"
+        blockchain_logo = "polygon.jpeg"
     else:
         blockchain_network = "Tezos"
+        blockchain_logo = "tezos.jpeg"
 
     return {
         "session_id": session_id,
@@ -161,6 +167,7 @@ def build_template_context(
         "evm_chain_id": evm_chain_id,
         "walletconnect_project_id": walletconnect_project_id,
         "dapp_url": server_url.rstrip("/") or request.host_url.rstrip("/"),
+        "blockchain_logo": blockchain_logo
     }
 
 
@@ -185,6 +192,10 @@ def build_credential_offer_request(
         SCA = "SCA_Etherlink"
         vct = "urn:eudi:sca:crypto:etherlink:1"
         blockchain_network = "Etherlink"
+    elif caip2_chain_id == "eip155:137":
+        SCA = "SCA_Polygon"
+        vct = "urn:eudi:sca:crypto:polygon:1"
+        blockchain_network = "Polygon"
     else: #  caip2_chain_id == "tezos:NetXdQprcVkpaWU":
         SCA = "SCA_Tezos"
         vct = "urn:eudi:sca:crypto:tezos:1"
@@ -407,8 +418,6 @@ def evm_dapp():
     }
     red.setex(session_id, PROOF_SESSION_TTL, json.dumps(proof_session))
     
-    
-
     return render_template(
         "dapp.html",
         **build_template_context(

@@ -5,6 +5,7 @@ import logging
 import os
 from datetime import datetime
 from typing import Any, Dict
+import markdown
 
 import redis
 from flask import (
@@ -114,6 +115,17 @@ def serve_static(filename: str):
         app_logger.error("%s not found", filename)
         abort(404)
 
+@app.route("/crypto4eudiw/documentation/<page>", methods=['GET'])
+def show_markdown_page(page):
+    try:
+        with open(f"documentation/{page}.md", "r") as f:
+            content = f.read()
+    except FileNotFoundError:
+        return "Page not found", 404
+    html_content = markdown.markdown(content, extensions=["tables", "fenced_code"])
+    return render_template("markdown_template.html", page=page, html_content=html_content)
+
+
 
 # ------------------------------------------------------------------------------
 # local bootstrap
@@ -121,5 +133,5 @@ def serve_static(filename: str):
 
 
 if __name__ == "__main__":
-    app_logger.info("app init (Tezos-only)")
+    app_logger.info("app init")
     app.run(host=mode.IP, port=mode.port, debug=True)
