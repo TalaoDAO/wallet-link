@@ -11,7 +11,7 @@ class currentMode() :
 		self.myenv = myenv
 		# En Prod chez AWS 
 		if self.myenv == 'aws':
-			self.server = 'https://talao.co/'
+			self.server = 'https://crypto4eudiw.talao.co/'
 			self.IP = '18.190.21.227' 
 		else:
 			self.server = 'http://' + extract_ip() + ':5000/'
