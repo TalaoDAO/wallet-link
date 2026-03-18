@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>{{wallet_name}} Proof of Crypto Ownership</title>
-  <link rel="icon" type="image/png" href="/crypto4eudiw/static/img/icon.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/static/img/icon.png" sizes="16x16" />
 
-  <link rel="stylesheet" href="/crypto4eudiw/static/style.css" />
+  <link rel="stylesheet" href="/static/style.css" />
 
   {% if wallet_type == "tezos" %}
   <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
@@ -22,10 +22,10 @@
         <nav class="nav-02" aria-label="Primary">
           <div class="nav-02__box">
             <div class="nav-02__logo">
-              <a class="nav-02__link" href="/crypto4eudiw" target="_self" aria-label="Altme home">
+              <a class="nav-02__link" href="/" target="_self" aria-label="Altme home">
                 <img loading="lazy"
                      class="nav-02__logo_img"
-                     src="/crypto4eudiw/static/img/altme-decentralized-identity-wallet-did-logo.webp"
+                     src="/static/img/altme-decentralized-identity-wallet-did-logo.webp"
                      height="70"
                      alt="Altme logo" />
               </a>
@@ -107,7 +107,7 @@
                   <button id="connectBtn" class="tezos-connectBtn" type="button" aria-label="Connect wallet">
                     <span class="tezos-connectInner">
                       <img class="tezos-logo"
-                           src="/crypto4eudiw/static/img/{{blockchain_logo}}"
+                           src="/static/img/{{blockchain_logo}}"
                            alt="{{ 'Ethereum' if wallet_type == 'evm' else 'Tezos' }}" />
                       <span class="tezos-connectText">
                         <span class="tezos-connectTitle">
@@ -121,7 +121,7 @@
                           {% endif %}
                         </span>
                       </span>
-                      <img class="tezos-chevron" src="/crypto4eudiw/static/img/vector.png" alt="" aria-hidden="true" />
+                      <img class="tezos-chevron" src="/static/img/vector.png" alt="" aria-hidden="true" />
                     </span>
                   </button>
 
@@ -184,9 +184,9 @@
       const EVM_CHALLENGE = {{ evm_challenge | tojson }};
       const EVM_CHAIN_ID = {{ evm_chain_id | tojson }};
       const WALLETCONNECT_PROJECT_ID = {{ walletconnect_project_id | tojson }};
-      const STREAM_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/stream" : "/crypto4eudiw/tezos/stream";
-      const VALIDATE_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/validate_sign" : "/crypto4eudiw/tezos/validate_sign";
-      const CREDENTIAL_OFFER_URL = WALLET_TYPE === "evm" ? "/crypto4eudiw/evm/credential_offer" : "/crypto4eudiw/tezos/credential_offer" ;
+      const STREAM_URL = WALLET_TYPE === "evm" ? "/evm/stream" : "/tezos/stream";
+      const VALIDATE_URL = WALLET_TYPE === "evm" ? "/evm/validate_sign" : "/tezos/validate_sign";
+      const CREDENTIAL_OFFER_URL = WALLET_TYPE === "evm" ? "/evm/credential_offer" : "/tezos/credential_offer" ;
       const CHAIN_NAMES = {
         1: "Ethereum Mainnet",
         5: "Goerli",
@@ -213,7 +213,7 @@
 
         el.innerHTML = `
           <span style="color:#d32f2f; display:flex; align-items:center; gap:8px;">
-            <img src="/crypto4eudiw/static/img/error.png" 
+            <img src="/static/img/error.png" 
                 style="width:20px; height:20px;">
             <span>${msg}</span>
           </span>
@@ -288,7 +288,7 @@
 
               const tick = document.createElement("img");
               tick.className = "tezos-successIcon";
-              tick.src = "/crypto4eudiw/static/img/tick-circle.png";
+              tick.src = "/static/img/tick-circle.png";
               tick.alt = "Success";
 
               const success = document.createElement("p");
@@ -315,7 +315,7 @@
 
               const cross = document.createElement("img");
               cross.className = "tezos-errorIcon";
-              cross.src = "/crypto4eudiw/static/img/error.png";
+              cross.src = "/static/img/error.png";
               cross.alt = "Error";
 
               const error = document.createElement("p");

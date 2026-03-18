@@ -230,7 +230,7 @@ def request_credential_offer(data: dict[str, Any]) -> tuple[dict[str, Any], int]
     mode = current_app.config["MODE"]
     headers = {"Content-Type": "application/json"}
     resp = requests.post(
-        mode.server + "crypto4eudiw/get_credential_offer",
+        mode.server + "get_credential_offer",
         json=data,
         headers=headers,
         timeout=10,
@@ -252,18 +252,18 @@ def request_credential_offer(data: dict[str, Any]) -> tuple[dict[str, Any], int]
 
 def init_app(app_: Flask) -> None:
     # Tezos
-    app_.add_url_rule("/crypto4eudiw/tezos", view_func=tezos_dapp, methods=["GET"])
-    app_.add_url_rule("/crypto4eudiw/tezos/validate_sign", view_func=tezos_validate_sign, methods=["POST"])
-    app_.add_url_rule("/crypto4eudiw/tezos/credential_offer", view_func=tezos_credential_offer, methods=["POST"])
-    app_.add_url_rule("/crypto4eudiw/tezos/stream", view_func=tezos_stream, methods=["GET", "POST"])
-    app_.add_url_rule("/crypto4eudiw/tezos/webhook", view_func=tezos_webhook, methods=["GET", "POST"])
+    app_.add_url_rule("/tezos", view_func=tezos_dapp, methods=["GET"])
+    app_.add_url_rule("/tezos/validate_sign", view_func=tezos_validate_sign, methods=["POST"])
+    app_.add_url_rule("/tezos/credential_offer", view_func=tezos_credential_offer, methods=["POST"])
+    app_.add_url_rule("/tezos/stream", view_func=tezos_stream, methods=["GET", "POST"])
+    app_.add_url_rule("/tezos/webhook", view_func=tezos_webhook, methods=["GET", "POST"])
 
     # EVM
-    app_.add_url_rule("/crypto4eudiw/evm", view_func=evm_dapp, methods=["GET"])
-    app_.add_url_rule("/crypto4eudiw/evm/validate_sign", view_func=evm_validate_sign, methods=["POST"])
-    app_.add_url_rule("/crypto4eudiw/evm/credential_offer", view_func=evm_credential_offer, methods=["POST"])
-    app_.add_url_rule("/crypto4eudiw/evm/stream", view_func=evm_stream, methods=["GET", "POST"])
-    app_.add_url_rule("/crypto4eudiw/evm/webhook", view_func=evm_webhook, methods=["GET", "POST"])
+    app_.add_url_rule("/evm", view_func=evm_dapp, methods=["GET"])
+    app_.add_url_rule("/evm/validate_sign", view_func=evm_validate_sign, methods=["POST"])
+    app_.add_url_rule("/evm/credential_offer", view_func=evm_credential_offer, methods=["POST"])
+    app_.add_url_rule("/evm/stream", view_func=evm_stream, methods=["GET", "POST"])
+    app_.add_url_rule("/evm/webhook", view_func=evm_webhook, methods=["GET", "POST"])
 
 
 # ------------------------------------------------------------------------------
@@ -375,7 +375,7 @@ def tezos_credential_offer():
         code=code,
         address=address,
         caip2_chain_id="tezos:NetXdQprcVkpaWU",
-        webhook_path_prefix="crypto4eudiw/tezos",
+        webhook_path_prefix="tezos",
     )
     proof_session["webhook_X-API-KEY"] = webhook_api_key
     save_session(session_id, proof_session)
@@ -402,7 +402,7 @@ def evm_dapp():
     session_id = str(uuid.uuid4())
     chain_id = request.args.get("chain_id") or int(current_app.config.get("EVM_CHAIN_ID", 1))
     domain = request.host
-    uri = request.url_root.rstrip("/") + "/crypto4eudiw/evm"
+    uri = request.url_root.rstrip("/") + "/evm"
     nonce = uuid.uuid4().hex[:8]
     challenge = evm_challenge_message(domain, uri, chain_id, nonce, code)
 
@@ -500,7 +500,7 @@ def evm_credential_offer():
         code=code,
         address=address,
         caip2_chain_id=f"eip155:{chain_id}",
-        webhook_path_prefix="crypto4eudiw/evm",
+        webhook_path_prefix="evm",
     )
     
     proof_session["webhook_X-API-KEY"] = webhook_api_key

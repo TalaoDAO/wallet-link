@@ -25,22 +25,23 @@ def init_app(app):
     
     
     # Credential issuer
-    app.add_url_rule('/crypto4eudiw/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
-    app.add_url_rule('/.well-known/openid-credential-issuer/crypto4eudiw/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/issuer/.well-known/openid-credential-issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
+    app.add_url_rule('/.well-known/openid-credential-issuer/issuer', view_func=credential_issuer_openid_configuration_endpoint, methods=['GET'])
     
-    app.add_url_rule('/crypto4eudiw/issuer/credential', view_func=issuer_credential, methods=['POST'])
-    app.add_url_rule('/crypto4eudiw/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
-    app.add_url_rule('/crypto4eudiw/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
+    app.add_url_rule('/issuer/credential', view_func=issuer_credential, methods=['POST'])
+    app.add_url_rule('/issuer/credential_offer_uri/<id>', view_func=issuer_credential_offer_uri, methods=['GET'])
+    app.add_url_rule('/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
     
     # AS endpoint when issuer = AS
-    app.add_url_rule('/crypto4eudiw/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/.well-known/oauth-authorization-server/crypto4eudiw/issuer', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/crypto4eudiw/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
-    app.add_url_rule('/crypto4eudiw/issuer/token', view_func=issuer_token, methods=['POST'])
-    app.add_url_rule("/crypto4eudiw/issuer/jwks", view_func=issuer_jwks, methods=["GET"])
+    app.add_url_rule('/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/.well-known/oauth-authorization-server/issuer', view_func=oauth_authorization_server, methods=['GET'])
+    
+    app.add_url_rule('/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
+    app.add_url_rule('/issuer/token', view_func=issuer_token, methods=['POST'])
+    app.add_url_rule("/issuer/jwks", view_func=issuer_jwks, methods=["GET"])
 
     # external API
-    app.add_url_rule('/crypto4eudiw/get_credential_offer', view_func=get_credential_offer, methods=['POST'])
+    app.add_url_rule('/get_credential_offer', view_func=get_credential_offer, methods=['POST'])
 
     return
 
@@ -82,8 +83,8 @@ def build_signed_metadata(metadata, mode) -> str:
     header['x5c'] = x509_attestation.build_x509_san_dns()
     
     payload = {
-        'sub':  mode.server + 'crypto4eudiw/issuer',
-        'iss': mode.server + "crypto4eudiw/issuer",
+        'sub':  mode.server + 'issuer',
+        'iss': mode.server + "issuer",
         'iat': int(datetime.now().timestamp()),
         'exp': int(datetime.now().timestamp()) + 86400,
     }
@@ -130,9 +131,9 @@ def credential_issuer_openid_configuration(mode):
     """
     # general section
     configuration = {
-        'credential_issuer': mode.server + 'crypto4eudiw/issuer',
-        'credential_endpoint': mode.server + 'crypto4eudiw/issuer/credential',
-        'nonce_endpoint': mode.server + 'crypto4eudiw/issuer/nonce',
+        'credential_issuer': mode.server + 'issuer',
+        'credential_endpoint': mode.server + 'issuer/credential',
+        'nonce_endpoint': mode.server + 'issuer/nonce',
         "display": [
             {
                 "name": "Talao issuer",
@@ -181,10 +182,10 @@ def build_authorization_server_configuration(mode):
         logging.exception("Invalid credential configurations JSON")
         authorization_server_config = {}
     config = {
-        'issuer': mode.server + 'crypto4eudiw/issuer',
-        'authorization_endpoint': mode.server + 'crypto4eudiw/authorize',
-        'token_endpoint': mode.server + 'crypto4eudiw/issuer/token',
-        'jwks_uri':  mode.server + 'crypto4eudiw/issuer/jwks',
+        'issuer': mode.server + 'issuer',
+        'authorization_endpoint': mode.server + 'authorize',
+        'token_endpoint': mode.server + 'issuer/token',
+        'jwks_uri':  mode.server + 'issuer/jwks',
         'pre-authorized_grant_anonymous_access_supported': True
     }
     config.update(authorization_server_config)
@@ -194,7 +195,7 @@ def build_authorization_server_configuration(mode):
 # build credential offer
 def build_credential_offer(data, pre_authorized_code, mode):
     offer = {
-        'credential_issuer': f'{mode.server}crypto4eudiw/issuer',
+        'credential_issuer': f'{mode.server}issuer',
         'credential_configuration_ids': [data.get("credential_id")],
         'grants': {
             'urn:ietf:params:oauth:grant-type:pre-authorized_code': {
@@ -254,7 +255,7 @@ def get_credential_offer():
     }
     # for request uri endpoint
     uri_id = str(uuid.uuid1()) 
-    credential_offer_uri = f'{mode.server}crypto4eudiw/issuer/credential_offer_uri/{uri_id}'
+    credential_offer_uri = f'{mode.server}issuer/credential_offer_uri/{uri_id}'
     red.setex(uri_id, URI_LIFE, json.dumps(code_data))
     
     # for token endpoint
