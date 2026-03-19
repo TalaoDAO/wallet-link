@@ -106,11 +106,14 @@ Any EVM mobile wallet compatible with WalletConnect, including:
 
 ### EUDI Wallet compliant wallet with OIDC4VCI draft 15 to Final 1.0
 
+
 - 🇫🇷 [Altme Wallet](https://www.altme.io/)
 - 🇸🇪 [Igrant.io Wallet](https://www.igrant.io/)
 - 🇩🇪 [Lissi Wallet](https://www.lissi.id/)
+- 🇮🇹 [Namirial Wallet](https://www.namirial.com/fr/wallet/)
 - 🇫🇷 [Talao Wallet](https://www.talao.io/talao-wallet/)
 - 🇪🇸 [VID Wallet](https://www.validatedid.com/en/identity/vidwallet)
+
 
 
 ## Supported credentials

@@ -33,6 +33,7 @@ def init_app(app):
     app.add_url_rule('/issuer/nonce', view_func=issuer_nonce, methods=['POST'])
     
     # AS endpoint when issuer = AS
+    app.add_url_rule('/issuer/.well-known/openid-configuration', view_func=oauth_authorization_server, methods=['GET'])
     app.add_url_rule('/issuer/.well-known/oauth-authorization-server', view_func=oauth_authorization_server, methods=['GET'])
     app.add_url_rule('/.well-known/oauth-authorization-server/issuer', view_func=oauth_authorization_server, methods=['GET'])
     
@@ -102,6 +103,7 @@ def credential_issuer_openid_configuration_endpoint():
     accept = request.headers.get("Accept","").lower()
     wants_jwt = "application/jwt" in accept
     if wants_jwt:
+        logging.info("Signed metadata sent")
         headers = {'Cache-Control': 'no-store', 'Content-Type': 'application/jwt'}
         signed_metadata = build_signed_metadata(metadata, mode)
         return Response(response=signed_metadata, headers=headers)
