@@ -21,6 +21,9 @@ from routes import home, oidc4vci
 import environment
 from utils import message
 
+
+VERSION = "0.5.0"
+
 # ------------------------------------------------------------------------------
 # Logging
 # ------------------------------------------------------------------------------
@@ -71,6 +74,7 @@ app.config["SESSION_REDIS"] = red
 app.config["REDIS"] = red
 app.config["WALLETCONNECT_PROJECT_ID"] = "510345d7283143d63459e40d85fe794a"
 app.config["EVM_CHAIN_ID"] = 1
+app.config["Version"] = VERSION
 app.secret_key = json.dumps(APP_SECRET_KEY)
 
 QRcode(app)
@@ -81,7 +85,7 @@ oidc4vci.init_app(app)
 @app.errorhandler(500)
 def error_500(e: Exception):
     """Notify support and redirect to homepage on unhandled errors."""
-    message.msg("Error 500 wallet-link", "support@talao.io", str(e))
+    message.msg("Error 500 wallet-link", "contact@talao.io", str(e))
     return redirect(mode.server)
 
 
@@ -92,6 +96,7 @@ def error_500(e: Exception):
 @app.route("/")
 def index():
     return render_template("choose_wallet.html")
+
 
 @app.route("/error", methods=["GET"])
 def error():

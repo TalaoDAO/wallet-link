@@ -158,7 +158,7 @@
         <div class="footer-02__wrapper">
           <div class="footer-02__text content_box">
             <p id="line1Footer">
-              &copy; 2026 Web3 Digital Wallet - All rights reserved, Version 0.4.1
+              &copy; 2026 Web3 Digital Wallet - All rights reserved, Version: {{config.Version}}
               <a href="https://altme.io/cgu/" target="_blank" rel="noreferrer">CGU</a>,
               <a href="https://altme.io/privacy/" target="_blank" rel="noreferrer">Privacy</a>,
               <a href="https://qhf0siml406.typeform.com/to/PdULRDIV?typeform-source=www.talao.io" target="_blank" rel="noreferrer">Contact</a>
@@ -219,10 +219,6 @@
           </span>
         `;
       }
-      /*
-      function setError(msg) {
-        setText("choose", msg);
-      } */
 
       function setConnected(address) {
         const el = $("walletStatus");
@@ -339,8 +335,8 @@
 
         setText("step1", "Step 2 — Receive an attestation");
         setText("choose", isMobile()
-          ? "Tap the button to open your EUDI Wallet."
-          : "Scan the QR code with your EUDI Wallet."
+          ? "Tap the button to open your EUDI Wallet..."
+          : "Scan the QR code with your EUDI Wallet...."
         );
 
         setStep2Active();
@@ -384,7 +380,13 @@
           projectId: WALLETCONNECT_PROJECT_ID,
           chains: [Number(EVM_CHAIN_ID || 1)],
           showQrModal: true,
-          methods: ["personal_sign", "eth_sign", "eth_requestAccounts"],
+          methods: [
+            "personal_sign",
+            "eth_sign",
+            "eth_requestAccounts",
+            "eth_chainId",
+            "wallet_switchEthereumChain"
+          ],
           optionalMethods: ["eth_chainId", "eth_accounts"],
           optionalEvents: ["accountsChanged", "chainChanged"],
           metadata: {
@@ -402,7 +404,105 @@
         return evmProvider;
       }
 
+      function normalizeChainId(chainId) {
+        if (typeof chainId === "number") return chainId;
 
+        if (typeof chainId === "bigint") return Number(chainId);
+
+        if (typeof chainId === "string") {
+          if (chainId.startsWith("0x") || chainId.startsWith("0X")) {
+            return parseInt(chainId, 16);
+          }
+          return parseInt(chainId, 10);
+        }
+
+        throw new Error(`Unsupported chainId format: ${chainId}`);
+      }
+
+      function isUserRejectedError(err) {
+        const msg = String(err?.message || err || "");
+
+        return (
+          err?.code === 4001 ||
+          err?.error?.code === 4001 ||
+          msg.includes('"code":4001') ||
+          msg.toLowerCase().includes("user rejected") ||
+          msg.toLowerCase().includes("user denied")
+        );
+      }
+
+      async function signWithWalletConnect() {
+          const wc = await ensureWalletConnectProvider();
+
+          await wc.connect();
+
+          wc.on("chainChanged", (chainIdHex) => {
+            console.log("chainChanged", chainIdHex, parseInt(chainIdHex, 16));
+          });
+
+          const accounts = await wc.request({
+            method: "eth_requestAccounts"
+          });
+
+          const address = Array.isArray(accounts) ? accounts[0] : null;
+          if (!address) {
+            throw new Error("Wallet did not return an account.");
+          }
+
+          const expectedChainId = Number(EVM_CHAIN_ID);
+          const expectedHexChainId = "0x" + expectedChainId.toString(16);
+
+          // Read chain directly from wallet
+          let rawChainId = await wc.request({ method: "eth_chainId" });
+          let walletChainId = normalizeChainId(rawChainId);
+
+          // Try to switch if needed
+          if (expectedChainId && walletChainId !== expectedChainId) {
+            try {
+              await wc.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: expectedHexChainId }]
+              });
+
+              // Re-read after switch
+              rawChainId = await wc.request({ method: "eth_chainId" });
+              walletChainId = normalizeChainId(rawChainId);
+            } catch (err) {
+              throw new Error(
+                `Wrong network: wallet is on chain ${walletChainId}. Please switch to ${expectedChainId}.`
+              );
+            }
+          }
+
+          if (expectedChainId && walletChainId !== expectedChainId) {
+            throw new Error(
+              `Wrong network: wallet is on chain ${walletChainId}. Please switch to ${expectedChainId}.`
+            );
+          }
+
+          const browserProvider = new BrowserProvider(wc);
+          const signer = await browserProvider.getSigner();
+
+          setText("choose", "Sign message...");
+
+          try {
+            const signature = await signer.signMessage(EVM_CHALLENGE);
+
+            return {
+              address,
+              signature,
+              chainId: walletChainId,
+              providerType: "walletconnect"
+            };
+          }catch (err) {
+            if (isUserRejectedError(err)) {
+              throw new Error("Signature request was canceled in the wallet.");
+            }
+            throw err;
+          }
+        }
+
+        /*
       async function signWithWalletConnect() {
           const wc = await ensureWalletConnectProvider();
 
@@ -433,6 +533,8 @@
               throw new Error(`Wrong network: you are on ${currentName}. Please switch to ${expectedName}.`);
           }
 
+          setText("choose", "Sign message...");
+
           // plain text message signing
           const signature = await signer.signMessage(EVM_CHALLENGE);
 
@@ -442,7 +544,7 @@
             chainId,
             providerType: "walletconnect"
           };
-        }
+        }   */
 
       async function createCredentialOffer() {
         const createRes = await fetch(CREDENTIAL_OFFER_URL, {
@@ -469,6 +571,8 @@
             account = await client.getActiveAccount();
           }
           if (!account) throw new Error("No account returned");
+
+          setText("choose", "Sign message...");
 
           const signature = await client.requestSignPayload({
             signingType: window.beacon.SigningType.MICHELINE,
@@ -498,14 +602,12 @@
         } catch (err) {
           console.error(err);
           setError(err?.message || String(err));
-          // setError("Connection cancelled or failed. Please try again.");
         }
       }
 
 
       async function connectAndSignEvm() {
         setText("choose", "Opening wallet...");
-
         try {
 
           let signed = await signWithWalletConnect();
