@@ -104,7 +104,7 @@ Any EVM mobile wallet compatible with WalletConnect, including:
 - [Metamask](https://metamask.io/download)
 - [Trust Wallet](https://trustwallet.com/)
 
-### EUDI Wallet compliant wallet with OIDC4VCI draft 15 to Final 1.0
+### EUDI compliant wallet with OIDC4VCI draft 15 to Final 1.0
 
 
 - 🇫🇷 [Altme Wallet](https://www.altme.io/)

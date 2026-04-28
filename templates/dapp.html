@@ -8,9 +8,9 @@
   <link rel="icon" type="image/png" href="/static/img/icon.png" sizes="16x16" />
 
   <link rel="stylesheet" href="/static/style.css" />
-
   {% if wallet_type == "tezos" %}
-  <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.7.0/dist/walletbeacon.min.js"></script>
+ <!-- <script defer src="https://unpkg.com/@airgap/beacon-sdk@4.8.1/dist/walletbeacon.min.js"></script> -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@airgap/beacon-sdk@4.8.1/dist/walletbeacon.min.js"></script>
   {% endif %}
   <script defer src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
@@ -355,11 +355,14 @@
         if (!window.beacon || !window.beacon.DAppClient) {
           throw new Error("Beacon SDK not loaded.");
         }
-
         beaconClient = new window.beacon.DAppClient({
           name: "Altme",
-          enableMetrics: false
+          enableMetrics: false,
+          preferredNetwork: window.beacon.NetworkType.MAINNET,
+          transports: ["walletconnect"]
         });
+     
+
 
         beaconClient.subscribeToEvent(
           window.beacon.BeaconEvent.ACTIVE_ACCOUNT_SET,
